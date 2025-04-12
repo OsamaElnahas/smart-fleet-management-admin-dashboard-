@@ -1,12 +1,11 @@
-import "./App.css";
+import Dashboard from "./components/dashboard/dashboard";
+import Sidebar from "./components/sidebar/sidebar";
 
 export default function App() {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello World osama</h1>
-      <h1 className="text-3xl font-bold underline">Hello World zaiad</h1>
-      <h1 className="text-3xl font-bold underline ">Hello World mohamed</h1>
-      <button className="rounded bg-blue-500 text-white p-2 red">Ziad Gamed</button>
-    </>
+    <div className="grid grid-cols-[200px,_1fr] gap-3">
+      <Sidebar />
+      <Dashboard />
+    </div>
   );
 }
