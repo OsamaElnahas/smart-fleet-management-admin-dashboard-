@@ -1,6 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
+import { useForm } from "react-hook-form"
+import * as yup from "yup"
+import { yupResolver } from "@hookform/resolvers/yup"
 
+const schema=yup.object().shape({
+    email:yup.string().email("enter a valid email").required("required"),
+    password:yup.string().required("required")
+})
 export default function Login() {
+
+ const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+    const{register,handleSubmit,    formState: { errors },}=useForm({
+        resolver:yupResolver(schema),
+        mode:"onBlur"
+    
+    })
+    async function onSubmit(data) {
+        setIsLoading(true);
+        try {
+          const res = await axios.post("http://localhost:5034/api/Account/login", data);
+          console.log("Login Successful:", res.data);
+        } catch (error) {
+          console.error("Login Error:", error);
+          setError("Something went wrong. Please try again.");
+        }
+      
+        setIsLoading(false);
+      }
     return <>
     
     <div className='w-full font-Poppins   flex items-center justify-center'>
@@ -9,15 +38,18 @@ export default function Login() {
             <div className="title text-4xl text-center  text-primaryColor mb-14 md:mb-0 ">
                 <span className=' font-extrabold'>VEE </span>MANAGE
             </div>
-            <form action="" className='flex-3 w-full justify-between'>
+            <form action="" className='flex-3 w-full justify-between' onSubmit={handleSubmit(onSubmit)}>
 
             <div className="mb-2">
-                <label className='block' htmlFor="username">User name</label>
-                <input className='borrder-[#666666] border rounded-md p-2  w-full my-2 ' type="text" name='username' />
-            </div>
+                <label className='block' htmlFor="email">email</label>
+                <input {...register("email")} className='borrder-[#666666] border rounded-md p-2  w-full my-2 ' type="email" name='email' />
+                {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+                </div>
             <div className="mb-2">
                 <label htmlFor="password" className='block'>Password</label>
-                <input className='borrder-[#666666] border rounded-md p-2  w-full my-2 ' type="password" name='password'/>
+                <input {...register("password")} className='borrder-[#666666] border rounded-md p-2  w-full my-2 ' type="password" name='password'/>
+                {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+
             </div>
             <button className='w-full bg-blackColor text-white rounded-lg p-2    mt-12  text-lg font-Poppins' >Login</button>
 
