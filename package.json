@@ -10,11 +10,13 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@fontsource/inter": "^5.2.5",
         "@hookform/resolvers": "^5.0.1",
         "axios": "^1.8.4",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-hook-form": "^7.55.0",
+        "react-icons": "^5.5.0",
         "yup": "^1.6.1"
     },
     "devDependencies": {
