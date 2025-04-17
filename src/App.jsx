@@ -8,7 +8,7 @@ import SignUp from "./components/SignUp/SignUp";
 export default function App() {
   return <>
       {/* <SignUp/> */}
-      <Login/>
+      {/* <Login/> */}
       {/* <ForgetPassword/> */}
       {/* <ResetPassword /> */}
     </>
