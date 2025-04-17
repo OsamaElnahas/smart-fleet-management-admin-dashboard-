@@ -6,14 +6,14 @@ import Sidebar from "./components/sidebar/sidebar";
 import SignUp from "./components/SignUp/SignUp";
 
 export default function App() {
-  return (
-    <>
+  return <>
       {/* <SignUp/> */}
       {/* <Login/> */}
       {/* <ForgetPassword/> */}
       {/* <ResetPassword /> */}
     </>
-  );
-  // {/* <Sidebar /> */}
-  // {/* <Dashboard /> */}
+  
+  
+    
+  
 }

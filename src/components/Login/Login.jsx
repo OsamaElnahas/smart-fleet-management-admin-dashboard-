@@ -54,7 +54,7 @@ export default function Login() {
               </label>
               <input
                 {...register("email")}
-                className="borrder-[#666666] border rounded-md p-2  w-full my-2"
+                className="border  rounded-md p-2  w-full my-2"
                 type="email"
                 name="email"
               />
@@ -68,7 +68,7 @@ export default function Login() {
               </label>
               <input
                 {...register("password")}
-                className="borrder-[#666666] border rounded-md p-2  w-full my-2 "
+                className=" border rounded-md p-2  w-full my-2 "
                 type="password"
                 name="password"
               />

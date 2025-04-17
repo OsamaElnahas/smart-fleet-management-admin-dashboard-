@@ -1,6 +1,37 @@
 import React from "react";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-const ForgetPassword = () => {
+const schema = yup.object().shape({
+  email: yup.string().email("enter a valid email").required("required"),
+});
+export default function ForgetPassword()  {
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: "onBlur",
+  });
+
+  async function onSubmit(data) {
+    try {
+      const res = await axios.post(
+        "http://localhost:5034/api/Account/forgotpassword",
+        data
+      );
+      console.log("Password Reset Email Sent:", res.data);
+    } catch (error) {
+      console.error("Error Sending Password Reset Email:", error);
+    }
+  }
+
+
+
   return (
     <div>
       <div className="w-full font-Poppins items-center justify-center bg-stone-100">
@@ -9,7 +40,7 @@ const ForgetPassword = () => {
             <span className=" font-extrabold">VEE </span>MANAGE
           </div>
 
-          <form action="" className="mt-[-50%] p-5 ">
+          <form action="" className="mt-[-50%] p-5 " onSubmit={handleSubmit(onSubmit)}>
             <div className="title text-base text-center font-medium text-blackColor mb-14 md:mb-7">
               Just one step away from recovering your account.
             </div>
@@ -23,7 +54,8 @@ const ForgetPassword = () => {
                   type="email"
                   name="email"
                   id="email"
-                  className="border-[#666666] border rounded-md p-1.5 w-[100%]"
+                  className=" border rounded-md p-1.5 w-[100%]"
+                  {...register("email")}
                 />
                 <button className="bg-blackColor hover:bg-[#333] transition duration-300 text-white p-2 rounded-lg w-[70%] text-center">
                   Continue
@@ -37,4 +69,3 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;
