@@ -27,9 +27,9 @@ export default function Login() {
           console.error("Login Error:", error);
           setError("Something went wrong. Please try again.");
         }
-      
+    
         setIsLoading(false);
-      }
+    }
     return <>
     
     <div className='w-full font-Poppins   flex items-center justify-center'>

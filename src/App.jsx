@@ -6,11 +6,11 @@ import SignUp from "./components/SignUp/SignUp";
 export default function App() {
   return <>
   
-  {/* <SignUp/> */}
-    <Login/>
+  <SignUp/>
+    {/* <Dashboard />  */}
+    {/* <Login/> */}
   </>
       {/* <Sidebar /> */}
-      {/* <Dashboard /> */}
     
   
 }
