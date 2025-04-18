@@ -6,8 +6,9 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdLogout } from "react-icons/md";
+import { Link } from "react-router-dom";
 
-const Sidebar = ({ isVisable, setisVisable }) => {
+const Sidebar = ({ isVisable, handleToggle }) => {
   const [showUsersSubmenu, setShowUsersSubmenu] = useState(false);
   const [showVehiclesSubmenu, setShowVehiclesSubmenu] = useState(false);
   const [isActive, setisActive] = useState(false);
@@ -19,32 +20,36 @@ const Sidebar = ({ isVisable, setisVisable }) => {
     setisActive(!isActive);
   };
   console.log(isVisable);
+
   return (
     <div
-      className={`s-1 bg-[#191919] min-h-[100vh] text-white flex flex-col justify-between px-5 py-10 font-Inter fixed w-[250px] ${
-        !isVisable ? " absolute translate-x-0" : ""
+      className={`bg-[#191919] min-h-[100vh] text-white flex flex-col justify-between px-5 py-10 font-Inter w-[240px] z-[3000] fixed transition-transform duration-400 ${
+        isVisable ? "translate-x-0" : "-translate-x-full"
       }`}
     >
-      <div className="up">
+      {" "}
+      <div className="up w-[100%]">
         <div className="title text-[1.3rem] flex gap-3 items-center text-stone-100 mb-14">
           <div className="flex-1">
             <span className=" font-extrabold">VEE </span>MANAGE
           </div>
+
           <span
             className="text-[1.5rem] text-stone-100 cursor-pointer hover:scale-125 transition duration-300"
-            onClick={() => setisVisable(!isVisable)}
+            onClick={handleToggle}
           >
             <GiHamburgerMenu className="text-2xl" />
           </span>
         </div>
-        <div className="item flex gap-4 items-center mb-3 text-[1.1rem] p-2 hover:bg-primaryColor rounded-md">
+        <Link
+          to={"Overview"}
+          className="item flex gap-4 items-center mb-3 text-[1.1rem] p-2 hover:bg-primaryColor rounded-md"
+        >
           <span className="">
             <MdOutlineDashboard className="text-[1.4rem]" />
           </span>
-          <a href="" className="text-[#ffffffc0]">
-            Overview
-          </a>
-        </div>
+          Overview
+        </Link>
         <div className="item flex flex-col mb-3 text-[1.1rem]  rounded-md">
           <div
             onClick={() => setShowUsersSubmenu(!showUsersSubmenu)}
@@ -66,16 +71,22 @@ const Sidebar = ({ isVisable, setisVisable }) => {
             </div>
           </div>
           {showUsersSubmenu && (
-            <div className="ml-10 mt-1 flex flex-col gap-1 text-sm text-gray-300 text-[1.1rem]">
-              <a href="" className="mb-1.5">
+            <div className="ml-12 mt-1 flex flex-col gap-1 text-sm text-gray-300 text-[1.1rem]">
+              {/* <a href="" className="mb-1.5">
                 All Users
-              </a>
-              <a href="" className="mb-1.5">
+              </a> */}
+              <Link
+                to={"/users/drivers"}
+                className="mb-1.5  hover:bg-primaryColor p-2 rounded-md"
+              >
                 Drivers
-              </a>
-              <a href="" className="mb-1.5">
+              </Link>
+              <Link
+                to="/users/mechanics"
+                className="mb-1.5  hover:bg-primaryColor p-2 rounded-md"
+              >
                 Mechanics
-              </a>
+              </Link>
             </div>
           )}
         </div>
@@ -100,7 +111,7 @@ const Sidebar = ({ isVisable, setisVisable }) => {
             </div>
           </div>
           {showVehiclesSubmenu && (
-            <div className="ml-10 mt-1 flex flex-col text-[1.1rem] gap-1 text-sm text-gray-300">
+            <div className="ml-12  mt-1 flex flex-col text-[1.1rem] gap-1 text-sm text-gray-300">
               <a href="" className="mb-1.5">
                 All Veichles
               </a>
