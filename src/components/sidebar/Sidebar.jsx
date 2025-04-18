@@ -7,7 +7,7 @@ import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdLogout } from "react-icons/md";
 
-const Sidebar = ({isVisable ,setisVisable}) => {
+const Sidebar = ({ isVisable, handleToggle }) => {
   const [showUsersSubmenu, setShowUsersSubmenu] = useState(false);
   const [showVehiclesSubmenu, setShowVehiclesSubmenu] = useState(false);
   const [isActive, setisActive] = useState(false);
@@ -20,13 +20,17 @@ const Sidebar = ({isVisable ,setisVisable}) => {
   };
   console.log(isVisable);
       return (
-    <div className={`s-1 bg-[#191919] min-h-[100vh] text-white flex flex-col justify-between px-5 py-10 font-Inter ${!isVisable ? " absolute right-[100%] transition duration-300 ": "absolute left-0 transition duration-300"}`}>
-      <div className="up">
+        
+<div
+  className={`bg-[#191919] min-h-[100vh] text-white flex flex-col justify-between px-5 py-10 font-Inter w-[240px] z-[3000] fixed transition-transform duration-400 ${
+    isVisable ? "translate-x-0" : "-translate-x-full"
+  }`}
+>      <div className="up w-[100%]">
         <div className="title text-[1.3rem] flex gap-3 items-center text-stone-100 mb-14">
           <div className="flex-1">
             <span className=" font-extrabold">VEE </span>MANAGE
           </div>
-          <span className="text-[1.5rem] text-stone-100 cursor-pointer hover:scale-125 transition duration-300" onClick={() => setisVisable(!isVisable)}>
+          <span className="text-[1.5rem] text-stone-100 cursor-pointer hover:scale-125 transition duration-300" onClick={handleToggle}>
             <GiHamburgerMenu className="text-2xl" />
           </span>
         </div>
@@ -59,7 +63,7 @@ const Sidebar = ({isVisable ,setisVisable}) => {
             </div>
           </div>
           {showUsersSubmenu && (
-            <div className="ml-10 mt-1 flex flex-col gap-1 text-sm text-gray-300 text-[1.1rem]">
+            <div className="ml-12 mt-1 flex flex-col gap-1 text-sm text-gray-300 text-[1.1rem]">
               <a href="" className="mb-1.5">
                 All Users
               </a>
@@ -93,7 +97,7 @@ const Sidebar = ({isVisable ,setisVisable}) => {
             </div>
           </div>
           {showVehiclesSubmenu && (
-            <div className="ml-10 mt-1 flex flex-col text-[1.1rem] gap-1 text-sm text-gray-300">
+            <div className="ml-12  mt-1 flex flex-col text-[1.1rem] gap-1 text-sm text-gray-300">
               <a href="" className="mb-1.5">
                 All Veichles
               </a>
