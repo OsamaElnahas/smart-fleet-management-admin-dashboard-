@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Sidebar from "../sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
 import Dashboard from "../dashboard/dashboard";
+import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   const [isVisable, setisVisable] = useState(true);
@@ -16,7 +17,7 @@ const Layout = () => {
       <div className={`content  transition-all duration-300 ${isVisable ? "md:ml-[240px] " : "ml-0"}`}>
           <Navbar isVisable={isVisable} handleToggle={handleToggle} />
         <div className="main-content p-4 px-10">
-          <Dashboard/>
+          <Outlet/>
         </div>
       </div>
     </div>

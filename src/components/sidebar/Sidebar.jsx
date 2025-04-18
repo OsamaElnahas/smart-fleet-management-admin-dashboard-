@@ -6,6 +6,7 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdLogout } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ isVisable, handleToggle }) => {
   const [showUsersSubmenu, setShowUsersSubmenu] = useState(false);
@@ -34,14 +35,12 @@ const Sidebar = ({ isVisable, handleToggle }) => {
             <GiHamburgerMenu className="text-2xl" />
           </span>
         </div>
-        <div className="item flex gap-4 items-center mb-3 text-[1.1rem] p-2 hover:bg-primaryColor rounded-md">
+        <Link to={"Overview"} className="item flex gap-4 items-center mb-3 text-[1.1rem] p-2 hover:bg-primaryColor rounded-md">
           <span className="">
             <MdOutlineDashboard className="text-[1.4rem]" />
           </span>
-          <a href="" className="text-[#ffffffc0]">
             Overview
-          </a>
-        </div>
+        </Link>
         <div className="item flex flex-col mb-3 text-[1.1rem]  rounded-md">
           <div
             onClick={() => setShowUsersSubmenu(!showUsersSubmenu)}
@@ -64,15 +63,15 @@ const Sidebar = ({ isVisable, handleToggle }) => {
           </div>
           {showUsersSubmenu && (
             <div className="ml-12 mt-1 flex flex-col gap-1 text-sm text-gray-300 text-[1.1rem]">
-              <a href="" className="mb-1.5">
+              {/* <a href="" className="mb-1.5">
                 All Users
-              </a>
-              <a href="" className="mb-1.5">
+              </a> */}
+             <Link to={"/users/drivers"} className="mb-1.5  hover:bg-primaryColor p-2 rounded-md">
                 Drivers
-              </a>
-              <a href="" className="mb-1.5">
+              </Link>
+             <Link to="/users/mechanics" className="mb-1.5  hover:bg-primaryColor p-2 rounded-md">
                 Mechanics
-              </a>
+              </Link>
             </div>
           )}
         </div>
