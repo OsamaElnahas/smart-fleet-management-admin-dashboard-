@@ -11,16 +11,15 @@ import { NavLink } from "react-router-dom";
 const Sidebar = ({ isVisable, handleToggle }) => {
   const [showUsersSubmenu, setShowUsersSubmenu] = useState(false);
   const [showVehiclesSubmenu, setShowVehiclesSubmenu] = useState(false);
-  // const [isActive, setisActive] = useState(false);
+  const [isActive, setisActive] = useState(false);
   // function handleToggle (){
 
   //   setisVisable(!isVisable);
   // }
-  // const handleClick = () => {
-  //   setisActive(!isActive);
-  // };
+  const handleClick = () => {
+    setisActive(!isActive);
+  };
   console.log(isVisable);
-
   return (
     <div
       className={`bg-[#191919] min-h-[100vh] text-white flex flex-col justify-between px-5 py-10 font-Inter w-[240px] z-[3000] fixed transition-transform duration-400 ${
@@ -33,7 +32,6 @@ const Sidebar = ({ isVisable, handleToggle }) => {
           <div className="flex-1">
             <span className=" font-extrabold">VEE </span>MANAGE
           </div>
-
           <span
             className="text-[1.5rem] text-stone-100 cursor-pointer hover:scale-125 transition duration-300"
             onClick={handleToggle}
@@ -41,7 +39,6 @@ const Sidebar = ({ isVisable, handleToggle }) => {
             <GiHamburgerMenu className="text-2xl" />
           </span>
         </div>
-
         <NavLink
           to="Overview"
           className={({ isActive }) =>
