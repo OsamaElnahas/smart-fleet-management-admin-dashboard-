@@ -12,7 +12,14 @@ export default function Drivers() {
         + Add Driver
       </Link>
       <div>
-        <AllUsersTable />
+        <AllUsersTable titles={{col1:"id",
+
+          col2:"Driver Name",
+          col3:"Driver Number",
+          col4:"Driver Cos",
+          col5:"Rating",
+          col6:""}} />
+        
       </div>
     </>
   );
