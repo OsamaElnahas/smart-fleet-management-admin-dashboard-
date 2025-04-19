@@ -3,6 +3,7 @@ import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'   
 import { useForm } from 'react-hook-form'
 import DynamicForm from '../DynamicForm/DynamicForm'
+import axios from 'axios'
 
 const schema=Yup.object().shape({
     firstName:Yup.string().required('Name is required'),
@@ -65,6 +66,7 @@ const defaultValues = {
     firstName: '',
     lastName: '',
     phoneNumber: '',
+    role: 'Driver',
     address: {
       street: '',
       area: '',

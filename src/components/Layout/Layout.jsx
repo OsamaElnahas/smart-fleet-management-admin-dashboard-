@@ -14,7 +14,7 @@ const Layout = () => {
   return (
     <div className="   bg-[#f4f4f4] min-h-screen">
       <Sidebar isVisable={isVisable} handleToggle={handleToggle} />
-      <div className={`content  transition-all duration-300 ${isVisable ? "md:ml-[240px] " : "ml-0"}`}>
+      <div className={`content  transition-all duration-300 ${isVisable ? "md:ml-[280px] " : "ml-0"}`}>
           <Navbar isVisable={isVisable} handleToggle={handleToggle} />
         <div className="main-content p-4 px-10">
           <Outlet/>
