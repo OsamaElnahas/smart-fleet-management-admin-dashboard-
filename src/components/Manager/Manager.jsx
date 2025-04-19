@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import AllUsersTable from "../AllUsersTable/AllUsersTable";
 
 export default function Manager() {
   return (
@@ -10,8 +11,9 @@ export default function Manager() {
       >
         + Add Manager
       </Link>
-
-      <div>Manager will appear here</div>
+      <div>
+        <AllUsersTable />
+      </div>
     </>
   );
 }

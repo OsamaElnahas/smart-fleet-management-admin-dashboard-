@@ -22,8 +22,8 @@ const Sidebar = ({ isVisable, handleToggle }) => {
   console.log(isVisable);
   return (
     <div
-      className={`bg-[#191919] min-h-[100vh] text-white flex flex-col justify-between px-5 py-10 font-Inter w-[240px] z-[3000] fixed transition-transform duration-400 ${
-        isVisable ? "translate-x-0" : "`-translate-x-full`"
+      className={`bg-[#191919] min-h-[100vh] text-white flex flex-col justify-between px-5 py-10 font-Inter w-[280px] z-[3000] fixed transition-transform duration-400 ${
+        isVisable ? "translate-x-0" : "-translate-x-full"
       }`}
     >
       {" "}
@@ -177,7 +177,7 @@ const Sidebar = ({ isVisable, handleToggle }) => {
         <span>
           <MdLogout className="text-[1.4rem]" />
         </span>
-        <NavLink to={"/Login"} className="text-[1.1rem]">
+        <NavLink to={"/Login"} className="text-[1.1rem] py-1.5">
           Logout
         </NavLink>
       </div>

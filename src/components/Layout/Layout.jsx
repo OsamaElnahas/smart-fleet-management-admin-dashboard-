@@ -15,7 +15,7 @@ const Layout = () => {
       <Sidebar isVisable={isVisable} handleToggle={handleToggle} />
       <div
         className={`content  transition-all duration-300 ${
-          isVisable ? "md:ml-[240px] " : "ml-0"
+          isVisable ? "md:ml-[280px] " : "ml-0"
         }`}
       >
         <Navbar isVisable={isVisable} handleToggle={handleToggle} />

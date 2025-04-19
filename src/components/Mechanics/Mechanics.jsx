@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import AllUsersTable from "../AllUsersTable/AllUsersTable";
 
 export default function Mechans() {
   return (
@@ -10,8 +11,9 @@ export default function Mechans() {
       >
         + Add Mechanic
       </Link>
-
-      <div>Mechanics will appear here</div>
+      <div>
+        <AllUsersTable />
+      </div>
     </>
   );
 }
