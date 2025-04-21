@@ -16,6 +16,7 @@ import ManagerAdd from '../Forms/MangerAdd'
 import Mechans from '../Mechanics/Mechanics'
 import MecghanicAdd from '../Forms/MechanicAdd'
 import Cars from '../Cars/Cars'
+import NotFound from '../NotFound/NotFound'
 
 const Router=createBrowserRouter([
     {
@@ -37,6 +38,7 @@ const Router=createBrowserRouter([
         { path: "login", element: <Login/> },
         { path: "ResetPassword", element: <ResetPassword/> },
         { path: "ForgetPassword", element: <ForgetPassword/> },
+        { path: "*", element: <NotFound/> },
 
     ])
 
