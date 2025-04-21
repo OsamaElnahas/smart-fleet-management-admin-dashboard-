@@ -30,6 +30,19 @@ const fields = [
     placeholder: "Enter your last name",
   },
   {
+    name: "dateOfBirth",
+    label: "Date Of Birth",
+    type: "text",
+    placeholder: "Enter your date of birth",
+  },
+  {
+
+    name: "nationalId",
+    label: "national Id",
+    type: "text",
+    placeholder: "Enter your national Id",
+  },
+  {
     name: "phoneNumber",
     label: "Phone Number",
     type: "text",

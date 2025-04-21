@@ -14,11 +14,14 @@ export default function Drivers() {
       <div>
         <AllUsersTable titles={{col1:"id",
 
-          col2:"Driver Name",
-          col3:"Driver Number",
-          col4:"Driver Cos",
-          col5:"Rating",
-          col6:""}} />
+          col2:" Name",
+          col3:"Phone",
+          col4:"Email",
+          col5:"Age",
+          col6:"Government",
+          col7:" ",
+
+          }} />
         
       </div>
     </>
