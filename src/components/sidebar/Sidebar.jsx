@@ -137,7 +137,7 @@ const Sidebar = ({ isVisable, handleToggle }) => {
           >
             {" "}
             <NavLink
-              to={"/users/cars"}
+              to={"/vehicles"}
               className={({ isActive }) =>
                 `${
                   isActive ? "bg-stone-700" : ""
@@ -147,7 +147,7 @@ const Sidebar = ({ isVisable, handleToggle }) => {
               Cars
             </NavLink>
             <NavLink
-              to={"/users/heavyCars"}
+              to={"/heavyCars"}
               className={({ isActive }) =>
                 `${
                   isActive ? "bg-stone-700" : ""
@@ -159,19 +159,7 @@ const Sidebar = ({ isVisable, handleToggle }) => {
           </div>
         </div>
 
-        <NavLink
-          to={"/add"}
-          className={({ isActive }) =>
-            `${
-              isActive ? "bg-stone-700" : ""
-            } rounded-md item flex gap-4 items-center mb-3 p-2 text-[1.1rem] hover:bg-stone-700`
-          }
-        >
-          <span>
-            <AiOutlinePlusCircle className="text-[1.4rem]" />
-          </span>
-          Add
-        </NavLink>
+        
       </div>
       <div className="down flex items-center gap-4 justify-start w-[100%] bg-[#ffffff21] text-center px-3 py-1 rounded-lg mb-9 cursor-pointer hover:bg-stone-700 transition duration-300 ">
         <span>

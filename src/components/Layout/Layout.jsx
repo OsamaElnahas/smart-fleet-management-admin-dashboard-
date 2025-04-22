@@ -19,7 +19,7 @@ const Layout = () => {
         }`}
       >
         <Navbar isVisable={isVisable} handleToggle={handleToggle} />
-        <div className="main-content p-4 px-10">
+        <div className="main-content p-4 md:p-4 md:px-10">
           <Outlet />
         </div>
       </div>

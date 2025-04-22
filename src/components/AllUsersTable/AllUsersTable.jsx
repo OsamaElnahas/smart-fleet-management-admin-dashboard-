@@ -1,39 +1,36 @@
 import React from "react";
 import { IoEllipsisVertical } from "react-icons/io5";
 
-export default function AllUsersTable() {
+export default function AllUsersTable({titles, rows, columnSizes}) {
   return (
-    <div className="font-Inter flex flex-col gap-y-4 text-[1rem] font-[540] w-full ">
-      {/* HEAD */}
-      <div className="grid grid-cols-[10%,20%,20%,20%,20%,10%] text-[#04103B] bg-gray-100 p-3 rounded-lg font-[550]">
-        <div>ID</div>
-        <div>Driver Name</div>
-        <div>Driver Number</div>
-        <div>Driver Cos</div>
-        <div>Rating</div>
-        <div></div>
+    <div className="font-Inter   font-[540] w-full gap-y-5 p-1  md:p-3 rounded-lg  text-[0.75rem] md:text-[0.9rem] lg:text-[1.1rem] flex flex-col gap-2 truncate overflow-hidden whitespace-nowrap justify-center  ">
+     
+      <div className={`row text-[#04103B]  rounded-lg font-[550] mb-1 grid`} style={{ gridTemplateColumns: `${columnSizes.join(" ")}` }}>
+    {titles.map((title => (
+        <div className="p-2 " key={title}>
+          {title}
+        </div>
+      )))}
+      
+      
       </div>
-      {/* ROW */}
-      <div className="grid grid-cols-[10%,20%,20%,20%,20%,10%] bg-white p-4 rounded-xl shadow-md">
-        <div>1</div>
-        <div>Osama Elnahas</div>
-        <div>01005505505</div>
-        <div>218452</div>
-        <div>218452</div>
-        <button>
-          <IoEllipsisVertical className="text-[1.5rem]" />
-        </button>
-      </div>
-      <div className="grid grid-cols-[10%,20%,20%,20%,20%,10%] bg-white p-4 rounded-xl shadow-md">
-        <div>1</div>
-        <div>Osama Elnahas</div>
-        <div>01005505505</div>
-        <div>218452</div>
-        <div>218452</div>
-        <button>
-          <IoEllipsisVertical className="text-[1.5rem]" />
-        </button>
-      </div>
+      {rows.map((row,index) => (
+        <div className="row grid   bg-white  rounded-lg border border-stone-200 font-[300] shadow-md " key={index} style={{ gridTemplateColumns: `${columnSizes.join(" ")}` }}>
+          {row.map((item, index) => ( 
+            <div className=" p-2 truncate overflow-hidden whitespace-nowrap " key={index}>
+              {item}
+              
+           </div>
+            ))
+            }
+                <div className=" px-4 py-2 rounded-tr-xl rounded-br-xl  cursor-pointer ">
+                <IoEllipsisVertical />
+            </div>
+            </div>
+            ))}
+
+    
     </div>
   );
 }
+

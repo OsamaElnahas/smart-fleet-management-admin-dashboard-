@@ -27,7 +27,7 @@ export default function DynamicForm({
       <div>
         <form
           action=""
-          className="shadow-md p-6 rounded-lg flex flex-col gap-4 bg-white"
+          className="shadow-md p-6 rounded-lg flex flex-col gap-3 bg-white"
           onSubmit={handleSubmit(onSubmit)}
         >
           {fields.map((field, index) => (
