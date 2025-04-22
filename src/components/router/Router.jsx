@@ -18,6 +18,7 @@ import MecghanicAdd from '../Forms/MechanicAdd'
 import NotFound from '../NotFound/NotFound'
 import Vehicles from '../Vehicles/Vehicles'
 import VehiclesAdd from '../Vehicles/VehiclesAdd'
+import Model from '../Vehicles/Model'
 
 const Router=createBrowserRouter([
     {
@@ -33,6 +34,7 @@ const Router=createBrowserRouter([
             {path:'/users/managers/add',element:<ManagerAdd/>},
             {path:'/vehicles',element:<Vehicles/>},
             {path:'/vehicles/add',element:<VehiclesAdd/>},
+            {path:'/vehicles/model',element:<Model/>},
             
 
         ]},
