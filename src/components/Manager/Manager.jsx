@@ -18,14 +18,9 @@ export default function Manager() {
       {showPopup && (
         <Popup message="Are You Sure to Add This Manager " onClose={() => setShowPopup(false)} />
       )}
-      <AllUsersTable titles={{
-        col1: "id",
-        col2: " Name",
-        col3: "Phone",
-        col4: "Email",
-        col5: "Age",
-        col6: "Government",
-        col7: " ",
-      }} />
+      <AllUsersTable 
+      titles={["ID", "Name", "Phone", "Email","Age","Government"]} rows={[
+        ["1", "Osama Kamal", "0100000000", "osamaelnahs1234@gmail.com","22","portsaid" ],["2", "Iman Kamal", "0100111122", "iman@gmail.com","22","portsaid"],
+      ]} columnSizes={["10%", "20%", "15%", "25%", "10%", "15%" ,"10%"]} />
     </>
 }

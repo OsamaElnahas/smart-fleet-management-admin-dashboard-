@@ -137,7 +137,7 @@ const Sidebar = ({ isVisable, handleToggle }) => {
           >
             {" "}
             <NavLink
-              to={"/users/cars"}
+              to={"/vehicles"}
               className={({ isActive }) =>
                 `${
                   isActive ? "bg-stone-700" : ""
@@ -147,7 +147,7 @@ const Sidebar = ({ isVisable, handleToggle }) => {
               Cars
             </NavLink>
             <NavLink
-              to={"/users/heavyCars"}
+              to={"/heavyCars"}
               className={({ isActive }) =>
                 `${
                   isActive ? "bg-stone-700" : ""

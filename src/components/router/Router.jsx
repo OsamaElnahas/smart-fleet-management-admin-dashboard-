@@ -15,8 +15,9 @@ import Manager from '../../components/Manager/Manager'
 import ManagerAdd from '../Forms/MangerAdd'
 import Mechans from '../Mechanics/Mechanics'
 import MecghanicAdd from '../Forms/MechanicAdd'
-import Cars from '../Cars/Cars'
 import NotFound from '../NotFound/NotFound'
+import Vehicles from '../Vehicles/Vehicles'
+import VehiclesAdd from '../Vehicles/VehiclesAdd'
 
 const Router=createBrowserRouter([
     {
@@ -30,8 +31,8 @@ const Router=createBrowserRouter([
             {path:'/users/mechanics/add',element:<MecghanicAdd/>},
             {path:'/users/managers',element:<Manager/>},
             {path:'/users/managers/add',element:<ManagerAdd/>},
-            {path:'/cars',element:<Cars/>},
-            // {path:'/users/mechanics/add',element:<Dashboard/>},
+            {path:'/vehicles',element:<Vehicles/>},
+            {path:'/vehicles/add',element:<VehiclesAdd/>},
             
 
         ]},
