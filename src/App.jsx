@@ -1,23 +1,27 @@
 import { RouterProvider } from "react-router-dom";
-import Dashboard from "./components/dashboard/Dashboard";
-import ForgetPassword from "./components/Forget-reset-password/ForgetPassword";
-import ResetPassword from "./components/Forget-reset-password/ResetPassword";
-import Layout from "./components/Layout/Layout";
-import Login from "./components/Login/Login";
-import Sidebar from "./components/Sidebar/sidebar";
-import SignUp from "./components/SignUp/SignUp";
 import Router from "./components/router/Router";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
     <>
-      {/* <Layout /> */}
-      <RouterProvider router={Router} />
-
-      {/* <SignUp/> */}
-      {/* <Login/> */}
-      {/* <ForgetPassword/> */}
-      {/* <ResetPassword /> */}
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={Router} />
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick
+          pauseOnHover
+          draggable
+          theme="colored"
+        />
+      </QueryClientProvider>
     </>
   );
 }

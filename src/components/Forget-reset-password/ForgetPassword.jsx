@@ -3,12 +3,16 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
+import { ColorRing } from "react-loader-spinner";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   email: yup.string().email("enter a valid email").required("required"),
 });
-export default function ForgetPassword()  {
-
+export default function ForgetPassword() {
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -19,18 +23,22 @@ export default function ForgetPassword()  {
   });
 
   async function onSubmit(data) {
+    setIsLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:5034/api/Account/forgotpassword",
+        "http://veemanage.runasp.net/api/Account/forgotpassword",
         data
       );
-      console.log("Password Reset Email Sent:", res.data);
+      console.log(res.data);
+      {
+        !error && toast.success(res?.data);
+      }
     } catch (error) {
       console.error("Error Sending Password Reset Email:", error);
+      error && toast.error("the email is not registered");
     }
+    setIsLoading(false);
   }
-
-
 
   return (
     <div>
@@ -40,7 +48,11 @@ export default function ForgetPassword()  {
             <span className=" font-extrabold">VEE </span>MANAGE
           </div>
 
-          <form action="" className="mt-[-50%] p-5 " onSubmit={handleSubmit(onSubmit)}>
+          <form
+            action=""
+            className="mt-[-50%] p-5 "
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div className="title text-base text-center font-medium text-blackColor mb-14 md:mb-7">
               Just one step away from recovering your account.
             </div>
@@ -57,8 +69,28 @@ export default function ForgetPassword()  {
                   className=" border rounded-md p-1.5 w-[100%]"
                   {...register("email")}
                 />
-                <button className="bg-blackColor hover:bg-[#333] transition duration-300 text-white p-2 rounded-lg w-[70%] text-center">
-                  Continue
+
+                <button
+                  disabled={isLoading}
+                  className={`${
+                    isLoading && "cursor-not-allowed opacity-50"
+                  } bg-blackColor flex justify-center hover:bg-[#333] transition duration-300 text-white p-2 rounded-lg w-[70%] text-center`}
+                >
+                  {isLoading ? (
+                    <div className="d-flex justify-content-center">
+                      <ColorRing
+                        visible={true}
+                        height="45"
+                        width="45"
+                        ariaLabel="color-ring-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="color-ring-wrapper"
+                        colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+                      />
+                    </div>
+                  ) : (
+                    "Continue"
+                  )}
                 </button>
               </div>
             </div>
@@ -67,5 +99,4 @@ export default function ForgetPassword()  {
       </div>
     </div>
   );
-};
-
+}

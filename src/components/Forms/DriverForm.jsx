@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import DynamicForm from "../DynamicForm/DynamicForm";
 
+
 const schema = Yup.object().shape({
   firstName: Yup.string().required("Name is required"),
   lastName: Yup.string().required("Name is required"),
@@ -90,11 +91,16 @@ export default function DriverForm() {
   const [error, setError] = React.useState("");
 
   async function onSubmit(data) {
+    const finalData = {
+      ...data,
+      role: "Driver",
+      // token: localStorage.getItem("token"),
+    };
     setIsLoading(true);
     try {
       const res = await axios.post(
         "http://localhost:5034/api/Account/login",
-        data
+        finalData
       );
       console.log("Login Successful:", res.data);
     } catch (error) {
