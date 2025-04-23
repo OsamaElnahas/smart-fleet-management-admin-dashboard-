@@ -21,7 +21,7 @@ export default function Login() {
     mode: "onBlur",
   });
 
-  async function onSubmit(data) {
+  async function  1(data) {
     setIsLoading(true);
     try {
       const res = await axios.post(
