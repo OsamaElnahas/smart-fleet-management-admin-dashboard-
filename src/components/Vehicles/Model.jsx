@@ -7,10 +7,11 @@ const Model = () => {
     <div className="font-Nunito">
       <Link
         to={"/vehicles/add"}
-        className="block mb-5 border border-primaryColor w-[250px] p-3 ml-2 text-center rounded-lg text-primaryColor font-bold"
+        className="block mb-12 border border-primaryColor w-[180px] p-2 text-center rounded-lg text-primaryColor font-bold"
       >
-        +NEW MODEL
+        + New Model
       </Link>
+    
       <div className="grid grid-cols-3">
         <div className="bg-[#FFFFFF] py-4 px-4 rounded-lg shadow-lg m-2 border-l-[5px] max-w-[331px] min-h-[213px] border-[#4880FF]">
           <div className="flex justify-between items-center border-b-2 pb-4 mb-5">

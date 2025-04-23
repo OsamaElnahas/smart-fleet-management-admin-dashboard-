@@ -13,7 +13,7 @@ export default function Vehicles() {
         + Add Vehicle
       </Link>
       <Link
-        to={"/vehicles/category"}
+        to={"/vehicles/categories"}
         className="block mb-12 border bg-primaryColor text-white w-[180px] p-2 text-center rounded-lg font-bold"
       >
         Categories

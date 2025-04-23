@@ -6,9 +6,10 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdLogout } from "react-icons/md";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Sidebar = ({ isVisable, handleToggle }) => {
+  const navigate = useNavigate();
   const [showUsersSubmenu, setShowUsersSubmenu] = useState(false);
   const [showVehiclesSubmenu, setShowVehiclesSubmenu] = useState(false);
   const [isActive, setisActive] = useState(false);
@@ -19,6 +20,11 @@ const Sidebar = ({ isVisable, handleToggle }) => {
   const handleClick = () => {
     setisActive(!isActive);
   };
+  function handleLogout() {
+    localStorage.clear();
+    navigate("/login");
+
+  }
   console.log(isVisable);
   return (
     <div
@@ -116,7 +122,7 @@ const Sidebar = ({ isVisable, handleToggle }) => {
             className={({ isActive }) =>
               `${
                 isActive ? "bg-stone-700" : ""
-              } flex gap-2 items-center cursor-pointer hover:bg-stone-700 rounded-md p-2`
+              } flex  flex-1  gap-4  items-center cursor-pointer hover:bg-stone-700 rounded-md p-2`
             }
           >
             <span>
@@ -132,14 +138,12 @@ const Sidebar = ({ isVisable, handleToggle }) => {
           ></div>
         </div>
       </div>
-      <div className="down flex items-center gap-4 justify-start w-[100%] bg-[#ffffff21] text-center px-3 py-1 rounded-lg mb-9 cursor-pointer hover:bg-stone-700 transition duration-300 ">
+      <button  className="py-2 down flex items-center gap-4 justify-start px-2 text-center bg-[#ffffff21]  w-[100%] rounded-lg mb-9 cursor-pointer hover:bg-stone-700 transition duration-300 " onClick={()=> handleLogout()}>
         <span>
           <MdLogout className="text-[1.4rem]" />
         </span>
-        <NavLink to={"/Login"} className="text-[1.1rem] py-1.5">
           Logout
-        </NavLink>
-      </div>
+        </button>
     </div>
   );
 };

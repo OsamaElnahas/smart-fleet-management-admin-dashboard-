@@ -7,11 +7,13 @@ import Login from "./components/Login/Login";
 import Sidebar from "./components/Sidebar/sidebar";
 import SignUp from "./components/SignUp/SignUp";
 import Router from "./components/router/Router";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 export default function App() {
   return (
     <>
       {/* <Layout /> */}
+
       <RouterProvider router={Router} />
 
       {/* <SignUp/> */}

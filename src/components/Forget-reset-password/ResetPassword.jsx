@@ -6,9 +6,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 
 const schema = yup.object().shape({
-  password: yup.string().required("required"),
-  confirmPassword: yup.string().required("required"),
+  password: yup
+    .string()
+    .min(8, "Password Length Must be at Least 8")
+    .matches(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/,
+      "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+    )
+    .required("Password is required"),
 });
+
 
 export default function ResetPassword() {
   const {
@@ -21,16 +28,24 @@ export default function ResetPassword() {
   });
 
   async function onSubmit(data) {
+    const finalData = {
+      ...data,
+      email: localStorage.getItem("email"),
+      token: localStorage.getItem("token"),
+    };
+    console.log("Form Data:", finalData);
+  
     try {
       const res = await axios.post(
-        "http://localhost:5034/api/Account/resetpassword",
-        data
+        "http://veemanage.runasp.net/api/Account/resetpassword",
+        finalData
       );
-      console.log("Password Reset Successful:", res.data);
+      console.log("Password Reset Successful:", res);
     } catch (error) {
       console.error("Error Resetting Password:", error);
     }
   }
+  
 
 
   return (
@@ -54,16 +69,10 @@ export default function ResetPassword() {
                   className="border rounded-md p-1.5 w-[100%]"
                 />
               </div>
-              <div>
-                <label className="">Confirm Password</label>
-                <input
-                  {...register("confirmPassword")}
-                  type="password"
-                  className="border rounded-md p-1.5 w-[100%]"
-                />
-              </div>
-
-              <button className="w-full bg-black text-white p-2 rounded hover:bg-gray-800 transition">
+              {errors.password && (
+                <p className="text-red-500 text-sm">{errors.password.message}</p>
+              )}
+              <button className="w-full bg-black text-white p-2 rounded-md mt-12 hover:bg-gray-800 transition">
                 Reset Password
               </button>
             </div>

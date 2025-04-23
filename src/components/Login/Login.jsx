@@ -3,12 +3,17 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router";
+import { ColorRing } from "react-loader-spinner";
+// import { ColorRing } from "react-loader-spinner";
+
 
 const schema = yup.object().shape({
   email: yup.string().email("enter a valid email").required("required"),
   password: yup.string().required("required"),
 });
 export default function Login() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -23,21 +28,35 @@ export default function Login() {
 
   async function onSubmit(data) {
     setIsLoading(true);
+    console.log("Form Data:", data);
+    
     try {
+      // setIsLoading(true);
       const res = await axios.post(
-        "http://localhost:5034/api/Account/login",
+        "http://veemanage.runasp.net/api/Account/login",
         data
       );
       console.log("Login Successful:", res.data);
+      localStorage.setItem("token", res?.data?.token);//saving the token in local storage
+      localStorage.setItem("email", res?.data?.email); //saving the email in local storage
+      
+      if (res?.data?.mustChangePassword==true) { //checking if the user has to change the password or not
+        navigate("/ResetPassword");
+      }
+      else{
+        navigate("/Overview");
+      }
+
     } catch (error) {
       console.error("Login Error:", error);
-      setError("Something went wrong. Please try again.");
+      setError("Something went wrong. Please try again.");//setting the error message
     }
 
     setIsLoading(false);
   }
   return (
     <>
+    
       <div className="w-full font-Poppins flex items-center justify-center bg-stone-100">
         <div className="parent flex flex-col justify-around lg:w-[30%] 1024-1120:w-[40%] md:w-[50%] md:mx-auto w-full min-h-screen lg:mx-auto rounded-lg bg-white shadow-md px-6 py-10 items-center sm:w-[50%] sm:mx-auto">
           <div className="title text-4xl text-center  text-primaryColor mb-14 md:mb-0 ">
@@ -78,9 +97,26 @@ export default function Login() {
                 </p>
               )}
             </div>
-            <button className="w-full bg-blackColor hover:bg-[#333] transition duration-300 text-white rounded-lg p-2 mt-12  text-lg font-Poppins">
-              Login
-            </button>
+            <button disabled={isLoading}  className={`w-full flex justify-center bg-blackColor hover:bg-[#333] transition duration-300 text-white rounded-lg p-2 mt-12  text-lg font-Poppins ${isLoading && "opacity-50 cursor-not-allowed" }`} type="submit">
+            {isLoading ? (
+                    <div className="d-flex justify-content-center">
+                      <ColorRing
+                        visible={true}
+                        height="45"
+                        width="45"
+                        ariaLabel="color-ring-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="color-ring-wrapper"
+                        colors={['#fff', '#fff', '#fff', '#fff', '#fff']}
+                        />
+                    </div>
+                  ) : (
+                    "Login"
+                  )}
+                </button>
+            {error && (
+              <p className="text-red-500 text-sm mt-2">{error}</p>
+            )}
           </form>
         </div>
       </div>
