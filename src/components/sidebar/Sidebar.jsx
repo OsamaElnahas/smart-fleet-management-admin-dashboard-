@@ -24,7 +24,6 @@ const Sidebar = ({ isVisable, handleToggle }) => {
     localStorage.clear();
     navigate("/login");
   }
-  console.log(isVisable);
   return (
     <div
       className={`bg-[#191919] min-h-[100vh] text-white flex flex-col justify-between px-5 py-10 font-Inter w-[280px] z-[3000] fixed transition-transform duration-400 ${

@@ -1,36 +1,63 @@
 import React from "react";
 import { IoEllipsisVertical } from "react-icons/io5";
+import { Link } from "react-router";
 
-export default function AllUsersTable({titles, rows, columnSizes}) {
+export default function AllUsersTable({ titles, rows, columnSizes, ids }) {
+  // console.log("ids from user table", ids[0]);
   return (
-    <div className="font-Inter   font-[540] w-full gap-y-5 p-1  md:p-3 rounded-lg  text-[0.75rem] md:text-[0.9rem] lg:text-[1.1rem] flex flex-col gap-2 truncate overflow-hidden whitespace-nowrap justify-center  ">
-     
-      <div className={`row text-[#04103B]  rounded-lg font-[550] mb-1 grid`} style={{ gridTemplateColumns: `${columnSizes.join(" ")}` }}>
-    {titles.map((title => (
-        <div className="p-2 " key={title}>
-          {title}
+    <div className="font-Inter font-[540] w-full p-1 md:p-3 text-[0.75rem] md:text-[0.9rem] lg:text-[1.1rem] flex flex-col gap-3">
+      <div className="hidden md:flex flex-col gap-y-2  w-full">
+        {/* Table header */}
+        <div
+          className={`grid text-center text-[#04103B] font-[550]`}
+          style={{ gridTemplateColumns: columnSizes.join(" ") }}
+        >
+          {titles.map((title) => (
+            <div className="p-2" key={title}>
+              {title}
+            </div>
+          ))}
         </div>
-      )))}
-      
-      
-      </div>
-      {rows.map((row,index) => (
-        <div className="row grid   bg-white  rounded-lg border border-stone-200 font-[300] shadow-md " key={index} style={{ gridTemplateColumns: `${columnSizes.join(" ")}` }}>
-          {row.map((item, index) => ( 
-            <div className=" p-2 truncate overflow-hidden whitespace-nowrap " key={index}>
-              {item}
-              
-           </div>
-            ))
-            }
-                <div className=" px-4 py-2 rounded-tr-xl rounded-br-xl  cursor-pointer ">
-                <IoEllipsisVertical />
-            </div>
-            </div>
-            ))}
 
-    
+        {rows.map((row, index) => (
+          <div
+            className="grid text-center mb-2 bg-white rounded-lg border border-stone-200 font-[300] shadow-md"
+            key={index}
+            style={{ gridTemplateColumns: columnSizes.join(" ") }}
+          >
+            {row.map((item, idx) => (
+              <div className="p-2 truncate" key={idx}>
+                {item}
+              </div>
+            ))}
+            <Link
+              // to={`/profile/${ids[index]}`}
+              className="p-2 bg-primaryColor rounded-r-lg text-[16px] cursor-pointer text-white "
+            >
+              View Profile
+            </Link>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-col gap-4 md:hidden">
+        {rows.map((row, idx) => (
+          <div
+            key={idx}
+            className="bg-white p-4 rounded-xl shadow border text-sm"
+          >
+            {titles.map((title, index) => (
+              <div key={index} className="flex justify-between border-b py-1">
+                <span className="font-semibold text-gray-600">{title}</span>
+                <span className="text-gray-800">{row[index]}</span>
+              </div>
+            ))}
+            <div className="pt-2 text-right text-xl text-gray-500">
+              <IoEllipsisVertical className="inline-block" />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
-
