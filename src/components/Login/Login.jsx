@@ -26,7 +26,7 @@ export default function Login() {
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
-
+console.log(localStorage.getItem("token"));
   async function onSubmit(data) {
     setIsLoading(true);
     console.log("Form Data:", data);
