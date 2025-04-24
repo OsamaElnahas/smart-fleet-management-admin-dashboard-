@@ -73,13 +73,13 @@ const Dashboard = () => {
               <div className="item items-center    flex flex-col gap-2 px-1 ">
               <span> All Users</span>
               <div>
-                <span>{Users?.length||0}</span>
+                <span>{Users?.length||""}</span>
               </div>
               </div>
               <div className="item items-center flex flex-col gap-2 px-1 ">
               <span> Managers</span>
               <div>
-                <span>{managers?.length||0}</span>
+                <span>{managers?.length||""}</span>
               </div>
               </div>
               <div className="item items-center flex flex-col gap-2 px-1  ">
