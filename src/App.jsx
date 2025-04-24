@@ -19,7 +19,10 @@ export default function App() {
           closeOnClick
           pauseOnHover
           draggable
-          theme="colored"
+          // theme="colored"
+          theme="dark"
+          style={{ fontFamily: "Poppins",textAlign: "center" }}
+
         />
       </QueryClientProvider>
     </>

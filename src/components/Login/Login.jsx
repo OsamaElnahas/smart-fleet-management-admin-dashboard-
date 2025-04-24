@@ -40,11 +40,11 @@ export default function Login() {
       console.log("Login Successful:", res.data);
       localStorage.setItem("token", res?.data?.token); //saving the token in local storage
       localStorage.setItem("email", res?.data?.email); //saving the email in local storage
-      !errorMessage && toast.success("Login Successful");
-
+      
       if (res?.data?.mustChangePassword == true) {
         navigate("/ResetPassword");
       } else {
+        !errorMessage && toast.success("Welcome Back !");
         setTimeout(() => {
           navigate("/Overview");
         }, 1000);
@@ -52,11 +52,16 @@ export default function Login() {
       !errorMessage && setErrorMessage("");
     } catch (error) {
       console.error("Login Error:", error);
-      error && toast.error("This is not a vaild account.");
+    
+      const backendMessage = error?.response?.data?.message || "Login failed. Please try again.";
+      
+      toast.error(backendMessage);
+      setErrorMessage(backendMessage);
     }
 
     setIsLoading(false);
   }
+  
   return (
     <>
       <div className="w-full font-Poppins flex items-center justify-center bg-stone-100">
