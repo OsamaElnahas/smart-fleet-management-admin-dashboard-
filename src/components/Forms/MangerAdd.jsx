@@ -2,6 +2,7 @@ import React from "react";
 import * as Yup from "yup";
 import DynamicForm from "../DynamicForm/DynamicForm";
 import axios from "axios";
+import Loader from "../Loader/Loader";
 
 const schema = Yup.object().shape({
   firstName: Yup.string().required("Name is required"),
@@ -9,6 +10,11 @@ const schema = Yup.object().shape({
   phoneNumber: Yup.string()
     .matches(/^\d+$/, "Please enter a valid phone number")
     .required("Phone number is required"),
+  dateOfBirth: Yup.string().required("Date of birth is required"),
+  nationalId: Yup.string()
+    .matches(/^\d+$/, "Please enter a valid national ID")
+    .required("National ID is required"),
+  // role: Yup.string().oneOf(["Manager"]).required(),
   address: Yup.object({
     street: Yup.string().required("Street is required"),
     area: Yup.string().required("Area is required"),
@@ -35,6 +41,20 @@ const fields = [
     type: "text",
     placeholder: "Enter your phone number",
   },
+
+  {
+    name: "dateOfBirth",
+    label: "Date of Birth",
+    type: "date",
+    placeholder: "Enter your date of birth",
+  },
+  {
+    name: "nationalId",
+    label: "National ID",
+    type: "text",
+    placeholder: "Enter your national ID",
+  },
+
   {
     name: "address.street",
     label: "Street",
@@ -64,6 +84,10 @@ const defaultValues = {
   firstName: "",
   lastName: "",
   phoneNumber: "",
+  dateOfBirth: "",
+  nationalId: "",
+  // role: "Manager",
+
   address: {
     street: "",
     area: "",
@@ -77,11 +101,21 @@ export default function ManagerAdd() {
   const [error, setError] = React.useState("");
 
   async function onSubmit(data) {
+    const finalData = {
+      ...data,
+      role: "manager",
+    };
     setIsLoading(true);
+    console.log("Data to be sent:", finalData);
     try {
       const res = await axios.post(
-        "http://localhost:5034/api/Account/login",
-        data
+        "http://veemanage.runasp.net/api/User/add",
+        finalData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       console.log("Login Successful:", res.data);
     } catch (error) {
@@ -91,7 +125,9 @@ export default function ManagerAdd() {
 
     setIsLoading(false);
   }
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <>
       <DynamicForm
         schema={schema}

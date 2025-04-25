@@ -8,43 +8,43 @@ import { useQuery } from "@tanstack/react-query";
 // import MyCalendar from '..';
 
 const Dashboard = () => {
-
-  const {data:Users,isLoading,isError,}=useQuery({
+  const {
+    data: Users,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["allUsers"],
-    queryFn: ()=>getDataOfUsers("http://veemanage.runasp.net/api/User/all"),
+    queryFn: () => getDataOfUsers("http://veemanage.runasp.net/api/User/all"),
   });
-  const {data:Drivers}=useQuery({
+  const { data: Drivers } = useQuery({
     queryKey: ["drivers"],
-    queryFn: ()=>getDataOfUsers("http://veemanage.runasp.net/api/User/drivers"),
+    queryFn: () =>
+      getDataOfUsers("http://veemanage.runasp.net/api/User/drivers"),
   });
-  const {data:mechanics}=useQuery({
+  const { data: mechanics } = useQuery({
     queryKey: ["mechanics"],
-    queryFn: ()=>getDataOfUsers("http://veemanage.runasp.net/api/User/mechanics"),
+    queryFn: () =>
+      getDataOfUsers("http://veemanage.runasp.net/api/User/mechanics"),
   });
-  const {data:managers}=useQuery({
+  const { data: managers } = useQuery({
     queryKey: ["managers"],
-    queryFn: ()=>getDataOfUsers("http://veemanage.runasp.net/api/User/managers"),
+    queryFn: () =>
+      getDataOfUsers("http://veemanage.runasp.net/api/User/managers"),
   });
-  const {data:Vehicles}=useQuery({
+  const { data: Vehicles } = useQuery({
     queryKey: ["Vehicles"],
-    queryFn: ()=>getDataOfUsers("http://veemanage.runasp.net/api/Vehicle"),
+    queryFn: () => getDataOfUsers("http://veemanage.runasp.net/api/Vehicle"),
   });
-
-
-
-  
 
   async function getDataOfUsers(api) {
-    try{
-
+    try {
       const res = await axios.get(api, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
-        }}
-      );
+        },
+      });
       return res?.data;
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error fetching users:", error);
       return [];
     }
@@ -63,7 +63,7 @@ const Dashboard = () => {
   //   }
   // }
   // console.log("Users data:", data&&data);
-  
+
   return (
     <>
       <div className="title text-[1.8rem] font-bold mb-10 text-[#212529]">
@@ -73,49 +73,42 @@ const Dashboard = () => {
       <div className="dashboard grid gap-6">
         <div className="grid  md:grid-cols-12 gap-6">
           <div className="cards col-span-12 lg:col-span-6 flex flex-col gap-4 text-sm">
-            <div className="card   text-white px-5   py-8 rounded-lg shadow-md bg-slate-800 font-bold  flex flex-wrap gap-4  justify-between ">
-              <div className="item items-center    flex flex-col gap-2 px-1 ">
-              <span> All Users</span>
-              <div>
-                <span>{Users?.length||""}</span>
+            {/* Users Summary */}
+            <div className="card text-white px-5 py-8 rounded-lg shadow-md bg-slate-800 font-semibold grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+              <div className="item flex flex-col gap-2">
+                <span>All Users</span>
+                <span className="text-white text-xl">
+                  {Users?.length || ""}
+                </span>
               </div>
+              <div className="item flex flex-col gap-2">
+                <span>Managers</span>
+                <span className="text-white text-xl">
+                  {managers?.length || ""}
+                </span>
               </div>
-              <div className="item items-center flex flex-col gap-2 px-1 ">
-              <span> Managers</span>
-              <div>
-                <span>{managers?.length||""}</span>
+              <div className="item flex flex-col gap-2">
+                <span>Drivers</span>
+                <span className="text-white text-xl">
+                  {Users?.length || 0}
+                </span>
               </div>
-              </div>
-              <div className="item items-center flex flex-col gap-2 px-1  ">
-              <span> Drivers</span>
-              <div>
-                <span>{Users?.length||0}</span>
-              </div>
-              </div>
-              <div className="item items-center flex flex-col gap-2">
-              <span> Mechanics</span>
-              <div>
-                <span>{Users?.length||0}</span>
-              </div>
-              </div>
-            </div>
-
-            <div className="card h-32 text-black px-2 py-4 rounded-lg shadow-md bg-[#E8D73E] font-bold">
-              <div className="item  items-center flex flex-col gap-2  max-w-20 ">
-
-              <span> Vehicles</span>
-                <span className="">{Vehicles?.length ||""}</span>
+              <div className="item flex flex-col gap-2">
+                <span>Mechanics</span>
+                <span className="text-white text-xl">
+                  {Users?.length || 0}
+                </span>
               </div>
             </div>
-            <div className="card h-32 text-white px-2 py-4 rounded-lg shadow-md bg-[#5041BC] font-bold">
-              <div className="item items-center flex flex-col gap-2  max-w-20 ">
 
-              <span> New Users</span>
-              <div>
-                <span>100</span>
+            <div className="card h-32 text-gray-600 px-2 py-6 rounded-lg shadow-md bg-[#E8D73E] font-bold flex flex-col gap-2 justify-center items-center text-center">
+              <span className="">Vehicles</span>
+              <span className="text-xl">{Vehicles?.length || ""}</span>
+            </div>
 
-              </div>
-              </div>
+            <div className="card h-32 text-white px-2 py-6 rounded-lg shadow-md bg-[#5041BC] font-semibold flex flex-col gap-2 justify-center items-center text-center">
+              <span>New Users</span>
+              <span className="text-xl">100</span>
             </div>
           </div>
 
