@@ -2,8 +2,7 @@ import React from "react";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { Link } from "react-router";
 
-export default function AllUsersTable({ titles, rows, columnSizes, ids }) {
-  // console.log("ids from user table", ids[0]);
+export default function AllUsersTable({ titles, rows, columnSizes }) {
   return (
     <div className="font-Inter font-[540] w-full p-1 md:p-3 text-[0.75rem] md:text-[0.9rem] lg:text-[1.1rem] flex flex-col gap-3">
       <div className="hidden md:flex flex-col gap-y-2  w-full">
@@ -17,6 +16,7 @@ export default function AllUsersTable({ titles, rows, columnSizes, ids }) {
               {title}
             </div>
           ))}
+          <div className="p-2">Actions</div>
         </div>
 
         {rows.map((row, index) => (
@@ -25,14 +25,14 @@ export default function AllUsersTable({ titles, rows, columnSizes, ids }) {
             key={index}
             style={{ gridTemplateColumns: columnSizes.join(" ") }}
           >
-            {row.map((item, idx) => (
+            {row.values.map((item, idx) => (
               <div className="p-2 truncate" key={idx}>
                 {item}
               </div>
             ))}
             <Link
-              // to={`/profile/${ids[index]}`}
-              className="p-2 bg-primaryColor rounded-r-lg text-[16px] cursor-pointer text-white "
+              to={row.link}
+              className="p-2 bg-primaryColor rounded-r-lg text-[16px] cursor-pointer text-white"
             >
               View Profile
             </Link>
@@ -40,6 +40,7 @@ export default function AllUsersTable({ titles, rows, columnSizes, ids }) {
         ))}
       </div>
 
+      {/* Responsive layout for small screens */}
       <div className="flex flex-col gap-4 md:hidden">
         {rows.map((row, idx) => (
           <div
@@ -49,11 +50,16 @@ export default function AllUsersTable({ titles, rows, columnSizes, ids }) {
             {titles.map((title, index) => (
               <div key={index} className="flex justify-between border-b py-1">
                 <span className="font-semibold text-gray-600">{title}</span>
-                <span className="text-gray-800">{row[index]}</span>
+                <span className="text-gray-800">{row.values[index]}</span>
               </div>
             ))}
-            <div className="pt-2 text-right text-xl text-gray-500">
-              <IoEllipsisVertical className="inline-block" />
+            <div className="pt-2 text-right">
+              <Link
+                to={row.link}
+                className="inline-block bg-primaryColor text-white py-1 px-3 rounded-lg text-sm"
+              >
+                View Profile
+              </Link>
             </div>
           </div>
         ))}

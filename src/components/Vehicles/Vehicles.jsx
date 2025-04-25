@@ -53,16 +53,20 @@ export default function Vehicles() {
           <p>Loading...</p>
         ) : (
           <AllUsersTable
-            titles={["ID", "Model", "Palet Number", "Joind Year", "Category"]}
-            rows={data?.map((item, index) => [
+          titles={["ID", "Model", "Palet Number", "Joind Year", "Category"]}
+          rows={data?.map((item, index) => ({
+            link: `/VehiclesProfile/${item.id}`,
+            values: [
               index + 1,
               item.name,
               item.palletNumber,
               item.joindYear,
               item.category,
-            ])}
-            columnSizes={["10%", "25%", "20%", "20%", "15%", "10%"]}
-          />
+            ],
+          }))}
+          columnSizes={["10%", "25%", "20%", "20%", "15%", "10%"]}
+        />
+        
         )}
       </div>
     </>

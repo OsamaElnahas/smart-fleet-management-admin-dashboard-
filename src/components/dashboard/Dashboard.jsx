@@ -25,6 +25,10 @@ const Dashboard = () => {
     queryKey: ["managers"],
     queryFn: ()=>getDataOfUsers("http://veemanage.runasp.net/api/User/managers"),
   });
+  const {data:Vehicles}=useQuery({
+    queryKey: ["Vehicles"],
+    queryFn: ()=>getDataOfUsers("http://veemanage.runasp.net/api/Vehicle"),
+  });
 
 
 
@@ -36,7 +40,7 @@ const Dashboard = () => {
       const res = await axios.get(api, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },}
+        }}
       );
       return res?.data;
     }
@@ -68,8 +72,8 @@ const Dashboard = () => {
 
       <div className="dashboard grid gap-6">
         <div className="grid  md:grid-cols-12 gap-6">
-          <div className="cards col-span-12 lg:col-span-6 flex flex-col gap-4">
-            <div className="card   text-white px-2 py-8 rounded-lg shadow-md bg-slate-800 font-bold  flex flex-wrap gap-4  justify-center">
+          <div className="cards col-span-12 lg:col-span-6 flex flex-col gap-4 text-sm">
+            <div className="card   text-white px-5   py-8 rounded-lg shadow-md bg-slate-800 font-bold  flex flex-wrap gap-4  justify-between ">
               <div className="item items-center    flex flex-col gap-2 px-1 ">
               <span> All Users</span>
               <div>
@@ -97,15 +101,20 @@ const Dashboard = () => {
             </div>
 
             <div className="card h-32 text-black px-2 py-4 rounded-lg shadow-md bg-[#E8D73E] font-bold">
-              <span> New Users</span>
-              <div className="mt-1.5">
-                <span className="">1,156</span>
+              <div className="item  items-center flex flex-col gap-2  max-w-20 ">
+
+              <span> Vehicles</span>
+                <span className="">{Vehicles?.length ||""}</span>
               </div>
             </div>
             <div className="card h-32 text-white px-2 py-4 rounded-lg shadow-md bg-[#5041BC] font-bold">
+              <div className="item items-center flex flex-col gap-2  max-w-20 ">
+
               <span> New Users</span>
               <div>
-                <span>1,156</span>
+                <span>100</span>
+
+              </div>
               </div>
             </div>
           </div>

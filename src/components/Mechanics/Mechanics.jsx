@@ -10,9 +10,21 @@ export default function Mechans() {
         + Add Mechanic
       </Link>
       <AllUsersTable
-       titles={["ID", "Name", "Phone", "Email","Age","Government"]} rows={[
+       titles={["ID", "Name", "Phone", "Email","Age","Government"]}
+      //  rows={data?.map((item, index) => ({
+      //   link: `/VehiclesProfile/${item.id}`,
+      //   values: [
+      //     index + 1,
+      //     item.name,
+      //     item.palletNumber,
+      //     item.joindYear,
+      //     item.category,
+      //   ],
+      // }))}
+        rows={[
         ["1", "Osama Kamal", "0100000000", "osamaelnahs1234@gmail.com","22","portsaid" ],["2", "Iman Kamal", "0100111122", "iman@gmail.com","22","portsaid"],
-      ]} columnSizes={["10%", "20%", "15%", "25%", "10%", "15%" ,"10%"]} />
+      ]}           columnSizes={["12%", "13%", "22%", "14%", "14%", "15%", "10%"]}
+      />
     </>
   
 }

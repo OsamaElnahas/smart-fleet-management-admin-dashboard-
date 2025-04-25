@@ -44,8 +44,10 @@ export default function Manager() {
         <Loader />
       ) : (
         <AllUsersTable
-          ids={data.map((item) => item.id)}
+        link={"/ManagersProfile"}
+          // ids={data.map((item) => item.id)}
           titles={[
+            "ID",
             "Name",
             "Phone",
             "Email",
@@ -53,18 +55,31 @@ export default function Manager() {
             "National ID",
             "Government",
           ]}
-          rows={
-            data?.map((item) => [
+          rows={data?.map((item, index) => ({
+            // link: `/ManagersProfile/${item.id}`,
+            link: `/ManagersProfile`,
+            values: [
+              index + 1,
               item.userName,
               item.phoneNumber,
               item.email,
               item.dateOfBirth,
               item.nationalId,
-
               item.address?.governorate,
-            ]) || []
-          }
-          columnSizes={["12%", "13%", "22%", "14%", "14%", "15%", "10%"]}
+            ],
+          }))}
+          // rows={
+          //   data?.map((item) => [
+          //     item.userName,
+          //     item.phoneNumber,
+          //     item.email,
+          //     item.dateOfBirth,
+          //     item.nationalId,
+
+          //     item.address?.governorate,
+          //   ]) || []
+          // }
+          columnSizes={["5%", "11%", "12%", "20%", "14%", "14%", "14%", "10%"]}
         />
       )}
     </>

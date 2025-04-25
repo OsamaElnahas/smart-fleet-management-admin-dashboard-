@@ -1,26 +1,11 @@
 import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 
-export default function Profile() {
-  const { data, isLoading } = useQuery({
-    queryKey: ["user"],
-    queryFn: getProfileData,
-  });
 
-  const { id } = useParams();
+export default function Profile({data}) {
+  console.log("data in profile", data);
+  
 
-  async function getProfileData() {
-    try {
-      const res = await axios.get(`http://veemanage.runasp.net/api/User/${id}`);
-      return res?.data;
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      return [];
-    }
-  }
 
   const [editMode, setEditMode] = useState(false);
 
@@ -35,7 +20,7 @@ export default function Profile() {
           </span>
           <div className="flex flex-col">
             <span>name</span>
-            <span>email</span>
+            <span> {data&&data[0]?.email}</span>
           </div>
         </div>
 
