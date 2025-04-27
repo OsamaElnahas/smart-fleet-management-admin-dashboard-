@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AllUsersTable from "../AllUsersTable/AllUsersTable";
-import Loader from "../Loader/Loader";
-import Popup from "../PopUp/PopUp";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import FetchWrapper from "../FetchWrapper";

@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import DynamicForm from "../DynamicForm/DynamicForm";
 import axios from "axios";
 import Loader from "../Loader/Loader";
+import Popup from "../Popup/Popup";
 
 const schema = Yup.object().shape({
   firstName: Yup.string().required("Name is required"),
@@ -97,6 +98,12 @@ const defaultValues = {
 };
 
 export default function ManagerAdd() {
+  const [isPopupOpen, setIsPopupOpen] = React.useState(false);
+  const [resData, setresData] = React.useState({
+    email: "",
+    password: "",
+  });
+
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState("");
 
@@ -117,7 +124,14 @@ export default function ManagerAdd() {
           },
         }
       );
+      const resEmail = res?.data?.email;
+      const resPassword = res?.data?.password;
       console.log("user Added:", res.data);
+      setresData({
+        email: resEmail,
+        password: resPassword,
+      });
+      setIsPopupOpen(true);
     } catch (error) {
       console.error(" Error:", error);
       setError("Something went wrong. Please try again.");
@@ -137,6 +151,14 @@ export default function ManagerAdd() {
         defaultValues={defaultValues}
         back_link="/users/managers"
       />
+      {isPopupOpen && (
+        <Popup
+          message="User Created Successfully!"
+          email={resData.email}
+          password={resData.password}
+          onClose={() => setIsPopupOpen(false)}
+        />
+      )}
     </>
   );
 }

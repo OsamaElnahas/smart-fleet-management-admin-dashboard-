@@ -5,11 +5,14 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { useParams } from "react-router";
+import { first } from "lodash";
 
 export default function Profile({ data }) {
   const { id } = useParams();
 
   const schema = yup.object().shape({
+    firstName: yup.string().required("First Name is required"),
+    lastName: yup.string().required("Last Name is required"),
     userName: yup.string().required("User Name is required"),
     role: yup.string().required("Role is required"),
     nationalId: yup.string().required("National ID is required"),
@@ -36,6 +39,8 @@ export default function Profile({ data }) {
   useEffect(() => {
     if (data) {
       reset({
+        firstName: data?.firstName || "-",
+        lastName: data?.lastName || "-",
         userName: data?.userName || "-",
         role: data?.role || "-",
         nationalId: data?.nationalId || "-",
@@ -102,12 +107,25 @@ export default function Profile({ data }) {
       <div className="data font-Poppins capitalize mb-8">
         {!editMode ? (
           <div className="grid grid-cols-12 gap-8">
-            <div className="col-span-6 flex flex-col gap-2">
+            {/* <div className="col-span-6 flex flex-col gap-2">
               <div className="label">User Name</div>
               <div className="field text-gray-500 bg-white rounded-md p-2">
                 {data.userName || "null"}
               </div>
+            </div> */}
+            <div className="col-span-6 flex flex-col gap-2">
+              <div className="label">First Name</div>
+              <div className="field text-gray-500 bg-white rounded-md p-2">
+                {data.firstName || "null"}
+              </div>
             </div>
+            <div className="col-span-6 flex flex-col gap-2">
+              <div className="label">Last Name</div>
+              <div className="field text-gray-500 bg-white rounded-md p-2">
+                {data.lastName || "null"}
+              </div>
+            </div>
+
             <div className="col-span-6 flex flex-col gap-2">
               <div className="label">Role</div>
               <div className="field text-gray-500 bg-white rounded-md p-2">
@@ -132,22 +150,28 @@ export default function Profile({ data }) {
                 {data.phoneNumber || "null"}
               </div>
             </div>
-            <div className="col-span-4 flex flex-col gap-2">
+            <div className="col-span-3 flex flex-col gap-2">
               <div className="label">Street</div>
               <div className="field text-gray-500 bg-white rounded-md p-2">
                 {data.address.street || "null"}
               </div>
             </div>
-            <div className="col-span-4 flex flex-col gap-2">
+            <div className="col-span-3 flex flex-col gap-2">
               <div className="label">Governorate</div>
               <div className="field text-gray-500 bg-white rounded-md p-2">
                 {data.address.governorate || "null"}
               </div>
             </div>
-            <div className="col-span-4 flex flex-col gap-2">
+            <div className="col-span-3 flex flex-col gap-2">
               <div className="label">Country</div>
               <div className="field text-gray-500 bg-white rounded-md p-2">
                 {data.address.country || "null"}
+              </div>
+            </div>
+            <div className="col-span-3 flex flex-col gap-2">
+              <div className="label">Area</div>
+              <div className="field text-gray-500 bg-white rounded-md p-2">
+                {data.address.area || "null"}
               </div>
             </div>
           </div>
@@ -157,6 +181,32 @@ export default function Profile({ data }) {
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="col-span-6 flex flex-col gap-2">
+              <div className="label">Fisrt Name</div>
+              <input
+                {...register("firstName")}
+                type="text"
+                className="field text-gray-500 bg-white rounded-md p-2"
+              />
+              {errors.userName && (
+                <p className="text-red-500 text-sm">
+                  {errors.firstName.message}
+                </p>
+              )}
+            </div>
+            <div className="col-span-6 flex flex-col gap-2">
+              <div className="label">Last Name</div>
+              <input
+                {...register("lastName")}
+                type="text"
+                className="field text-gray-500 bg-white rounded-md p-2"
+              />
+              {errors.userName && (
+                <p className="text-red-500 text-sm">
+                  {errors.lastName.message}
+                </p>
+              )}
+            </div>
+            {/* <div className="col-span-6 flex flex-col gap-2">
               <div className="label">User Name</div>
               <input
                 {...register("userName")}
@@ -168,7 +218,7 @@ export default function Profile({ data }) {
                   {errors.userName.message}
                 </p>
               )}
-            </div>
+            </div> */}
             <div className="col-span-6 flex flex-col gap-2">
               <div className="label">Role</div>
               <input
@@ -219,7 +269,7 @@ export default function Profile({ data }) {
                 </p>
               )}
             </div>
-            <div className="col-span-4 flex flex-col gap-2">
+            <div className="col-span-3 flex flex-col gap-2">
               <div className="label">Street</div>
               <input
                 {...register("address.street")}
@@ -232,7 +282,7 @@ export default function Profile({ data }) {
                 </p>
               )}
             </div>
-            <div className="col-span-4 flex flex-col gap-2">
+            <div className="col-span-3 flex flex-col gap-2">
               <div className="label">Governorate</div>
               <input
                 {...register("address.governorate")}
@@ -245,7 +295,7 @@ export default function Profile({ data }) {
                 </p>
               )}
             </div>
-            <div className="col-span-4 flex flex-col gap-2">
+            <div className="col-span-3 flex flex-col gap-2">
               <div className="label">Country</div>
               <input
                 {...register("address.country")}
@@ -258,7 +308,7 @@ export default function Profile({ data }) {
                 </p>
               )}
             </div>
-            <div className="col-span-4 flex flex-col gap-2">
+            <div className="col-span-3 flex flex-col gap-2">
               <div className="label">Area</div>
               <input
                 {...register("address.area")}

@@ -2,7 +2,7 @@ import React from "react";
 import * as Yup from "yup";
 import axios from "axios";
 import DynamicForm from "../DynamicForm/DynamicForm";
-
+import Popup from "../Popup/Popup";
 
 const schema = Yup.object().shape({
   firstName: Yup.string().required("Name is required"),
@@ -10,6 +10,11 @@ const schema = Yup.object().shape({
   phoneNumber: Yup.string()
     .matches(/^\d+$/, "Please enter a valid phone number")
     .required("Phone number is required"),
+  dateOfBirth: Yup.string().required("Date of birth is required"),
+  nationalId: Yup.string()
+    .matches(/^\d+$/, "Please enter a valid national ID")
+    .required("National ID is required"),
+  // role: Yup.string().oneOf(["Manager"]).required(),
   address: Yup.object({
     street: Yup.string().required("Street is required"),
     area: Yup.string().required("Area is required"),
@@ -17,6 +22,7 @@ const schema = Yup.object().shape({
     country: Yup.string().required("Country is required"),
   }),
 });
+
 const fields = [
   {
     name: "firstName",
@@ -31,24 +37,25 @@ const fields = [
     placeholder: "Enter your last name",
   },
   {
-    name: "dateOfBirth",
-    label: "Date Of Birth",
-    type: "text",
-    placeholder: "Enter your date of birth",
-  },
-  {
-
-    name: "nationalId",
-    label: "national Id",
-    type: "text",
-    placeholder: "Enter your national Id",
-  },
-  {
     name: "phoneNumber",
     label: "Phone Number",
     type: "text",
     placeholder: "Enter your phone number",
   },
+
+  {
+    name: "dateOfBirth",
+    label: "Date of Birth",
+    type: "date",
+    placeholder: "Enter your date of birth",
+  },
+  {
+    name: "nationalId",
+    label: "National ID",
+    type: "text",
+    placeholder: "Enter your national ID",
+  },
+
   {
     name: "address.street",
     label: "Street",
@@ -78,6 +85,10 @@ const defaultValues = {
   firstName: "",
   lastName: "",
   phoneNumber: "",
+  dateOfBirth: "",
+  nationalId: "",
+  // role: "Manager",
+
   address: {
     street: "",
     area: "",
@@ -87,22 +98,39 @@ const defaultValues = {
 };
 
 export default function DriverForm() {
+  const [isPopupOpen, setIsPopupOpen] = React.useState(false);
+  const [resData, setresData] = React.useState({
+    email: "",
+    password: "",
+  });
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState("");
 
   async function onSubmit(data) {
     const finalData = {
       ...data,
-      role: "Driver",
+      role: "driver",
       // token: localStorage.getItem("token"),
     };
     setIsLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:5034/api/Account/login",
-        finalData
+        "http://veemanage.runasp.net/api/User/add",
+        finalData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       console.log("Login Successful:", res.data);
+      const resEmail = res?.data?.email;
+      const resPassword = res?.data?.password;
+      setresData({
+        email: resEmail,
+        password: resPassword,
+      });
+      setIsPopupOpen(true);
     } catch (error) {
       console.error("Login Error:", error);
       setError("Something went wrong. Please try again.");
@@ -120,6 +148,14 @@ export default function DriverForm() {
         defaultValues={defaultValues}
         back_link="/users/drivers"
       />
+      {isPopupOpen && (
+        <Popup
+          message="User Created Successfully!"
+          email={resData.email}
+          password={resData.password}
+          onClose={() => setIsPopupOpen(false)}
+        />
+      )}
     </>
   );
 }
