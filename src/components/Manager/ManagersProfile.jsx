@@ -15,7 +15,7 @@ export default function ManagersProfile() {
     
       async function getProfileData() {
         try {
-          const res = await axios.get(`http://veemanage.runasp.net/api/manager/${id}`,{
+          const res = await axios.get(`http://veemanage.runasp.net/api/User/${id}`,{
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },

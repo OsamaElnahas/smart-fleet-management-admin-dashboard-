@@ -24,7 +24,7 @@ const Dashboard = () => {
   const { data: mechanics } = useQuery({
     queryKey: ["mechanics"],
     queryFn: () =>
-      getDataOfUsers("http://veemanage.runasp.net/api/User/mechanics"),
+      getDataOfUsers(" http://veemanage.runasp.net/api/User/mechanics"),
   });
   const { data: managers } = useQuery({
     queryKey: ["managers"],
@@ -43,6 +43,8 @@ const Dashboard = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+      console.log("Users data:", res?.data);
+      
       return res?.data;
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -90,13 +92,13 @@ const Dashboard = () => {
               <div className="item flex flex-col gap-2">
                 <span>Drivers</span>
                 <span className="text-white text-xl">
-                  {Users?.length || 0}
+                  {Drivers?.length || 0}
                 </span>
               </div>
               <div className="item flex flex-col gap-2">
                 <span>Mechanics</span>
                 <span className="text-white text-xl">
-                  {Users?.length || 0}
+                  {mechanics?.length || 0}
                 </span>
               </div>
             </div>

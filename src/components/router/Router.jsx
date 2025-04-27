@@ -24,6 +24,8 @@ import Profile from "../Profile/Profile";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import ManagersProfile from "../Manager/ManagersProfile";
 import VehiclesProfile from "../Vehicles/VehiclesProfile";
+import DriverProfile from "../Drivers/DriverProfile";
+import MechanicsProfile from "../Mechanics/MechanicsProfile";
 
 const Router = createBrowserRouter([
   {
@@ -46,8 +48,10 @@ const Router = createBrowserRouter([
           { path: "/vehicles/add", element: <VehiclesAdd /> },
           { path: "/vehicles/model", element: <Model /> },
           { path: "/vehicles/categories", element: <Category /> },
-          { path: "/ManagersProfile", element: <ManagersProfile /> },
+          { path: "/ManagerProfile/:id", element: <ManagersProfile /> },
           { path: "/VehiclesProfile/:id", element: <VehiclesProfile /> },
+          { path: "/driverProfile/:id", element: <DriverProfile /> },
+          { path: "/mechanicProfile/:id", element: <MechanicsProfile /> },
         ],
       },
     ],

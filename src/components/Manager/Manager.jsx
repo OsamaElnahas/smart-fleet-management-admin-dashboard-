@@ -5,10 +5,11 @@ import Loader from "../Loader/Loader";
 import Popup from "../PopUp/PopUp";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import FetchWrapper from "../FetchWrapper";
 
 export default function Manager() {
   const [showPopup, setShowPopup] = useState(true);
-  const { data, isLoading } = useQuery({
+  const { data, isLoading,isError,error } = useQuery({
     queryKey: ["managers"],
     queryFn: () =>
       getDataOfUsers("http://veemanage.runasp.net/api/User/managers"),
@@ -27,61 +28,50 @@ export default function Manager() {
       return [];
     }
   }
-  console.log("Users data:", data && data);
-  console.log("form magner",data&& data[0]?.email);
+  console.log("manager data:", data && data);
+  isError && console.log("error from query", error?.message);
+  
 
 
   return (
     <>
-      {!data && <Loader />}
+  <div className="text-center mb-7 w-[100%] py-[0.5rem]  bg-stone-200 text-stone-700 border border-stone-300   rounded-md shadow-sm font-semibold text-xl">
+  Managers
+    </div>
       <Link
         to={"/users/managers/add"}
-        className="block mb-12 border border-primaryColor w-[180px] p-2 text-center rounded-lg text-primaryColor font-bold"
+        className="block mb-8 border border-primaryColor w-[180px] p-2 text-center rounded-lg text-primaryColor font-bold"
       >
         + Add Manager
       </Link>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <AllUsersTable
-        link={"/ManagersProfile"}
-          // ids={data.map((item) => item.id)}
-          titles={[
-            "ID",
-            "Name",
-            "Phone",
-            "Email",
-            "Date of Birth",
-            "National ID",
-            "Government",
-          ]}
-          rows={data?.map((item, index) => ({
-            // link: `/ManagersProfile/${item.id}`,
-            link: `/ManagersProfile`,
-            values: [
-              index + 1,
-              item.userName,
-              item.phoneNumber,
-              item.email,
-              item.dateOfBirth,
-              item.nationalId,
-              item.address?.governorate,
-            ],
-          }))}
-          // rows={
-          //   data?.map((item) => [
-          //     item.userName,
-          //     item.phoneNumber,
-          //     item.email,
-          //     item.dateOfBirth,
-          //     item.nationalId,
 
-          //     item.address?.governorate,
-          //   ]) || []
-          // }
-          columnSizes={["5%", "11%", "12%", "20%", "14%", "14%", "14%", "10%"]}
-        />
-      )}
+      <FetchWrapper isLoading={isLoading} isError={isError} error={error} data={data}>
+        <AllUsersTable
+        titles={[
+          "ID",
+          "Name",
+          "Phone",
+          "Email",
+          "Date of Birth",
+          "National ID",
+          // "Address",
+        ]}
+        rows={data?.map((item, index) => ({
+          link: `/ManagerProfile/${item.id}`,
+          values: [
+            index + 1,
+            item.userName,
+            item.phoneNumber,
+            item.email,
+            item.dateOfBirth,
+            item.nationalId,
+            // item.address?.governorate,
+          ],
+        }))}
+        columnSizes={["8%", "16%", "20%", "20%", "15%", "18%", "3%"]}
+  />
+</FetchWrapper>
+
     </>
   );
 }

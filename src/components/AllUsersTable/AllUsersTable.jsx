@@ -1,11 +1,12 @@
 import React from "react";
+import { FaArrowRight } from "react-icons/fa";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { Link } from "react-router";
 
 export default function AllUsersTable({ titles, rows, columnSizes }) {
   return (
     <div className="font-Inter font-[540] w-full p-1 md:p-3 text-[0.75rem] md:text-[0.9rem] lg:text-[1.1rem] flex flex-col gap-3">
-      <div className="hidden md:flex flex-col gap-y-2  w-full">
+      <div className="hidden lg:flex flex-col gap-y-2  w-full">
         {/* Table header */}
         <div
           className={`grid text-center text-[#04103B] font-[550]`}
@@ -16,7 +17,7 @@ export default function AllUsersTable({ titles, rows, columnSizes }) {
               {title}
             </div>
           ))}
-          <div className="p-2">Actions</div>
+          <div className="p-2"></div>
         </div>
 
         {rows.map((row, index) => (
@@ -32,16 +33,18 @@ export default function AllUsersTable({ titles, rows, columnSizes }) {
             ))}
             <Link
               to={row.link}
-              className="p-2 bg-primaryColor rounded-r-lg text-[16px] cursor-pointer text-white"
+              className="p-2 flex justify-end bg-primaryColor rounded-r-lg text-[16px] cursor-pointer text-white"
             >
-              View Profile
+              {/* View Profile */}
+              <FaArrowRight  />
+
             </Link>
           </div>
         ))}
       </div>
 
       {/* Responsive layout for small screens */}
-      <div className="flex flex-col gap-4 md:hidden">
+      <div className="flex flex-col gap-4 lg:hidden">
         {rows.map((row, idx) => (
           <div
             key={idx}

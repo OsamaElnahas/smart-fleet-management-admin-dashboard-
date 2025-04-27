@@ -117,9 +117,9 @@ export default function ManagerAdd() {
           },
         }
       );
-      console.log("Login Successful:", res.data);
+      console.log("user Added:", res.data);
     } catch (error) {
-      console.error("Login Error:", error);
+      console.error(" Error:", error);
       setError("Something went wrong. Please try again.");
     }
 
