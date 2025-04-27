@@ -1,7 +1,8 @@
 import React from 'react'
+import CheckStatus from '../Checker'
 
 export default function MechanicsProfile() {
   return (
-    <div>MechanicsProfile</div>
+    <CheckStatus/>
   )
 }
