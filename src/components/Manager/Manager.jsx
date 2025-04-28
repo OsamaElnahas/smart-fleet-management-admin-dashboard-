@@ -59,9 +59,10 @@ export default function Manager() {
           ]}
           rows={data?.map((item, index) => ({
             link: `/ManagerProfile/${item.id}`,
+            id:item.id,
             values: [
               index + 1,
-              item.userName,
+              item.firstName +" "+item.lastName,
               item.phoneNumber,
               item.email,
               item.dateOfBirth,

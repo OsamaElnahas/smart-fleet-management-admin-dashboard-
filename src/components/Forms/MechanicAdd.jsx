@@ -109,11 +109,11 @@ export default function MecghanicAdd() {
   const [error, setError] = React.useState("");
 
   async function onSubmit(data) {
+    setIsLoading(true);
     const finalData = {
       ...data,
       role: "mechanic",
     };
-    setIsLoading(true);
     try {
       const res = await axios.post(
         "http://veemanage.runasp.net/api/User/add",
@@ -151,7 +151,9 @@ export default function MecghanicAdd() {
       />
       {isPopupOpen && (
         <Popup
-          message="User Created Successfully!"
+        isLoading={isLoading}
+        link={"/users/mechanics"}
+
           email={resData.email}
           password={resData.password}
           onClose={() => setIsPopupOpen(false)}

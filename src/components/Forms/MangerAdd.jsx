@@ -153,7 +153,8 @@ export default function ManagerAdd() {
       />
       {isPopupOpen && (
         <Popup
-          message="User Created Successfully!"
+        isLoading={isLoading}
+        link={"/users/managers"}
           email={resData.email}
           password={resData.password}
           onClose={() => setIsPopupOpen(false)}

@@ -6,7 +6,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router";
 import { ColorRing } from "react-loader-spinner";
 import { toast } from "react-toastify";
-import { set } from "lodash";
 // import { ColorRing } from "react-loader-spinner";
 
 const schema = yup.object().shape({

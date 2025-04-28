@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 import axios from 'axios';
 import Loader from '../Loader/Loader';
+import { toast } from 'react-toastify';
 
     export default function DriverProfile() {
         const { data, isLoading ,isFetched} = useQuery({
@@ -21,10 +22,11 @@ import Loader from '../Loader/Loader';
                 },
               });
               console.log("driver data profile", res?.data);
+              
               return res?.data;
               
             } catch (error) {
-              console.error("Error fetching users:", error);
+              console.error("Error fetching user data:", error);
               return [];
             }
           }

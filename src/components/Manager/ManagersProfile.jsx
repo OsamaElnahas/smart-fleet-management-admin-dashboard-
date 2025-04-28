@@ -4,6 +4,7 @@ import Loader from '../Loader/Loader';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function ManagersProfile() {
       const { data, isLoading ,isFetched} = useQuery({
@@ -20,10 +21,11 @@ export default function ManagersProfile() {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           });
+
           return res?.data;
         } catch (error) {
-          console.error("Error fetching users:", error);
-          return [];
+          console.error("Error fetching user data:", error);
+                    return [];
         }
       }
   return <>

@@ -2,7 +2,7 @@ import React from "react";
 import { FaCheckCircle, FaTimesCircle, FaSpinner } from "react-icons/fa";
 import { motion } from "framer-motion";
 
-export default function CheckStatus({ status = "success" }) {
+export default function CheckStatus({ status }) {
   return (
     <div className="flex flex-col gap-3 justify-center items-center">
       <motion.div

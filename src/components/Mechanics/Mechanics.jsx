@@ -50,9 +50,10 @@ export default function Mechans() {
     "National ID",
   ]}       rows={data?.map((item, index) => ({
         link: `/mechanicProfile/${ item.id}`,
+        id:item.id,
         values: [
           index + 1,
-          item.userName,
+          item.firstName +" "+item.lastName,
           item.phoneNumber,
           item.email,
           item.dateOfBirth,
