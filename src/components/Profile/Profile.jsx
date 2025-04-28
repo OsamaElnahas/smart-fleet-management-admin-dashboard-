@@ -187,7 +187,7 @@ export default function Profile({ data }) {
           </div>
         ) : (
           <form
-            className="grid grid-cols-12 gap-8"
+            className="grid grid-cols-12 gap-6"
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="col-span-6 flex flex-col gap-2">
@@ -273,7 +273,7 @@ export default function Profile({ data }) {
                 </p>
               )}
             </div>
-            <div className="col-span-3 flex flex-col gap-2">
+            <div className="col-span-6 md:col-span-3 flex flex-col gap-2">
               <div className="label">Street</div>
               <input
                 {...register('address.street')}
@@ -323,17 +323,17 @@ export default function Profile({ data }) {
                 <p className="text-red-500 text-sm">{errors.address.area.message}</p>
               )}
             </div>
-            <div className="col-span-12 flex gap-3">
+            <div className="col-span-12 flex gap-5">
               <button
                 type="submit"
-                className="py-2 px-4 bg-primaryColor rounded-md text-white"
+                className="py-2 px-4 bg-primaryColor rounded-md text-white w-24"
                 disabled={mutation.isLoading}
               >
                 {mutation.isLoading ? 'Saving...' : 'Save'}
               </button>
               <button
                 type="button"
-                className="py-2 px-4 bg-gray-500 rounded-md text-white"
+                className="py-2 px-4 bg-gray-500 rounded-md text-white w-24"
                 onClick={() => setEditMode(false)}
               >
                 Cancel

@@ -119,16 +119,26 @@ export default function AllUsersTable({ titles, rows, columnSizes,baseUrl }) {
                 <span className="text-gray-800">{row.values[index]}</span>
               </div>
             ))}
-            <div className="pt-2 text-right">
+            <div className="mt-8 flex flex-col gap-3 ">
               <Link
                 to={row.link}
-                className="inline-block bg-primaryColor text-white py-1 px-3 rounded-lg text-sm"
+                className="inline-block bg-primaryColor text-white py-1 px-3 rounded-lg text-sm w-28 text-center"
               >
                 View Profile
               </Link>
+              <div className=" py-1 px-3 text-[16px] cursor-pointer  flex gap-3 items-center bg-red-300 rounded-lg text-white w-28 text-center" onClick={()=>{
+                setSelectedId(row.id);
+              setIsvisable(true)}} > 
+              <span><FaTrash/></span>
+              Delete
             </div>
+            </div>
+            
           </div>
         ))}
+                {isVisable &&<Popup message={"Are You Sure to Delete This User ?"} onClose={()=>setIsvisable(false)} onConfirm={() => {
+          mutation.mutate();
+}}/>}
       </div>
     </div>
   );
