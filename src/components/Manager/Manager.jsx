@@ -48,6 +48,8 @@ export default function Manager() {
         data={data}
       >
         <AllUsersTable
+          baseUrl="http://veemanage.runasp.net/api/User"
+
           titles={[
             "ID",
             "Name",

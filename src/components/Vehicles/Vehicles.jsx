@@ -55,9 +55,12 @@ export default function Vehicles() {
       <div>
         <FetchWrapper isLoading={isLoading} data={data}>
           <AllUsersTable
+            baseUrl="http://veemanage.runasp.net/api/Vehicle"
+
           titles={["ID", "Model", "Palet Number", "Joind Year", "Category"]}
           rows={data?.map((item, index) => ({
             link: `/VehiclesProfile/${item.id}`,
+            id:item.id,
             values: [
               index + 1,
               item.name,

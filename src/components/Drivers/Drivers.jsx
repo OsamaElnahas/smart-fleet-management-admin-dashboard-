@@ -44,7 +44,10 @@ export default function Drivers() {
         <FetchWrapper isLoading={isLoading} isError={isError} error={error} data={data}>
 
 
-        <AllUsersTable   titles={[
+        <AllUsersTable 
+          baseUrl="http://veemanage.runasp.net/api/User"
+
+          titles={[
           "ID",
           "Name",
           "Phone",

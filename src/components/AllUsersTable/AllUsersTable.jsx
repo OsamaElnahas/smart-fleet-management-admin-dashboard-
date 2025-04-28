@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 
 
-export default function AllUsersTable({ titles, rows, columnSizes }) {
+export default function AllUsersTable({ titles, rows, columnSizes,baseUrl }) {
   const QueryClient = useQueryClient();
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
   const[isVisable,setIsvisable]=useState(false)
@@ -29,7 +29,7 @@ export default function AllUsersTable({ titles, rows, columnSizes }) {
   });
   
   async function deleteItem() {
-    return await axios.delete(`http://veemanage.runasp.net/api/User/${selectedId}`,
+    return await axios.delete(`${baseUrl}/${selectedId}`,
       {
         headers:{
           Authorization: `Bearer ${localStorage.getItem("token")}`,

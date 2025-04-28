@@ -41,6 +41,8 @@ export default function Mechans() {
 
   <FetchWrapper isLoading={isLoading} isError={isError} error={error} data={data}>
       <AllUsersTable
+        baseUrl="http://veemanage.runasp.net/api/User"
+
       titles={[
         "ID",
         "Name",
