@@ -7,7 +7,7 @@ export default function Category() {
   return (
     <>
       <Link
-        to={"/users/drivers/add"}
+        to={"/category/add"}
         className="block mb-12 border border-primaryColor w-[180px] p-2 text-center rounded-lg text-primaryColor font-bold"
       >
         + Add New Category
