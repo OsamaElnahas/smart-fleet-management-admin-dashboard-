@@ -8,6 +8,7 @@ const Popup = ({ message, onClose, onConfirm, email, password, isLoading, link }
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white rounded-xl py-10 px-6 shadow-xl max-w-sm w-full flex flex-col items-center gap-6">
+        {isLoading && <CheckStatus status={"loading"}/>}
         
         {message && (
           <>

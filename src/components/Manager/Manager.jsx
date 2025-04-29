@@ -6,7 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import FetchWrapper from "../FetchWrapper";
 
 export default function Manager() {
-  const [showPopup, setShowPopup] = useState(true);
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["managers"],
     queryFn: () =>
@@ -22,12 +21,12 @@ export default function Manager() {
       });
       return res?.data;
     } catch (error) {
-      console.error("Error fetching users:", error);
+      // console.error("Error fetching users:", error);
       return [];
     }
   }
-  console.log("manager data:", data && data);
-  isError && console.log("error from query", error?.message);
+  // console.log("manager data:", data && data);
+  // isError && console.log("error from query", error?.message);
 
   return (
     <>
@@ -49,6 +48,8 @@ export default function Manager() {
       >
         <AllUsersTable
           baseUrl="http://veemanage.runasp.net/api/User"
+          keyOfQuery={"managers"}
+
 
           titles={[
             "ID",

@@ -55,6 +55,7 @@ export default function Vehicles() {
       <div>
         <FetchWrapper isLoading={isLoading} data={data}>
           <AllUsersTable
+            keyOfQuery={"vehicles"}
             baseUrl="http://veemanage.runasp.net/api/Vehicle"
 
           titles={["ID", "Model", "Palet Number", "Joind Year", "Category"]}

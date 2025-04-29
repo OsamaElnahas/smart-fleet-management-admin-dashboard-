@@ -19,10 +19,10 @@ export default function Mechans() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log("mechanic data", res?.data);
+      // console.log("mechanic data", res?.data);
       return res?.data;
     } catch (error) {
-      console.error("Error fetching users:", error);
+      // console.error("Error fetching users:", error);
       return [];
     }
   }
@@ -41,6 +41,8 @@ export default function Mechans() {
 
   <FetchWrapper isLoading={isLoading} isError={isError} error={error} data={data}>
       <AllUsersTable
+                  keyOfQuery={"mechanics"}
+
         baseUrl="http://veemanage.runasp.net/api/User"
 
       titles={[

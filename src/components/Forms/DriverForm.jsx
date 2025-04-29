@@ -123,7 +123,7 @@ export default function DriverForm() {
           },
         }
       );
-      console.log("Login Successful:", res.data);
+      // console.log("Login Successful:", res.data);
       const resEmail = res?.data?.email;
       const resPassword = res?.data?.password;
       setresData({
@@ -132,7 +132,7 @@ export default function DriverForm() {
       });
       setIsPopupOpen(true);
     } catch (error) {
-      console.error("Login Error:", error);
+      // console.error("Login Error:", error);
       setError("Something went wrong. Please try again.");
     }
 

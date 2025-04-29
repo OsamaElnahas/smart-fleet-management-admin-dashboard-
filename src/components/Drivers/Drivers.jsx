@@ -20,12 +20,12 @@ export default function Drivers() {
         },
 
       });
-      console.log("driver data", res?.data);
+      // console.log("driver data", res?.data);
       return res?.data;
       
 
     } catch (error) {
-      console.error("Error fetching users:", error);
+      // console.error("Error fetching users:", error);
       return [];
     }
   }
@@ -45,6 +45,8 @@ export default function Drivers() {
 
 
         <AllUsersTable 
+                    keyOfQuery={"drivers"}
+
           baseUrl="http://veemanage.runasp.net/api/User"
 
           titles={[

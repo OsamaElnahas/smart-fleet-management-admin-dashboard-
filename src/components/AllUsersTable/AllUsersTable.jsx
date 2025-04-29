@@ -9,8 +9,8 @@ import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 
 
-export default function AllUsersTable({ titles, rows, columnSizes,baseUrl }) {
-  const QueryClient = useQueryClient();
+export default function AllUsersTable({ titles, rows, columnSizes,baseUrl,keyOfQuery }) {
+  const queryClient = useQueryClient();
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
   const[isVisable,setIsvisable]=useState(false)
   const [selectedId, setSelectedId] = useState(null);
@@ -18,12 +18,12 @@ export default function AllUsersTable({ titles, rows, columnSizes,baseUrl }) {
   const mutation = useMutation({
     mutationFn: deleteItem,
     onSuccess: () => {
-      toast.success('User is Deleted!');
+      toast.success(' Deleted Successfully !');
       setIsvisable(false)
-      QueryClient.invalidateQueries(['user']);
+      queryClient.invalidateQueries([key]);
     },
     onError: (error) => {
-      console.error('Error deleting data:', error);
+      // console.error('Error deleting data:', error);
       toast.error('Delete Failed');
     },
   });
@@ -45,7 +45,7 @@ export default function AllUsersTable({ titles, rows, columnSizes,baseUrl }) {
       setSelectedRowIndex(index); // يفتح على الصف ده بس
     }
   };
-  console.log("selectedId",selectedId);
+  // console.log("selectedId",selectedId);
   
   
   return (
