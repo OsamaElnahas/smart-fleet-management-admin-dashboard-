@@ -2,7 +2,7 @@ import React from "react";
 import MyCalendar from "../Calendar/MyCalendar";
 import StatisticsChart from "../Statistcs/Statistcs";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 // import DateTimePicker from '../Calendar/Calendar';
 // import Calendar from '../Calendar/Calendar.jsx';
 // import MyCalendar from '..';
@@ -44,7 +44,7 @@ const Dashboard = () => {
         },
       });
       console.log("Users data:", res?.data);
-      
+
       return res?.data;
     } catch (error) {
       console.error("Error fetching users:", error);
