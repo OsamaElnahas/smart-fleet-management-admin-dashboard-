@@ -2,7 +2,7 @@ import React from "react";
 import CheckStatus from "../Checker";
 import { Link } from "react-router-dom";
 
-const Popup = ({ message, onClose, onConfirm, email, password, isLoading, link }) => {
+const Popup = ({ message, onClose, onConfirm, email, password, isLoading, link ,status}) => {
   const showUserInfo = email && password;
 
   return (
@@ -36,6 +36,19 @@ const Popup = ({ message, onClose, onConfirm, email, password, isLoading, link }
             </div>
           </>
         )}
+        {status&&<>
+        
+          <CheckStatus status={status===true ? "success" :"error"}/>
+          <button
+              onClick={onClose}
+              className="p-2 w-[100px] mt-12 bg-primaryColor text-white rounded-lg hover:bg-blue-700 transition"
+            >
+              Done
+            </button>
+        </>
+          
+        
+        }
 
         {message && !showUserInfo && (
           <div className="btns flex gap-6 mt-6">

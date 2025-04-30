@@ -2,7 +2,8 @@ import React from "react";
 import MyCalendar from "../Calendar/MyCalendar";
 import StatisticsChart from "../Statistcs/Statistcs";
 import axios from "axios";
-import { QueryClient, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../Loader/Loader";
 // import DateTimePicker from '../Calendar/Calendar';
 // import Calendar from '../Calendar/Calendar.jsx';
 // import MyCalendar from '..';
@@ -67,7 +68,9 @@ const Dashboard = () => {
   // console.log("Users data:", data&&data);
 
   return (
+  
     <>
+    {isLoading&&<Loader/>}
       <div className="title text-[1.8rem] font-bold mb-10 text-[#212529]">
         Dashboard
       </div>
@@ -76,7 +79,7 @@ const Dashboard = () => {
         <div className="grid  md:grid-cols-12 gap-6">
           <div className="cards col-span-12 lg:col-span-6 flex flex-col gap-4 text-sm">
             {/* Users Summary */}
-            <div className="card text-white px-5 py-8 rounded-lg shadow-md bg-slate-800 font-semibold grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+            <div className="card text-white px-5 py-8 rounded-lg shadow-md bg-slate-800 font-semibold grid grid-cols-2 sm:grid-cols-4 gap-6 items-center   text-center">
               <div className="item flex flex-col gap-2">
                 <span>All Users</span>
                 <span className="text-white text-xl">

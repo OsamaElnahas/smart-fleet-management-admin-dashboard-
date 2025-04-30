@@ -1,5 +1,4 @@
 import React from "react";
-// import { Router } from 'react-router-dom'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "../Layout/Layout";
 import Drivers from "../Drivers/Drivers";
@@ -9,8 +8,6 @@ import Login from "../Login/Login";
 import ResetPassword from "../Forget-reset-password/ResetPassword";
 import ForgetPassword from "../Forget-reset-password/ForgetPassword";
 import DriverForm from "../Forms/DriverForm";
-// import ManagerAdd from '../Forms/MangerAdd'
-// import MechanicsAdd from '../Forms/MechanicsAdd'
 import Manager from "../../components/Manager/Manager";
 import ManagerAdd from "../Forms/MangerAdd";
 import Mechans from "../Mechanics/Mechanics";
@@ -26,6 +23,7 @@ import ManagersProfile from "../Manager/ManagersProfile";
 import VehiclesProfile from "../Vehicles/VehiclesProfile";
 import DriverProfile from "../Drivers/DriverProfile";
 import MechanicsProfile from "../Mechanics/MechanicsProfile";
+import CategoryAdd from "../Forms/CategoryAdd";
 
 const Router = createBrowserRouter([
   {
@@ -52,6 +50,7 @@ const Router = createBrowserRouter([
           { path: "/VehiclesProfile/:id", element: <VehiclesProfile /> },
           { path: "/driverProfile/:id", element: <DriverProfile /> },
           { path: "/mechanicProfile/:id", element: <MechanicsProfile /> },
+          { path: "/category/add", element: <CategoryAdd /> },
         ],
       },
     ],

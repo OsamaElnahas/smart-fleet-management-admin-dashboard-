@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import AllUsersTable from "../AllUsersTable/AllUsersTable";
 import { useState } from "react";
 import axios from "axios";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import {  useQuery } from "@tanstack/react-query";
 import FetchWrapper from "../FetchWrapper";
 
 export default function Vehicles() {
