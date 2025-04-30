@@ -6,7 +6,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router";
 import { ColorRing } from "react-loader-spinner";
 import { toast } from "react-toastify";
-import { set } from "lodash";
 // import { ColorRing } from "react-loader-spinner";
 
 const schema = yup.object().shape({
@@ -26,10 +25,10 @@ export default function Login() {
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
-console.log(localStorage.getItem("token"));
   async function onSubmit(data) {
     setIsLoading(true);
-    console.log("Form Data:", data);
+    setErrorMessage("");
+    // console.log("Form Data:", data);
 
     try {
       // setIsLoading(true);
@@ -37,7 +36,7 @@ console.log(localStorage.getItem("token"));
         "http://veemanage.runasp.net/api/Account/login",
         data
       );
-      console.log("Login Successful:", res.data);
+      // console.log("Login Successful:", res.data);
       localStorage.setItem("token", res?.data?.token); //saving the token in local storage
       localStorage.setItem("email", res?.data?.email); //saving the email in local storage
       
@@ -49,16 +48,14 @@ console.log(localStorage.getItem("token"));
           navigate("/Overview");
         }, 1000);
       }
-      !errorMessage && setErrorMessage("");
     } catch (error) {
-      console.error("Login Error:", error);
+      // console.error("Login Error:", error);
     
       const backendMessage = error?.response?.data?.message || "Login failed. Please try again.";
       
       toast.error(backendMessage);
       setErrorMessage(backendMessage);
     }
-
     setIsLoading(false);
   }
   

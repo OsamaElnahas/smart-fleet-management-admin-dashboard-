@@ -20,12 +20,12 @@ export default function Drivers() {
         },
 
       });
-      console.log("driver data", res?.data);
+      // console.log("driver data", res?.data);
       return res?.data;
       
 
     } catch (error) {
-      console.error("Error fetching users:", error);
+      // console.error("Error fetching users:", error);
       return [];
     }
   }
@@ -44,7 +44,12 @@ export default function Drivers() {
         <FetchWrapper isLoading={isLoading} isError={isError} error={error} data={data}>
 
 
-        <AllUsersTable   titles={[
+        <AllUsersTable 
+                    keyOfQuery={"drivers"}
+
+          baseUrl="http://veemanage.runasp.net/api/User"
+
+          titles={[
           "ID",
           "Name",
           "Phone",
@@ -54,9 +59,11 @@ export default function Drivers() {
         ]}
         rows={data?.map((item, index) => ({
           link: `/driverProfile/${item.id}`,
+          id:item.id,
+
           values: [
             index + 1,
-            item.userName,
+            item.firstName +" "+item.lastName,
             item.phoneNumber,
             item.email,
             item.dateOfBirth,

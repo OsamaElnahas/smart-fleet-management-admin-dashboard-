@@ -14,40 +14,40 @@ const Dashboard = () => {
     isError,
   } = useQuery({
     queryKey: ["allUsers"],
-    queryFn: () => getDataOfUsers("http://veemanage.runasp.net/api/User/all"),
+    queryFn: () => getDataOfUsers("http://veemanage.runasp.net/api/User/all","all user data"),
   });
   const { data: Drivers } = useQuery({
     queryKey: ["drivers"],
     queryFn: () =>
-      getDataOfUsers("http://veemanage.runasp.net/api/User/drivers"),
+      getDataOfUsers("http://veemanage.runasp.net/api/User/drivers","drivers data"),
   });
   const { data: mechanics } = useQuery({
     queryKey: ["mechanics"],
     queryFn: () =>
-      getDataOfUsers(" http://veemanage.runasp.net/api/User/mechanics"),
+      getDataOfUsers(" http://veemanage.runasp.net/api/User/mechanics","mechanics data"),
   });
   const { data: managers } = useQuery({
     queryKey: ["managers"],
     queryFn: () =>
-      getDataOfUsers("http://veemanage.runasp.net/api/User/managers"),
+      getDataOfUsers("http://veemanage.runasp.net/api/User/managers","managers data"),
   });
   const { data: Vehicles } = useQuery({
     queryKey: ["Vehicles"],
-    queryFn: () => getDataOfUsers("http://veemanage.runasp.net/api/Vehicle"),
+    queryFn: () => getDataOfUsers("http://veemanage.runasp.net/api/Vehicle","Vehicle data"),
   });
 
-  async function getDataOfUsers(api) {
+  async function getDataOfUsers(api,message) {
     try {
       const res = await axios.get(api, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log("Users data:", res?.data);
-
+      // console.log(message, res?.data);
+      
       return res?.data;
     } catch (error) {
-      console.error("Error fetching users:", error);
+      // console.error("Error fetching users:", error);
       return [];
     }
   }
@@ -80,25 +80,25 @@ const Dashboard = () => {
               <div className="item flex flex-col gap-2">
                 <span>All Users</span>
                 <span className="text-white text-xl">
-                  {Users?.length || ""}
+                  {Users?.length || "-"}
                 </span>
               </div>
               <div className="item flex flex-col gap-2">
                 <span>Managers</span>
                 <span className="text-white text-xl">
-                  {managers?.length || ""}
+                  {managers?.length || "-"}
                 </span>
               </div>
               <div className="item flex flex-col gap-2">
                 <span>Drivers</span>
                 <span className="text-white text-xl">
-                  {Drivers?.length || 0}
+                  {Drivers?.length || "-"}
                 </span>
               </div>
               <div className="item flex flex-col gap-2">
                 <span>Mechanics</span>
                 <span className="text-white text-xl">
-                  {mechanics?.length || 0}
+                  {mechanics?.length || "-"}
                 </span>
               </div>
             </div>
@@ -114,9 +114,9 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="col-span-12 lg:col-span-6 ">
+          {/* <div className="col-span-12 lg:col-span-6 ">
             <StatisticsChart />
-          </div>
+          </div> */}
         </div>
 
         {/* <div className="chart bg-white  rounded-lg shadow-md text-gray-800 mt-4">

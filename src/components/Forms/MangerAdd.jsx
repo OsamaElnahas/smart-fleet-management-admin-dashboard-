@@ -113,7 +113,7 @@ export default function ManagerAdd() {
       role: "manager",
     };
     setIsLoading(true);
-    console.log("Data to be sent:", finalData);
+    // console.log("Data to be sent:", finalData);
     try {
       const res = await axios.post(
         "http://veemanage.runasp.net/api/User/add",
@@ -126,23 +126,20 @@ export default function ManagerAdd() {
       );
       const resEmail = res?.data?.email;
       const resPassword = res?.data?.password;
-      console.log("user Added:", res.data);
+      // console.log("user Added:", res.data);
       setresData({
         email: resEmail,
         password: resPassword,
       });
       setIsPopupOpen(true);
     } catch (error) {
-      console.error(" Error:", error);
+      // console.error(" Error:", error);
       setError("Something went wrong. Please try again.");
     }
 
     setIsLoading(false);
   }
-  return isLoading ? (
-    <Loader />
-  ) : (
-    <>
+  return <>
       <DynamicForm
         schema={schema}
         fields={fields}
@@ -153,12 +150,13 @@ export default function ManagerAdd() {
       />
       {isPopupOpen && (
         <Popup
-          message="User Created Successfully!"
+        isLoading={isLoading}
+        link={"/users/managers"}
           email={resData.email}
           password={resData.password}
           onClose={() => setIsPopupOpen(false)}
         />
       )}
     </>
-  );
+  
 }
