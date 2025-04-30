@@ -3,9 +3,10 @@ import * as Yup from "yup";
 import axios from "axios";
 import DynamicForm from "../DynamicForm/DynamicForm";
 import Popup from "../Popup/Popup";
+import { Link, useNavigate } from 'react-router';
 export default function CategoryAdd() {
 
-    
+    const navigate=useNavigate()
 const schema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     description: Yup.string().required("description is required"),
@@ -79,7 +80,9 @@ return (
           status={status}
           isLoading={isLoading}
           link={"/vehicles/categories"}
-          onClose={() => setIsPopupOpen(false)}
+          onClose={() =>{ 
+            navigate("/vehicles/categories")
+            setIsPopupOpen(false)}}
           />
         )}
     </>

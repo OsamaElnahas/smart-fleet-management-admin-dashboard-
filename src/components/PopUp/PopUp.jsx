@@ -41,9 +41,9 @@ const Popup = ({ message, onClose, onConfirm, email, password, isLoading, link ,
           <CheckStatus status={status===true ? "success" :"error"}/>
           <button
               onClick={onClose}
-              className="p-2 w-[100px] bg-red-400 text-white rounded-lg hover:bg-red-600 transition"
+              className="p-2 w-[100px] mt-12 bg-primaryColor text-white rounded-lg hover:bg-blue-700 transition"
             >
-              Close
+              Done
             </button>
         </>
           

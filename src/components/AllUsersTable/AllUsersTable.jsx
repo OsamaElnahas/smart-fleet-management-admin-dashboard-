@@ -66,7 +66,7 @@ export default function AllUsersTable({ titles, rows, columnSizes,baseUrl,keyOfQ
 
         {rows.map((row, index) => (
           <div
-            className={`grid text-center mb-2 bg-white rounded-lg  font-[300] shadow-md relative ${selectedRowIndex===index ? "shadow-lg border border-primaryColor" :"border border-stone-300"}`}
+            className={`grid text-center mb-2 bg-white rounded-lg  font-[300] shadow-md relative transition duration-500 ${selectedRowIndex===index ? "shadow-lg border-2 border-primaryColor" :"border border-stone-300"}`}
             key={index}
             style={{ gridTemplateColumns: columnSizes.join(" ") }}
             
@@ -76,22 +76,22 @@ export default function AllUsersTable({ titles, rows, columnSizes,baseUrl,keyOfQ
                 {item}
               </div>
             ))}
-              <div className="flex flex-col justify-center text-primaryColor font-bold ">
+              <div className="flex flex-col justify-center text-primaryColor font-bold cursor-pointer ">
 
               <IoEllipsisVertical  size={25} onClick={()=>handleToggle(index)}/>
               </div>
 
               {
-                selectedRowIndex===index &&<div className="flex flex-col gap-1 p-2 rounded-md shadow-2xl text-primaryColor border  border-primaryColor absolute right-0 -top-[87px] bg-white z-50 px-5">
+                selectedRowIndex===index &&<div className="flex flex-col gap-1 p-2 rounded-md shadow-2xl text-primaryColor border  border-primaryColor absolute right-0 -top-[87px] bg-white z-50 transition duration-500">
 
             <Link
               to={row.link}
-              className=" p-[3px] px-1 border-b border-stone-300  text-[16px] cursor-pointer  flex gap-3 items-center"
+              className=" p-[3px] px-1 border-b border-stone-300  text-[16px] cursor-pointer  flex gap-2 items-center transition duration-300 rounded-md hover:bg-primaryColor hover:text-white"
               >
               <span><FaUser/></span>  Profile
 
             </Link>
-            <div className=" p-[3px]  px-1 text-[16px] cursor-pointer  flex gap-3 items-center " onClick={()=>{
+            <div className=" p-[3px]  px-1 text-[16px] cursor-pointer  flex gap-2 items-center transition duration-300 rounded-md hover:bg-primaryColor hover:text-white " onClick={()=>{
                 setSelectedId(row.id);
               setIsvisable(true)}} > 
               <span><FaTrash/></span>
