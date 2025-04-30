@@ -20,7 +20,7 @@ export default function AllUsersTable({ titles, rows, columnSizes,baseUrl,keyOfQ
     onSuccess: () => {
       toast.success(' Deleted Successfully !');
       setIsvisable(false)
-      queryClient.invalidateQueries([key]);
+      queryClient.invalidateQueries([keyOfQuery]);
     },
     onError: (error) => {
       // console.error('Error deleting data:', error);
