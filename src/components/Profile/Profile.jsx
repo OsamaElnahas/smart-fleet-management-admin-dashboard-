@@ -104,9 +104,10 @@ export default function Profile({ data }) {
           <span className="icon text-4xl border rounded-[50%] p-4 border-gray-400">
             <FaUser />
           </span>
-          <div className="flex gap-2">
+          <div className="flex flex-col gap-2">
             <span>{data && data?.firstName + ' ' + data?.lastName}</span>
-          </div>
+            <span className='text-sm text-stone-500'>{data && "email : "+  data?.email }</span>
+              </div>
         </div>
 
         <div className="btns ml-auto flex gap-3">
