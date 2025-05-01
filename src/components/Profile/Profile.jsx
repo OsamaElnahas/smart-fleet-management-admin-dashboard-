@@ -76,6 +76,7 @@ export default function Profile({ data }) {
   }
   const mutation = useMutation({
     mutationFn:editData,
+    
     onSuccess: () => {
       toast.success('Edit Saved!');
       setEditMode(false);
