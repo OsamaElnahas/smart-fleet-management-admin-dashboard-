@@ -81,7 +81,7 @@ export default function Category() {
                 ) : item.name.toLowerCase().includes("truck") ? (
                   <FaTruck />
                 ) : (
-                  <FaCircle />
+                  <FaCar />
                 )}
               </span>
               <span>{item.name}</span>
@@ -92,11 +92,9 @@ export default function Category() {
                 <IoEllipsisVertical />
               </button>
               {openIndex === index && (
-                <div className="absolute bg-white shadow-md rounded-md p-2 border border-primaryColor right-2 -top-20">
+                <div className="absolute bg-white shadow-md rounded-md p-2 border border-primaryColor right-2 -top-16">
                   <ul className="flex flex-col items-start gap-2">
-                    <button className="text-primaryColor font-semibold hover:text-yellow-500 cursor-pointer">
-                      Edit
-                    </button>
+                  
                     <button
                       onClick={() =>{
                         setSelectedId(item.id)
@@ -104,7 +102,7 @@ export default function Category() {
                       }
                       } 
                         
-                      className="text-red-500 font-semibold hover:text-yellow-500 cursor-pointer"
+                      className="text-red-500 font-semibold hover:text-blue-700 cursor-pointer"
                     >
                       Delete
                     </button>
