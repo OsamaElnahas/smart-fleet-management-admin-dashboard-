@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ColorRing } from "react-loader-spinner";
 import Popup from "../Popup/Popup";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 // Predefined vehicle data (for Brand and Model dropdowns)
@@ -292,9 +292,9 @@ export default function ModelAdd() {
               )}
             </button>
             <button className="border border-stone-300 py-2 rounded-lg w-[100px]">
-              <a className="p-3 px-7" href="/model">
+              <Link className="p-3 px-7" to="/vehicles/model">
                 Cancel
-              </a>
+              </Link>
             </button>
           </div>
         </form>
