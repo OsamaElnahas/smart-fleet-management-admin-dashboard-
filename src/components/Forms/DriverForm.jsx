@@ -28,57 +28,57 @@ const fields = [
     name: "firstName",
     label: "First Name",
     type: "text",
-    placeholder: "Enter your first name",
+    placeholder: "Enter first name",
   },
   {
     name: "lastName",
     label: "Last Name",
     type: "text",
-    placeholder: "Enter your last name",
+    placeholder: "Enter last name",
   },
   {
     name: "phoneNumber",
     label: "Phone Number",
     type: "text",
-    placeholder: "Enter your phone number",
+    placeholder: "Enter phone number",
   },
 
   {
     name: "dateOfBirth",
     label: "Date of Birth",
     type: "date",
-    placeholder: "Enter your date of birth",
+    placeholder: "Enter date of birth",
   },
   {
     name: "nationalId",
     label: "National ID",
     type: "text",
-    placeholder: "Enter your national ID",
+    placeholder: "Enter national ID",
   },
 
   {
     name: "address.street",
     label: "Street",
     type: "text",
-    placeholder: "Enter your street address",
+    placeholder: "Enter street address",
   },
   {
     name: "address.area",
     label: "Area",
     type: "text",
-    placeholder: "Enter your area address",
+    placeholder: "Enter area address",
   },
   {
     name: "address.governorate",
     label: "Governorate",
     type: "text",
-    placeholder: "Enter your governorate address",
+    placeholder: "Enter governorate address",
   },
   {
     name: "address.country",
     label: "Country",
     type: "text",
-    placeholder: "Enter your country address",
+    placeholder: "Enter country address",
   },
 ];
 const defaultValues = {
