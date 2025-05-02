@@ -92,3 +92,79 @@ export default function VehiclesAdd() {
     />  
 </>
 }
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+
+// const VehiclesAdd = () => {
+//   const [brands, setBrands] = useState([]);
+//   const [models, setModels] = useState([]);
+//   const [selectedBrand, setSelectedBrand] = useState("");
+//   const [selectedModel, setSelectedModel] = useState("");
+
+//   // Fetch car brands from NHTSA API
+//   useEffect(() => {
+//     axios
+//       .get("https://vpic.nhtsa.dot.gov/api/vehicles/GetAllMakes?format=json")
+//       .then((res) => {
+//         const makes = res.data.Results.map((make) => make.Make_Name);
+//         setBrands(makes.sort());
+//       })
+//       .catch((err) => {
+//         console.error("Error fetching brands:", err);
+//       });
+//   }, []);
+
+//   // Fetch models when brand is selected
+//   useEffect(() => {
+//     if (selectedBrand) {
+//       axios
+//         .get(
+//           `https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/${selectedBrand}?format=json`
+//         )
+//         .then((res) => {
+//           const modelsData = res.data.Results.map((model) => model.Model_Name);
+//           setModels(modelsData.sort());
+//         })
+//         .catch((err) => {
+//           console.error("Error fetching models:", err);
+//         });
+//     } else {
+//       setModels([]);
+//     }
+//   }, [selectedBrand]);
+
+//   return (
+//     <form>
+//       <label>Brand:</label>
+//       <select
+//         value={selectedBrand}
+//         onChange={(e) => setSelectedBrand(e.target.value)}
+//       >
+//         <option value="">Select a brand</option>
+//         {brands.map((brand, idx) => (
+//           <option key={idx} value={brand}>
+//             {brand}
+//           </option>
+//         ))}
+//       </select>
+
+//       <br />
+
+//       <label>Model:</label>
+//       <select
+//         value={selectedModel}
+//         onChange={(e) => setSelectedModel(e.target.value)}
+//         disabled={!models.length}
+//       >
+//         <option value="">Select a model</option>
+//         {models.map((model, idx) => (
+//           <option key={idx} value={model}>
+//             {model}
+//           </option>
+//         ))}
+//       </select>
+//     </form>
+//   );
+// };
+
+

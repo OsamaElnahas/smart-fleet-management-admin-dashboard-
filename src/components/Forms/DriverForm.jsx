@@ -133,7 +133,7 @@ export default function DriverForm() {
       setIsPopupOpen(true);
     } catch (error) {
       // console.error("Login Error:", error);
-      setError("Something went wrong. Please try again.");
+      setError(error?.response?.data?.message||"Something went wrong");
     }
 
     setIsLoading(false);
@@ -147,6 +147,8 @@ export default function DriverForm() {
         title="Add Driver"
         defaultValues={defaultValues}
         back_link="/users/drivers"
+        error={error}
+        isLoading={isLoading}
       />
       {isPopupOpen && (
         <Popup

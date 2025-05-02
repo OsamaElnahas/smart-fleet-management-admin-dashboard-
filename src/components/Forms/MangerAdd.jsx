@@ -105,7 +105,7 @@ export default function ManagerAdd() {
   });
 
   const [isLoading, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState("");
+  const [error, setError] = React.useState(null);
 
   async function onSubmit(data) {
     const finalData = {
@@ -134,11 +134,13 @@ export default function ManagerAdd() {
       setIsPopupOpen(true);
     } catch (error) {
       // console.error(" Error:", error);
-      setError("Something went wrong. Please try again.");
+      setError(error?.response?.data?.message||"Something went wrong");
     }
 
     setIsLoading(false);
   }
+  console.log(error);
+  
   return <>
       <DynamicForm
         schema={schema}
@@ -147,6 +149,9 @@ export default function ManagerAdd() {
         title="Add Manager"
         defaultValues={defaultValues}
         back_link="/users/managers"
+        error={error}
+        isLoading={isLoading}
+
       />
       {isPopupOpen && (
         <Popup

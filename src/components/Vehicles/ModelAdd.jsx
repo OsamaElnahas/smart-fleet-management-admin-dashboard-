@@ -6,8 +6,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ColorRing } from "react-loader-spinner";
 import Popup from "../Popup/Popup";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
-// Predefined vehicle data (from ModelAdd)
+// Predefined vehicle data (for Brand and Model dropdowns)
 const vehicleData = {
   Sedan: {
     Hyundai: ["Elantra", "Accent", "Tucson", "Verna", "Sonata", "Kona"],
@@ -67,38 +68,56 @@ const vehicleData = {
     DFSK: ["C31", "C35"],
     Changan: ["Star Truck"],
     JMC: ["Board Truck"],
-    Bajaj: ["Maxima"],
+    Bajaj: ["Workhorse"],
     Foton: ["Tunland"],
   },
 };
 
-export default function CategoryAdd() {
+export default function ModelAdd() {
   const navigate = useNavigate();
 
-  // Predefined options for dropdowns
-  const categoryOptions = Object.keys(vehicleData);
-  const descriptionOptions = [
-    "Small passenger vehicle",
-    "Large off-road vehicle",
-    "Public transport",
-    "Heavy-duty transport",
-    "Light cargo transport",
-  ];
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedModel, setSelectedModel] = useState("");
+
+  const { data: categories = [], isLoading: isFetching, error: fetchError } = useQuery({
+    queryKey: ["getCategory"],
+    queryFn: async () => {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("No authentication token found");
+      const res = await axios.get("http://veemanage.runasp.net/api/Vehicle/Category", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data; // Assuming [{ name: "Sedan" }, ...]
+    },
+    onError: (error) => {
+      console.error("Failed to fetch categories:", error);
+    },
+  });
+
+  const brands = selectedCategory ? Object.keys(vehicleData[selectedCategory] || {}) : [];
+  const models = selectedBrand ? vehicleData[selectedCategory]?.[selectedBrand] || [] : [];
 
   const schema = Yup.object().shape({
-    name: Yup.string().required("Category name is required"),
-    description: Yup.string().required("Description is required"),
+    category: Yup.string().required("Category is required"),
+    brand: Yup.string().required("Brand is required"),
+    model: Yup.string().required("Model is required"),
   });
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      name: "",
-      description: "",
+      category: "",
+      brand: "",
+      model: "",
     },
     mode: "all",
   });
@@ -108,11 +127,36 @@ export default function CategoryAdd() {
   const [status, setStatus] = useState(false);
   const [error, setError] = useState("");
 
+  const handleCategoryChange = (e) => {
+    const value = e.target.value;
+    setSelectedCategory(value);
+    setSelectedBrand("");
+    setSelectedModel("");
+    setValue("category", value);
+    setValue("brand", "");
+    setValue("model", "");
+  };
+
+  const handleBrandChange = (e) => {
+    const value = e.target.value;
+    setSelectedBrand(value);
+    setSelectedModel("");
+    setValue("brand", value);
+    setValue("model", "");
+  };
+
+  const handleModelChange = (e) => {
+    const value = e.target.value;
+    setSelectedModel(value);
+    setValue("model", value);
+  };
+
+  // Form submission handler
   async function onSubmit(data) {
     setIsLoading(true);
     try {
       const res = await axios.post(
-        "http://veemanage.runasp.net/api/Vehicle/Category",
+        "http://veemanage.runasp.net/api/Vehicle/Model",
         data,
         {
           headers: {
@@ -123,6 +167,7 @@ export default function CategoryAdd() {
       console.log(res?.data);
       setStatus(true);
       setIsPopupOpen(true);
+      reset(); // Reset form after successful submission
     } catch (error) {
       setError(error?.response?.data?.message || "Something went wrong");
       setStatus(false);
@@ -132,51 +177,89 @@ export default function CategoryAdd() {
 
   return (
     <>
-      <div className="font-bold mb-7 text-2xl font-Inter">Add Category</div>
+      <div className="font-bold mb-7 text-2xl font-Inter">Add Model</div>
       <div>
         <form
           className="shadow-md p-6 rounded-lg flex flex-col gap-3 bg-white"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col gap-2 mb-1">
-            <label htmlFor="name" className="font-semibold">
-              Category Name
+            <label htmlFor="category" className="font-semibold">
+              Category
             </label>
             <select
-              {...register("name")}
+              {...register("category")}
               className="p-3 rounded-md m-1 w-96 border border-stone-300"
-              name="name"
+              name="category"
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+              disabled={isFetching || fetchError || !categories.length}
             >
-              <option value="">Select category</option>
-              {categoryOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
+              <option value="">Select a category</option>
+              {categories.map((category) => (
+                <option key={category.name} value={category.name}>
+                  {category.name}
                 </option>
               ))}
             </select>
-            {errors.name && (
-              <p className="text-red-500 text-sm">{errors.name.message}</p>
+            {errors.category && (
+              <p className="text-red-500 text-sm">{errors.category.message}</p>
+            )}
+            {fetchError && (
+              <p className="text-red-500 text-sm">
+                {fetchError.message || "Failed to fetch categories"}
+              </p>
+            )}
+            {isFetching && (
+              <p className="text-gray-500 text-sm">Loading categories...</p>
             )}
           </div>
 
           <div className="flex flex-col gap-2 mb-1">
-            <label htmlFor="description" className="font-semibold">
-              Description
+            <label htmlFor="brand" className="font-semibold">
+              Brand
             </label>
             <select
-              {...register("description")}
+              {...register("brand")}
               className="p-3 rounded-md m-1 w-96 border border-stone-300"
-              name="description"
+              name="brand"
+              value={selectedBrand}
+              onChange={handleBrandChange}
+              disabled={!brands.length}
             >
-              <option value="">Select description</option>
-              {descriptionOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
+              <option value="">Select a brand</option>
+              {brands.map((brand) => (
+                <option key={brand} value={brand}>
+                  {brand}
                 </option>
               ))}
             </select>
-            {errors.description && (
-              <p className="text-red-500 text-sm">{errors.description.message}</p>
+            {errors.brand && (
+              <p className="text-red-500 text-sm">{errors.brand.message}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-2 mb-1">
+            <label htmlFor="model" className="font-semibold">
+              Model
+            </label>
+            <select
+              {...register("model")}
+              className="p-3 rounded-md m-1 w-96 border border-stone-300"
+              name="model"
+              value={selectedModel}
+              onChange={handleModelChange}
+              disabled={!models.length}
+            >
+              <option value="">Select a model</option>
+              {models.map((model) => (
+                <option key={model} value={model}>
+                  {model}
+                </option>
+              ))}
+            </select>
+            {errors.model && (
+              <p className="text-red-500 text-sm">{errors.model.message}</p>
             )}
           </div>
 
@@ -209,7 +292,7 @@ export default function CategoryAdd() {
               )}
             </button>
             <button className="border border-stone-300 py-2 rounded-lg w-[100px]">
-              <a className="p-3 px-7" href="/vehicles/categories">
+              <a className="p-3 px-7" href="/model">
                 Cancel
               </a>
             </button>
@@ -221,9 +304,9 @@ export default function CategoryAdd() {
         <Popup
           status={status}
           isLoading={isLoading}
-          link="/vehicles/categories"
+          link="/model"
           onClose={() => {
-            navigate("/vehicles/categories");
+            navigate("/model");
             setIsPopupOpen(false);
           }}
         />

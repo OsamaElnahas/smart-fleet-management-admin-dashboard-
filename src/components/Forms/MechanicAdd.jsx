@@ -135,7 +135,7 @@ export default function MecghanicAdd() {
       setIsPopupOpen(true);
     } catch (error) {
       // console.error("Login Error:", error);
-      setError("Something went wrong. Please try again.");
+      setError(error?.response?.data?.message||"Something went wrong");
     }
 
     setIsLoading(false);
@@ -149,6 +149,8 @@ export default function MecghanicAdd() {
         title="Add Mechanic"
         defaultValues={defaultValues}
         back_link="/users/mechanics"
+        error={error}
+        isLoading={isLoading}
       />
       {isPopupOpen && (
         <Popup

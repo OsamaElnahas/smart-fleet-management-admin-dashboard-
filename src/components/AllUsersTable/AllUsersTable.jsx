@@ -126,7 +126,7 @@ export default function AllUsersTable({ titles, rows, columnSizes,baseUrl,keyOfQ
               >
                 View Profile
               </Link>
-              <div className=" py-1 px-3 text-[16px] cursor-pointer  flex gap-3 items-center bg-red-300 rounded-lg text-white w-28 text-center" onClick={()=>{
+              <div className=" py-1 px-3 text-[16px] cursor-pointer  flex gap-3 items-center bg-red-500 rounded-lg text-white w-28 text-center" onClick={()=>{
                 setSelectedId(row.id);
               setIsvisable(true)}} > 
               <span><FaTrash/></span>

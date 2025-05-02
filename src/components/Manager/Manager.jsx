@@ -4,8 +4,11 @@ import AllUsersTable from "../AllUsersTable/AllUsersTable";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import FetchWrapper from "../FetchWrapper";
+import { FaSearch } from "react-icons/fa";
+import Search from "../Search";
 
 export default function Manager() {
+  const [searchItem,setSearchItem]=useState("")
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["managers"],
     queryFn: () =>
@@ -25,7 +28,14 @@ export default function Manager() {
       return [];
     }
   }
-  // console.log("manager data:", data && data);
+  const filterUsers = data?.filter((item) =>
+    (item.firstName + " " + item.lastName).toLowerCase().includes(searchItem.toLowerCase()) || item.nationalId.includes(searchItem) || item.phoneNumber.includes(searchItem)
+
+  );
+  
+  console.log("manager data:", data && data);
+  console.log("search item",searchItem);
+  console.log("filter users",filterUsers);
   // isError && console.log("error from query", error?.message);
 
   return (
@@ -33,18 +43,25 @@ export default function Manager() {
       <div className="text-center mb-7 w-[100%] py-[0.5rem]  bg-stone-200 text-stone-700 border border-stone-300   rounded-md shadow-sm font-semibold text-xl">
         Managers
       </div>
+      <div className="flex items-center justify-between mb-8">
+
       <Link
         to={"/users/managers/add"}
-        className="block mb-8 border border-primaryColor w-[180px] p-2 text-center rounded-lg text-primaryColor font-bold"
-      >
+        className="block  border border-primaryColor w-[180px] p-2 text-center rounded-lg text-primaryColor font-bold"
+        >
         + Add Manager
       </Link>
+      <Search onChange={(e)=>
+        setSearchItem(e.target.value)
+      } />
+        </div>
 
       <FetchWrapper
         isLoading={isLoading}
         isError={isError}
         error={error}
         data={data}
+        filter={filterUsers}
       >
         <AllUsersTable
           baseUrl="http://veemanage.runasp.net/api/User"
@@ -60,7 +77,24 @@ export default function Manager() {
             "National ID",
             // "Address",
           ]}
-          rows={data?.map((item, index) => ({
+          rows={
+            filterUsers? filterUsers?.map((item, index) => ({
+              link: `/ManagerProfile/${item.id}`,
+              id:item.id,
+              values: [
+                index + 1,
+                item.firstName +" "+item.lastName,
+                item.phoneNumber,
+                item.email,
+                item.dateOfBirth,
+                item.nationalId,
+                // item.address?.governorate,
+              ],
+            }))
+            
+            :
+            
+            data?.map((item, index) => ({
             link: `/ManagerProfile/${item.id}`,
             id:item.id,
             values: [

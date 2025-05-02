@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import get from "lodash.get";
 import { Link, NavLink } from "react-router";
+import { ColorRing } from "react-loader-spinner";
 export default function DynamicForm({
   schema,
   fields,
@@ -10,6 +11,8 @@ export default function DynamicForm({
   title,
   defaultValues,
   back_link,
+  error,
+  isLoading
 }) {
   const {
     register,
@@ -20,6 +23,8 @@ export default function DynamicForm({
     defaultValues,
     mode: "all",
   });
+  console.log("error from DynamicForm",error);
+  
 
   return (
     <>
@@ -50,16 +55,31 @@ export default function DynamicForm({
             </div>
           ))}
 
+            {error&& <p className="text-red-500"> {error} </p>}
           <div className="flex justify-end w-[100%] gap-4 mt-4">
             <button
-              className={`py-2 rounded-lg w-[100px] ${
+              className={`py-2 rounded-lg w-[100px] text-center flex justify-center ${
                 !isValid
                   ? "bg-gray-100 text-gray-500 cursor-not-allowed"
                   : "bg-primaryColor text-white hover:bg-primaryColor-dark"
               }`}
               disabled={!isValid}
             >
-              Create
+             {isLoading ? (
+                             <div className="d-flex justify-content-center">
+                               <ColorRing
+                                 visible={true}
+                                 height="30"
+                                 width="30"
+                                 ariaLabel="color-ring-loading"
+                                 wrapperStyle={{}}
+                                 wrapperClass="color-ring-wrapper"
+                                 colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+                               />
+                             </div>
+                           ) : (
+                             "Create"
+                           )}
             </button>
             <button className="border border-stone-300 py-2  rounded-lg w-[100px]">
               <Link className="p-3 px-7" to={back_link}>
