@@ -49,8 +49,6 @@ export default function Manager() {
         <AllUsersTable
           baseUrl="http://veemanage.runasp.net/api/User"
           keyOfQuery={"managers"}
-
-
           titles={[
             "ID",
             "Name",
@@ -62,10 +60,10 @@ export default function Manager() {
           ]}
           rows={data?.map((item, index) => ({
             link: `/ManagerProfile/${item.id}`,
-            id:item.id,
+            id: item.id,
             values: [
               index + 1,
-              item.firstName +" "+item.lastName,
+              item.firstName + " " + item.lastName,
               item.phoneNumber,
               item.email,
               item.dateOfBirth,

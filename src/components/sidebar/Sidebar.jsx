@@ -72,6 +72,7 @@ const Sidebar = ({ isVisable, handleToggle }) => {
                 <MdKeyboardArrowUp className="text-gray-300 text-2xl" />
               ) : (
                 <MdKeyboardArrowDown className="text-gray-300 text-2xl" />
+                
               )}
             </div>
           </div>

@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import AllUsersTable from "../AllUsersTable/AllUsersTable";
 import { useState } from "react";
 import axios from "axios";
-import {  useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import FetchWrapper from "../FetchWrapper";
 
 export default function Vehicles() {
@@ -28,7 +28,7 @@ export default function Vehicles() {
     <>
       <div className="text-center mb-7 w-[100%] py-[0.5rem]   bg-stone-200 text-stone-700 border border-stone-300   rounded-md shadow-sm font-semibold text-xl">
         Vehicles
-    </div>
+      </div>
       <div className="controls">
         <div className="btns flex gap-5  mb-8">
           <Link
@@ -57,23 +57,21 @@ export default function Vehicles() {
           <AllUsersTable
             keyOfQuery={"vehicles"}
             baseUrl="http://veemanage.runasp.net/api/Vehicle"
-
-          titles={["ID", "Model", "Palet Number", "Joind Year", "Category"]}
-          rows={data?.map((item, index) => ({
-            link: `/VehiclesProfile/${item.id}`,
-            id:item.id,
-            values: [
-              index + 1,
-              item.name,
-              item.palletNumber,
-              item.joindYear,
-              item.category,
-            ],
-          }))}
-          columnSizes={["10%", "28%", "20%", "20%", "19%", "3%"]}
-        />
+            titles={["ID", "Model", "Palet Number", "Joind Year", "Category"]}
+            rows={data?.map((item, index) => ({
+              link: `/VehiclesProfile/${item.id}`,
+              id: item.id,
+              values: [
+                index + 1,
+                item.name,
+                item.palletNumber,
+                item.joindYear,
+                item.category,
+              ],
+            }))}
+            columnSizes={["10%", "28%", "20%", "20%", "19%", "3%"]}
+          />
         </FetchWrapper>
-        
       </div>
     </>
   );
