@@ -8,9 +8,8 @@ import Popup from "../Popup/Popup";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
-// Predefined vehicle data (for Brand and Model dropdowns)
 const vehicleData = {
-  Sedan: {
+  Car: {
     Hyundai: ["Elantra", "Accent", "Tucson", "Verna", "Sonata", "Kona"],
     Toyota: ["Corolla", "Yaris", "Camry", "Fortuner", "Land Cruiser", "Hilux"],
     Kia: ["Cerato", "Sportage", "Picanto", "Seltos", "K5", "Carnival"],
@@ -73,37 +72,45 @@ const vehicleData = {
   },
 };
 
+
 export default function ModelAdd() {
   const navigate = useNavigate();
-
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+  const [selectedCategoryName, setSelectedCategoryName] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState(false);
+  const [error, setError] = useState("");
 
-  const { data: categories = [], isLoading: isFetching, error: fetchError } = useQuery({
+  const { data: categories = [], isLoading: isFetching } = useQuery({
     queryKey: ["getCategory"],
     queryFn: async () => {
       const token = localStorage.getItem("token");
-      if (!token) throw new Error("No authentication token found");
-      const res = await axios.get("http://veemanage.runasp.net/api/Vehicle/Category", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      const res = await axios.get("https://veemanage.runasp.net/api/Vehicle/Category", {
+        headers: { Authorization: `Bearer ${token}` },
       });
-      return res.data; // Assuming [{ name: "Sedan" }, ...]
-    },
-    onError: (error) => {
-      console.error("Failed to fetch categories:", error);
+      return res.data;
     },
   });
 
-  const brands = selectedCategory ? Object.keys(vehicleData[selectedCategory] || {}) : [];
-  const models = selectedBrand ? vehicleData[selectedCategory]?.[selectedBrand] || [] : [];
+  const getNormalizedKey = (categoryName) => {
+    return Object.keys(vehicleData).find(
+      (key) => key.toLowerCase().trim() === categoryName.toLowerCase().trim()
+    );
+  };
+
+  const normalizedKey = getNormalizedKey(selectedCategoryName);
+  const brands = normalizedKey ? Object.keys(vehicleData[normalizedKey]) : [];
+  const models = normalizedKey && selectedBrand
+    ? vehicleData[normalizedKey][selectedBrand] || []
+    : [];
 
   const schema = Yup.object().shape({
-    category: Yup.string().required("Category is required"),
+    CategoryId: Yup.string().required("Category is required"),
     brand: Yup.string().required("Brand is required"),
-    model: Yup.string().required("Model is required"),
+    name: Yup.string().required("Model is required"),
   });
 
   const {
@@ -114,27 +121,23 @@ export default function ModelAdd() {
     reset,
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: {
-      category: "",
-      brand: "",
-      model: "",
-    },
+    defaultValues: { category: "", brand: "", model: "" },
     mode: "all",
   });
 
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [status, setStatus] = useState(false);
-  const [error, setError] = useState("");
-
   const handleCategoryChange = (e) => {
-    const value = e.target.value;
-    setSelectedCategory(value);
+    const id = e.target.value;
+    const selectedCat = categories.find((c) => c.id === id);
+    const name = selectedCat?.name || "";
+
+    setSelectedCategoryId(id);
+    setSelectedCategoryName(name);
     setSelectedBrand("");
     setSelectedModel("");
-    setValue("category", value);
+
+    setValue("category", id);
     setValue("brand", "");
-    setValue("model", "");
+    setValue("name", "");
   };
 
   const handleBrandChange = (e) => {
@@ -142,171 +145,138 @@ export default function ModelAdd() {
     setSelectedBrand(value);
     setSelectedModel("");
     setValue("brand", value);
-    setValue("model", "");
+    setValue("name", "");
   };
 
   const handleModelChange = (e) => {
     const value = e.target.value;
     setSelectedModel(value);
-    setValue("model", value);
+    setValue("name", value);
   };
 
-  // Form submission handler
-  async function onSubmit(data) {
+  const onSubmit = async (data) => {
+    console.log(data);
+    
     setIsLoading(true);
     try {
       const res = await axios.post(
-        "http://veemanage.runasp.net/api/Vehicle/Model",
+        "https://veemanage.runasp.net/api/Vehicle/Model",
         data,
         {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
-      console.log(res?.data);
       setStatus(true);
       setIsPopupOpen(true);
-      reset(); // Reset form after successful submission
-    } catch (error) {
-      setError(error?.response?.data?.message || "Something went wrong");
+      console.log(res?.data);
+      
+      reset();
+    } catch (err) {
+      setError(err?.response?.data?.message || "Something went wrong");
       setStatus(false);
+      console.log(err);
+      
     }
     setIsLoading(false);
-  }
+  };
 
   return (
     <>
       <div className="font-bold mb-7 text-2xl font-Inter">Add Model</div>
-      <div>
-        <form
-          className="shadow-md p-6 rounded-lg flex flex-col gap-3 bg-white"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <div className="flex flex-col gap-2 mb-1">
-            <label htmlFor="category" className="font-semibold">
-              Category
-            </label>
-            <select
-              {...register("category")}
-              className="p-3 rounded-md m-1 w-96 border border-stone-300"
-              name="category"
-              value={selectedCategory}
-              onChange={handleCategoryChange}
-              disabled={isFetching || fetchError || !categories.length}
-            >
-              <option value="">Select a category</option>
-              {categories.map((category) => (
-                <option key={category.name} value={category.name}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-            {errors.category && (
-              <p className="text-red-500 text-sm">{errors.category.message}</p>
-            )}
-            {fetchError && (
-              <p className="text-red-500 text-sm">
-                {fetchError.message || "Failed to fetch categories"}
-              </p>
-            )}
-            {isFetching && (
-              <p className="text-gray-500 text-sm">Loading categories...</p>
-            )}
-          </div>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="shadow-md p-6 rounded-lg flex flex-col gap-3 bg-white"
+      >
+        {/* Category */}
+        <div className="flex flex-col gap-2 mb-1">
+          <label className="font-semibold">Category</label>
+          <select
+            {...register("CategoryId")}
+            className="p-3 rounded-md m-1 w-96 border border-stone-300"
+            value={selectedCategoryId}
+            onChange={handleCategoryChange}
+            disabled={isFetching || !categories.length}
+          >
+            <option value="">Select Category</option>
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+          {errors.CategoryId && <p className="text-red-500 text-sm">{errors.CategoryId.message}</p>}
+        </div>
 
-          <div className="flex flex-col gap-2 mb-1">
-            <label htmlFor="brand" className="font-semibold">
-              Brand
-            </label>
-            <select
-              {...register("brand")}
-              className="p-3 rounded-md m-1 w-96 border border-stone-300"
-              name="brand"
-              value={selectedBrand}
-              onChange={handleBrandChange}
-              disabled={!brands.length}
-            >
-              <option value="">Select a brand</option>
-              {brands.map((brand) => (
-                <option key={brand} value={brand}>
-                  {brand}
-                </option>
-              ))}
-            </select>
-            {errors.brand && (
-              <p className="text-red-500 text-sm">{errors.brand.message}</p>
+        {/* Brand */}
+        <div className="flex flex-col gap-2 mb-1">
+          <label className="font-semibold">Brand</label>
+          <select
+            {...register("brand")}
+            className="p-3 rounded-md m-1 w-96 border border-stone-300"
+            value={selectedBrand}
+            onChange={handleBrandChange}
+            disabled={!brands.length}
+          >
+            <option value="">Select Brand</option>
+            {brands.map((brand) => (
+              <option key={brand} value={brand}>
+                {brand}
+              </option>
+            ))}
+          </select>
+          {errors.brand && <p className="text-red-500 text-sm">{errors.brand.message}</p>}
+        </div>
+
+        {/* Model */}
+        <div className="flex flex-col gap-2 mb-1">
+          <label className="font-semibold">Model</label>
+          <select
+            {...register("name")}
+            className="p-3 rounded-md m-1 w-96 border border-stone-300"
+            value={selectedModel}
+            onChange={handleModelChange}
+            disabled={!models.length}
+          >
+            <option value="">Select Model</option>
+            {models.map((model) => (
+              <option key={model} value={model}>
+                {model}
+              </option>
+            ))}
+          </select>
+          {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+        </div>
+
+        {error && <p className="text-red-500">{error}</p>}
+
+        {/* Submit */}
+        <div className="flex justify-end w-full gap-4 mt-4">
+          <button
+            type="submit"
+            className={`py-2 rounded-lg w-[100px] text-center flex justify-center ${
+              !isValid ? "bg-gray-100 text-gray-500 cursor-not-allowed" : "bg-primaryColor text-white hover:bg-primaryColor-dark"
+            }`}
+            disabled={!isValid}
+          >
+            {isLoading ? (
+              <ColorRing visible height="30" width="30" ariaLabel="loading" colors={["#fff"]} />
+            ) : (
+              "Create"
             )}
-          </div>
-
-          <div className="flex flex-col gap-2 mb-1">
-            <label htmlFor="model" className="font-semibold">
-              Model
-            </label>
-            <select
-              {...register("model")}
-              className="p-3 rounded-md m-1 w-96 border border-stone-300"
-              name="model"
-              value={selectedModel}
-              onChange={handleModelChange}
-              disabled={!models.length}
-            >
-              <option value="">Select a model</option>
-              {models.map((model) => (
-                <option key={model} value={model}>
-                  {model}
-                </option>
-              ))}
-            </select>
-            {errors.model && (
-              <p className="text-red-500 text-sm">{errors.model.message}</p>
-            )}
-          </div>
-
-          {error && <p className="text-red-500">{error}</p>}
-
-          <div className="flex justify-end w-[100%] gap-4 mt-4">
-            <button
-              type="submit"
-              className={`py-2 rounded-lg w-[100px] text-center flex justify-center ${
-                !isValid
-                  ? "bg-gray-100 text-gray-500 cursor-not-allowed"
-                  : "bg-primaryColor text-white hover:bg-primaryColor-dark"
-              }`}
-              disabled={!isValid}
-            >
-              {isLoading ? (
-                <div className="d-flex justify-content-center">
-                  <ColorRing
-                    visible={true}
-                    height="30"
-                    width="30"
-                    ariaLabel="color-ring-loading"
-                    wrapperStyle={{}}
-                    wrapperClass="color-ring-wrapper"
-                    colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
-                  />
-                </div>
-              ) : (
-                "Create"
-              )}
-            </button>
-            <button className="border border-stone-300 py-2 rounded-lg w-[100px]">
-              <Link className="p-3 px-7" to="/vehicles/model">
-                Cancel
-              </Link>
-            </button>
-          </div>
-        </form>
-      </div>
+          </button>
+          <Link to="/vehicles/model" className="border border-stone-300 py-2 rounded-lg w-[100px] text-center">
+            Cancel
+          </Link>
+        </div>
+      </form>
 
       {isPopupOpen && (
         <Popup
           status={status}
           isLoading={isLoading}
-          link="/model"
+          link="/vehicles/model"
           onClose={() => {
-            navigate("/model");
+            navigate("/vehicles/model");
             setIsPopupOpen(false);
           }}
         />

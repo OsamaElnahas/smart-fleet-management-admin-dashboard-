@@ -163,5 +163,5 @@ export default function ManagerAdd() {
         />
       )}
     </>
-  );
+  
 }
