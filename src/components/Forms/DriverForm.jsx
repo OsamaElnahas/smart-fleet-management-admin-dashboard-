@@ -115,7 +115,7 @@ export default function DriverForm() {
     };
     try {
       const res = await axios.post(
-        "http://veemanage.runasp.net/api/User/add",
+        "https://veemanage.runasp.net/api/User/add",
         finalData,
         {
           headers: {
@@ -150,9 +150,8 @@ export default function DriverForm() {
       />
       {isPopupOpen && (
         <Popup
-        isLoading={isLoading}
-        link={"/users/drivers"}
-
+          isLoading={isLoading}
+          link={"/users/drivers"}
           email={resData.email}
           password={resData.password}
           onClose={() => setIsPopupOpen(false)}

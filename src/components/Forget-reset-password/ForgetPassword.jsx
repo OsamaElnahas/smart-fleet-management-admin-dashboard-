@@ -26,7 +26,7 @@ export default function ForgetPassword() {
     setIsLoading(true);
     try {
       const res = await axios.post(
-        "http://veemanage.runasp.net/api/Account/forgotpassword",
+        "https://veemanage.runasp.net/api/Account/forgotpassword",
         data
       );
       console.log(res.data);

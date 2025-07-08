@@ -41,7 +41,7 @@ export default function CategoryAdd() {
 
     try {
       const res = await axios.post(
-        "http://veemanage.runasp.net/api/Vehicle/Category",
+        "https://veemanage.runasp.net/api/Vehicle/Category",
         data,
         {
           headers: {

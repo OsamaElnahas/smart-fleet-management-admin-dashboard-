@@ -9,7 +9,7 @@ export default function Manager() {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["managers"],
     queryFn: () =>
-      getDataOfUsers("http://veemanage.runasp.net/api/User/managers"),
+      getDataOfUsers("https://veemanage.runasp.net/api/User/all/manager"),
   });
 
   async function getDataOfUsers(api) {
@@ -47,7 +47,7 @@ export default function Manager() {
         data={data}
       >
         <AllUsersTable
-          baseUrl="http://veemanage.runasp.net/api/User"
+          baseUrl="https://veemanage.runasp.net/api/User"
           keyOfQuery={"managers"}
           titles={[
             "ID",

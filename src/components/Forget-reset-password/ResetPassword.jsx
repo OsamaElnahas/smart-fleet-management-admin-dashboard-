@@ -38,7 +38,7 @@ export default function ResetPassword() {
 
     try {
       const res = await axios.post(
-        "http://veemanage.runasp.net/api/Account/resetpassword",
+        "https://veemanage.runasp.net/api/Account/resetpassword",
         finalData
       );
       {

@@ -115,13 +115,13 @@ export default function MecghanicAdd() {
     };
     try {
       const res = await axios.post(
-        "http://veemanage.runasp.net/api/User/add",
+        "https://veemanage.runasp.net/api/User/add",
         finalData,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        } 
+        }
       );
       // console.log("Login Successful:", res.data);
       const resEmail = res?.data?.email;
