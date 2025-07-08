@@ -76,8 +76,6 @@ export default function VehiclesAdd() {
     queryFn: getModels,
   });
 
-  
-
   async function onSubmit(data) {
     setIsLoading(true);
     setError("");
