@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Game</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="rules">
+        <div class="ruleWord">Rules</div>
+        <div class="theRules">
+            <p>- IF The Score of Dice is 1 The Current score Will Be Zero and The Turn will be switched</p>
+            <p>- Press Hold Will Save Your Current Score To be Add to Total score and Switched the Turn</p>
+            <p>- Winner is The First One get 40 points in total score OR in current score OR mixed </p>
+        </div>
+    </div>
+    <div class="main_box">
+        <div class="control">
+            <button id="newgame">New Game</button>
+            <img id="dice" src="./dice_PNG135.png" alt="Dice Image">
+            <button id="rolldice">Roll Dice</button>
+            <button id="hold" title="Hold To Save Your Current Score And Switch The Turn">Hold</button>
+            <div class="inputs">
+                <input type="text" id="player1Name" placeholder="Enter Player 1 Name">
+                <input type="text" id="player2Name" placeholder="Enter Player 2 Name">
+            </div>
+        </div>
+        <div class="boxes">
+            <div id="box1">
+                <div id="player1" class="active-player">Player One</div>
+                <div id="current_score1" title="Press Hold to Add your cuurent score to Total score"></div>
+                <div class="total_score" title=" Winner by reach 40 ">
+                    <div>Total Score</div>
+                    <div id="score1" title=" Winner by reach 40 ">0</div>
+                    <div id="gamesWons1"></div>
+                </div>
+            </div>
+            <div id="box2">
+                <div id="player2">Player Two</div>
+                <div id="current_score2" title="Press Hold to Add your cuurent score to Total score"></div>
+                <div class="total_score" title=" Winner by reach 40 ">
+                    <div>Total Score</div>
+                    <div id="score2" title=" Winner by reach 40 ">0</div>
+                    <div id="gamesWons2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./main.js "></script>
+</body>
+
+</html>

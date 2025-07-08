@@ -66,9 +66,9 @@ export default function DynamicForm({
               disabled={!isValid}
             >
              {isLoading ? (
-                             <div className="d-flex justify-content-center">
-                               <ColorRing
-                                 visible={true}
+                            <div className="d-flex justify-content-center">
+                            <ColorRing
+                              visible={true}
                                  height="30"
                                  width="30"
                                  ariaLabel="color-ring-loading"

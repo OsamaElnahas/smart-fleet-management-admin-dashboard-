@@ -46,7 +46,7 @@ export default function Manager() {
       <div className="flex items-center justify-between mb-8">
 
       <Link
-        to={"/users/managers/add"}
+        to={"/users/managers /add"}
         className="block  border border-primaryColor w-[180px] p-2 text-center rounded-lg text-primaryColor font-bold"
         >
         + Add Manager

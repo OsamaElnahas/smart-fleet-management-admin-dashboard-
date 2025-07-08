@@ -1,0 +1,126 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    background-color: #3f5c40;
+    font-family: "Open Sans", sans-serif;
+}
+
+.main_box {
+    width: 70%;
+    /* background-color: #d2d2d2; */
+    background-color: #c0cf9d;
+    padding: 20px;
+    margin-left: 12.5%;
+    margin-top: 10%;
+    border-radius: 10px;
+    height: 400px;
+    position: relative;
+    filter: drop-shadow(20px 10px 10px black);
+}
+
+.main_box .control {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 10%;
+    position: absolute;
+    left: 45%;
+}
+
+.main_box .control button {
+    border-radius: 12px;
+    padding: 5px 12px;
+    margin-bottom: 24px;
+    border: 1px solid #eee;
+    transition: 0.3s;
+    background-color: #3f5c40;
+    color: white;
+    font-size: 14px;
+}
+
+.main_box .control button:hover {
+    background-color: #eee;
+    color: black;
+    cursor: pointer;
+}
+
+.main_box .control #dice {
+    margin-bottom: 100px;
+    filter: drop-shadow(0px 0px 18px black);
+    background-color: black;
+    border-radius: 12px;
+    border: 1px solid black;
+    width: 100%;
+}
+
+.main_box .boxes {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.main_box .boxes #box1,
+.main_box .boxes #box2 {
+    padding: 12px 40px;
+    font-size: 32px;
+    font-weight: normal;
+    border-radius: 12px;
+    border: 1px solid #3f5c40;
+    height: 395px;
+    width: 250px;
+    text-align: center;
+}
+
+.main_box .boxes #box1 #player1,
+.main_box .boxes #box2 #player2 {
+    margin-bottom: 30px;
+    font-size: 40px;
+    font-weight: normal;
+}
+
+.active-player {
+    font-weight: bold;
+    color: rgb(69, 105, 70);
+    animation: rotate 1s infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(5deg);
+    }
+    10% {
+        transform: rotate(10deg);
+    }
+}
+
+.main_box .boxes #box1 #current_score1,
+.main_box .boxes #box2 #current_score2 {
+    margin-bottom: 100px;
+    font-size: 17px;
+    color: rgb(136, 65, 65);
+    text-align: center;
+    font-weight: bold;
+}
+
+.main_box .boxes #box1 .total_score,
+.main_box .boxes #box2 .total_score {
+    background-color: #c04b34;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 12px;
+    filter: drop-shadow(10px 10px 8px black);
+    font-size: 22px;
+}
+
+.main_box .boxes .total_score div {
+    padding: 8px 12px 0px 12px;
+}
+
+.main_box .boxes .total_score #gamesWons1,
+.main_box .boxes .total_score #gamesWons2 {
+    font-size: 16px;
+    margin-bottom: 12px;
+}
