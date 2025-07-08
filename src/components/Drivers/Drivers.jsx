@@ -58,20 +58,6 @@ export default function Drivers() {
         </div>
         
         <FetchWrapper isLoading={isLoading} isError={isError} error={error} data={data}   filter={filterUsers}
-        >
-
-
-        <AllUsersTable 
-                    keyOfQuery={"drivers"}
-
-          baseUrl="http://veemanage.runasp.net/api/User"
-
-
-      <FetchWrapper
-        isLoading={isLoading}
-        isError={isError}
-        error={error}
-        data={data}
       >
         <AllUsersTable
           keyOfQuery={"drivers"}
