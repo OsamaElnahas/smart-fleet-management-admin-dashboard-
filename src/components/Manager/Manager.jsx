@@ -12,7 +12,7 @@ export default function Manager() {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["managers"],
     queryFn: () =>
-      getDataOfUsers("http://veemanage.runasp.net/api/User/managers"),
+      getDataOfUsers("https://veemanage.runasp.net/api/User/all/manager"),
   });
 
   async function getDataOfUsers(api) {
@@ -64,10 +64,8 @@ export default function Manager() {
         filter={filterUsers}
       >
         <AllUsersTable
-          baseUrl="http://veemanage.runasp.net/api/User"
+          baseUrl="https://veemanage.runasp.net/api/User"
           keyOfQuery={"managers"}
-
-
           titles={[
             "ID",
             "Name",
@@ -96,10 +94,10 @@ export default function Manager() {
             
             data?.map((item, index) => ({
             link: `/ManagerProfile/${item.id}`,
-            id:item.id,
+            id: item.id,
             values: [
               index + 1,
-              item.firstName +" "+item.lastName,
+              item.firstName + " " + item.lastName,
               item.phoneNumber,
               item.email,
               item.dateOfBirth,

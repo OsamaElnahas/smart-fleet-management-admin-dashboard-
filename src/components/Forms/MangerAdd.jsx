@@ -116,7 +116,7 @@ export default function ManagerAdd() {
     // console.log("Data to be sent:", finalData);
     try {
       const res = await axios.post(
-        "http://veemanage.runasp.net/api/User/add",
+        "https://veemanage.runasp.net/api/User/add",
         finalData,
         {
           headers: {
@@ -155,13 +155,13 @@ export default function ManagerAdd() {
       />
       {isPopupOpen && (
         <Popup
-        isLoading={isLoading}
-        link={"/users/managers"}
+          isLoading={isLoading}
+          link={"/users/managers"}
           email={resData.email}
           password={resData.password}
           onClose={() => setIsPopupOpen(false)}
         />
       )}
     </>
-  
+  );
 }

@@ -33,7 +33,7 @@ export default function Login() {
     try {
       // setIsLoading(true);
       const res = await axios.post(
-        "http://veemanage.runasp.net/api/Account/login",
+        "https://veemanage.runasp.net/api/Account/login",
         data
       );
       // console.log("Login Successful:", res.data);

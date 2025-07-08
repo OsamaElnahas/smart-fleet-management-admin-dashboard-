@@ -15,37 +15,54 @@ const Dashboard = () => {
     isError,
   } = useQuery({
     queryKey: ["allUsers"],
-    queryFn: () => getDataOfUsers("http://veemanage.runasp.net/api/User/all","all user data"),
+    queryFn: () =>
+      getDataOfUsers(
+        "https://veemanage.runasp.net/api/User/all/users",
+        "all users"
+      ),
   });
   const { data: Drivers } = useQuery({
     queryKey: ["drivers"],
     queryFn: () =>
-      getDataOfUsers("http://veemanage.runasp.net/api/User/drivers","drivers data"),
+      getDataOfUsers(
+        "https://veemanage.runasp.net/api/User/all/driver",
+        "drivers data"
+      ),
   });
   const { data: mechanics } = useQuery({
     queryKey: ["mechanics"],
     queryFn: () =>
-      getDataOfUsers(" http://veemanage.runasp.net/api/User/mechanics","mechanics data"),
+      getDataOfUsers(
+        "https://veemanage.runasp.net/api/User/all/mechanic",
+        "mechanics data"
+      ),
   });
   const { data: managers } = useQuery({
     queryKey: ["managers"],
     queryFn: () =>
-      getDataOfUsers("http://veemanage.runasp.net/api/User/managers","managers data"),
+      getDataOfUsers(
+        "https://veemanage.runasp.net/api/User/all/manager",
+        "managers data"
+      ),
   });
   const { data: Vehicles } = useQuery({
     queryKey: ["Vehicles"],
-    queryFn: () => getDataOfUsers("http://veemanage.runasp.net/api/Vehicle","Vehicle data"),
+    queryFn: () =>
+      getDataOfUsers(
+        "https://veemanage.runasp.net/api/Vehicle",
+        "Vehicle data"
+      ),
   });
 
-  async function getDataOfUsers(api,message) {
+  async function getDataOfUsers(api, message) {
     try {
       const res = await axios.get(api, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      // console.log(message, res?.data);
-      
+      console.log(message, res);
+
       return res?.data;
     } catch (error) {
       // console.error("Error fetching users:", error);
@@ -68,9 +85,8 @@ const Dashboard = () => {
   // console.log("Users data:", data&&data);
 
   return (
-  
     <>
-    {isLoading&&<Loader/>}
+      {isLoading && <Loader />}
       <div className="title text-[1.8rem] font-bold mb-10 text-[#212529]">
         Dashboard
       </div>

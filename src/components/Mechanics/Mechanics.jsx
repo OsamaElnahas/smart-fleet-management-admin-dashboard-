@@ -11,16 +11,20 @@ export default function Mechans() {
   const [searchItem,setSearchItem]=useState("")
 
   const {isLoading ,data,isError,error}= useQuery({
+
     queryKey: ["mechanics"],
     queryFn: getDataOfUsers,
   });
   async function getDataOfUsers() {
     try {
-      const res = await axios.get("http://veemanage.runasp.net/api/User/mechanics", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const res = await axios.get(
+        "https://veemanage.runasp.net/api/User/all/mechanic",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       // console.log("mechanic data", res?.data);
       return res?.data;
     } catch (error) {
@@ -33,8 +37,9 @@ export default function Mechans() {
 
   );
 
-  return <>
-  <div className="text-center mb-7 w-[100%] py-[0.5rem]  bg-stone-200 text-stone-700 border border-stone-300   rounded-md shadow-sm font-semibold text-xl">
+  return (
+    <>
+      <div className="text-center mb-7 w-[100%] py-[0.5rem]  bg-stone-200 text-stone-700 border border-stone-300   rounded-md shadow-sm font-semibold text-xl">
         Mechanics
     </div>
     <div className="flex mb-8 justify-between items-center">
@@ -42,6 +47,7 @@ export default function Mechans() {
       <Link
         to={"/users/mechanics/add"}
         className="block  border border-primaryColor w-[180px] p-2 text-center rounded-lg text-primaryColor font-bold">
+
         + Add Mechanic
       </Link>
       <Search onChange={(e)=>
@@ -56,7 +62,7 @@ export default function Mechans() {
       <AllUsersTable
                   keyOfQuery={"mechanics"}
 
-        baseUrl="http://veemanage.runasp.net/api/User"
+          baseUrl="https://veemanage.runasp.net/api/User"
 
       titles={[
         "ID",
@@ -99,6 +105,7 @@ export default function Mechans() {
                       
                       />
   </FetchWrapper>
+
     </>
-  
+  );
 }

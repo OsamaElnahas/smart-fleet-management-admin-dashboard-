@@ -4,7 +4,6 @@ import DynamicForm from "../DynamicForm/DynamicForm";
 import axios from "axios";
 import Popup from "../Popup/Popup";
 
-
 const schema = Yup.object().shape({
   firstName: Yup.string().required("Name is required"),
   lastName: Yup.string().required("Name is required"),
@@ -23,7 +22,6 @@ const schema = Yup.object().shape({
     country: Yup.string().required("Country is required"),
   }),
 });
-
 
 const fields = [
   {
@@ -117,7 +115,7 @@ export default function MecghanicAdd() {
     };
     try {
       const res = await axios.post(
-        "http://veemanage.runasp.net/api/User/add",
+        "https://veemanage.runasp.net/api/User/add",
         finalData,
         {
           headers: {
@@ -154,9 +152,8 @@ export default function MecghanicAdd() {
       />
       {isPopupOpen && (
         <Popup
-        isLoading={isLoading}
-        link={"/users/mechanics"}
-
+          isLoading={isLoading}
+          link={"/users/mechanics"}
           email={resData.email}
           password={resData.password}
           onClose={() => setIsPopupOpen(false)}

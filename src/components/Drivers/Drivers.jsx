@@ -11,22 +11,23 @@ export default function Drivers() {
   const [searchItem,setSearchItem]=useState("")
 
  const {isLoading ,data,isError,error}= useQuery({
+
     queryKey: ["drivers"],
     queryFn: getDataOfUsers,
   });
 
   async function getDataOfUsers() {
     try {
-      const res = await axios.get("http://veemanage.runasp.net/api/User/drivers", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-
-      });
+      const res = await axios.get(
+        "https://veemanage.runasp.net/api/User/all/driver",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       // console.log("driver data", res?.data);
       return res?.data;
-      
-
     } catch (error) {
       // console.error("Error fetching users:", error);
       return [];
@@ -43,6 +44,7 @@ export default function Drivers() {
   Drivers
     </div>
     <div className="flex justify-between items-center mb-8">
+
 
       <Link
         to={"/users/drivers/add"}
@@ -64,6 +66,16 @@ export default function Drivers() {
 
           baseUrl="http://veemanage.runasp.net/api/User"
 
+
+      <FetchWrapper
+        isLoading={isLoading}
+        isError={isError}
+        error={error}
+        data={data}
+      >
+        <AllUsersTable
+          keyOfQuery={"drivers"}
+          baseUrl="https://veemanage.runasp.net/api/User"
           titles={[
           "ID",
           "Name",
@@ -79,6 +91,7 @@ export default function Drivers() {
             values: [
               index + 1,
               item.firstName +" "+item.lastName,
+
               item.phoneNumber,
               item.email,
               item.dateOfBirth,
@@ -106,12 +119,9 @@ export default function Drivers() {
         
         columnSizes={["8%", "16%", "20%", "20%", "15%", "18%", "3%"]}
         
+
         />
-        </FetchWrapper>
-
-
-        
-        
+      </FetchWrapper>
     </>
   );
 }

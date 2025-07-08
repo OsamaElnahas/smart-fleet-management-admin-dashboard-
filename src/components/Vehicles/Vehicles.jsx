@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import AllUsersTable from "../AllUsersTable/AllUsersTable";
 import { useState } from "react";
 import axios from "axios";
-import {  useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import FetchWrapper from "../FetchWrapper";
 import Search from "../Search";
 
@@ -18,7 +18,7 @@ export default function Vehicles() {
   async function getVehicles() {
     try {
       const response = await axios.get(
-        "http://veemanage.runasp.net/api/Vehicle"
+        "https://veemanage.runasp.net/api/Vehicle"
       );
       return response?.data;
     } catch (error) {
@@ -40,6 +40,7 @@ export default function Vehicles() {
     </div>
       <div className="controls flex justify-between items-center mb-8">
         <div className="btns flex gap-5 ">
+
           <Link
             to={"/vehicles/add"}
             className="block  border border-primaryColor w-[180px] p-2 text-center rounded-lg text-primaryColor font-bold"
@@ -68,13 +69,14 @@ export default function Vehicles() {
         <FetchWrapper isLoading={isLoading} isError={isError} error={error} data={data}   filter={filterUsers}>
           <AllUsersTable
             keyOfQuery={"vehicles"}
-            baseUrl="http://veemanage.runasp.net/api/Vehicle"
+            baseUrl="https://veemanage.runasp.net/api/Vehicle"
 
           titles={["ID", "Model", "Palet Number", "Joind Year", "Category"]}
           rows={
             filterUsers?filterUsers.map((item, index) => ({
               link: `/VehiclesProfile/${item.id}`,
               id:item.id,
+
               values: [
                 index + 1,
                 item.name,
@@ -99,8 +101,8 @@ export default function Vehicles() {
           }))}
           columnSizes={["10%", "28%", "20%", "20%", "19%", "3%"]}
         />
+
         </FetchWrapper>
-        
       </div>
     </>
   );

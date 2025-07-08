@@ -21,7 +21,7 @@ export default function Category() {
   async function delData(id) {
     try {
       const res = await axios.delete(
-        `http://veemanage.runasp.net/api/Vehicle/Category/${id}`,
+        `https://veemanage.runasp.net/api/Vehicle/Category/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -43,7 +43,7 @@ export default function Category() {
   async function getCategory() {
     try {
       const response = await axios.get(
-        "http://veemanage.runasp.net/api/Vehicle/Category",
+        "https://veemanage.runasp.net/api/Vehicle/Category",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
