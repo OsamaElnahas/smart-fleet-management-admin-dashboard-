@@ -1,0 +1,49 @@
+button {
+    background-color: #815854;
+    color: #F9EBDE;
+    border-radius: 12px;
+    padding: 18px 22px;
+    display: block;
+    margin: 60px auto;
+    font-size: 24px;
+    transition: 0.4s;
+}
+
+button:hover {
+    background-color: #F9EBDE;
+    color: #815854;
+}
+
+.parent {
+    width: 1000px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    background-color: #F9EBDE;
+    gap: 10px;
+    padding: 30px 80px;
+    display: none;
+    transition: 0.3s;
+}
+
+.card {
+    font-weight: normal;
+    border-radius: 16px;
+    background-color: #815854;
+    color: #F9EBDE;
+    padding: 5px 12px;
+}
+
+.card h3 {
+    font-size: 30px;
+    text-align: center;
+}
+
+.card p {
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+.closeBtn button {
+    display: none;
+}

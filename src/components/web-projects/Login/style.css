@@ -1,0 +1,35 @@
+:root {
+    --mainColor: #007bff;
+}
+
+.welcome-text {
+    font-size: 2rem;
+    color: var(--mainColor);
+}
+
+.logo-wrapper {
+    width: 5.5rem;
+    height: 5.5rem;
+    background-color: var(--mainColor);
+    border-radius: 50%;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-img {
+    width: 100%;
+    height: 60%;
+    object-fit: contain;
+}
+
+.dashboard-label {
+    color: var(--mainColor);
+}
+
+.power-text {
+    bottom: 5%;
+    right: 10%;
+    color: var(--mainColor);
+}

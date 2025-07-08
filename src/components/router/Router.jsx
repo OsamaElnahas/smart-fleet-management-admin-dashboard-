@@ -24,6 +24,7 @@ import VehiclesProfile from "../Vehicles/VehiclesProfile";
 import DriverProfile from "../Drivers/DriverProfile";
 import MechanicsProfile from "../Mechanics/MechanicsProfile";
 import CategoryAdd from "../Forms/CategoryAdd";
+import ModelAdd from "../Vehicles/ModelAdd";
 
 const Router = createBrowserRouter([
   {
@@ -51,6 +52,7 @@ const Router = createBrowserRouter([
           { path: "/driverProfile/:id", element: <DriverProfile /> },
           { path: "/mechanicProfile/:id", element: <MechanicsProfile /> },
           { path: "/category/add", element: <CategoryAdd /> },
+          { path: "/model/add", element: <ModelAdd /> },
         ],
       },
     ],
