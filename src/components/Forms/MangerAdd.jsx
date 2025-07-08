@@ -2,6 +2,8 @@ import React from "react";
 import * as Yup from "yup";
 import DynamicForm from "../DynamicForm/DynamicForm";
 import axios from "axios";
+import Loader from "../Loader/Loader";
+import Popup from "../Popup/Popup";
 
 const schema = Yup.object().shape({
   firstName: Yup.string().required("Name is required"),
@@ -9,6 +11,11 @@ const schema = Yup.object().shape({
   phoneNumber: Yup.string()
     .matches(/^\d+$/, "Please enter a valid phone number")
     .required("Phone number is required"),
+  dateOfBirth: Yup.string().required("Date of birth is required"),
+  nationalId: Yup.string()
+    .matches(/^\d+$/, "Please enter a valid national ID")
+    .required("National ID is required"),
+  // role: Yup.string().oneOf(["Manager"]).required(),
   address: Yup.object({
     street: Yup.string().required("Street is required"),
     area: Yup.string().required("Area is required"),
@@ -35,6 +42,20 @@ const fields = [
     type: "text",
     placeholder: "Enter your phone number",
   },
+
+  {
+    name: "dateOfBirth",
+    label: "Date of Birth",
+    type: "date",
+    placeholder: "Enter your date of birth",
+  },
+  {
+    name: "nationalId",
+    label: "National ID",
+    type: "text",
+    placeholder: "Enter your national ID",
+  },
+
   {
     name: "address.street",
     label: "Street",
@@ -64,6 +85,10 @@ const defaultValues = {
   firstName: "",
   lastName: "",
   phoneNumber: "",
+  dateOfBirth: "",
+  nationalId: "",
+  // role: "Manager",
+
   address: {
     street: "",
     area: "",
@@ -73,19 +98,42 @@ const defaultValues = {
 };
 
 export default function ManagerAdd() {
+  const [isPopupOpen, setIsPopupOpen] = React.useState(false);
+  const [resData, setresData] = React.useState({
+    email: "",
+    password: "",
+  });
+
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState("");
 
   async function onSubmit(data) {
+    const finalData = {
+      ...data,
+      role: "manager",
+    };
     setIsLoading(true);
+    // console.log("Data to be sent:", finalData);
     try {
       const res = await axios.post(
-        "http://localhost:5034/api/Account/login",
-        data
+        "https://veemanage.runasp.net/api/User/add",
+        finalData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
-      console.log("Login Successful:", res.data);
+      const resEmail = res?.data?.email;
+      const resPassword = res?.data?.password;
+      // console.log("user Added:", res.data);
+      setresData({
+        email: resEmail,
+        password: resPassword,
+      });
+      setIsPopupOpen(true);
     } catch (error) {
-      console.error("Login Error:", error);
+      // console.error(" Error:", error);
       setError("Something went wrong. Please try again.");
     }
 
@@ -101,6 +149,15 @@ export default function ManagerAdd() {
         defaultValues={defaultValues}
         back_link="/users/managers"
       />
+      {isPopupOpen && (
+        <Popup
+          isLoading={isLoading}
+          link={"/users/managers"}
+          email={resData.email}
+          password={resData.password}
+          onClose={() => setIsPopupOpen(false)}
+        />
+      )}
     </>
   );
 }

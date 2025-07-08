@@ -6,9 +6,10 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdLogout } from "react-icons/md";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Sidebar = ({ isVisable, handleToggle }) => {
+  const navigate = useNavigate();
   const [showUsersSubmenu, setShowUsersSubmenu] = useState(false);
   const [showVehiclesSubmenu, setShowVehiclesSubmenu] = useState(false);
   const [isActive, setisActive] = useState(false);
@@ -19,7 +20,10 @@ const Sidebar = ({ isVisable, handleToggle }) => {
   const handleClick = () => {
     setisActive(!isActive);
   };
-  console.log(isVisable);
+  function handleLogout() {
+    localStorage.clear();
+    navigate("/login");
+  }
   return (
     <div
       className={`bg-[#191919] min-h-[100vh] text-white flex flex-col justify-between px-5 py-10 font-Inter w-[280px] z-[3000] fixed transition-transform duration-400 ${
@@ -111,76 +115,36 @@ const Sidebar = ({ isVisable, handleToggle }) => {
           </div>
         </div>
         <div className="item flex flex-col mb-3 text-[1.1rem] rounded-md ">
-          <div
-            onClick={() => setShowVehiclesSubmenu(!showVehiclesSubmenu)}
-            className="flex gap-2 items-center cursor-pointer hover:bg-stone-700 rounded-md p-2 "
+          <NavLink
+            to={"/vehicles"}
+            className={({ isActive }) =>
+              `${
+                isActive ? "bg-stone-700" : ""
+              } flex  flex-1  gap-4  items-center cursor-pointer hover:bg-stone-700 rounded-md p-2`
+            }
           >
-            <div className="flex gap-3 items-center cursor-pointer rounded-md w-full justify-between ">
-              <div className="flex-1 flex gap-4 items-center cursor-pointer">
-                <span>
-                  <FaCar className="text-[1.4rem]" />
-                </span>
-                <span className="text-[#ffffffc0]">Vehicles</span>
-              </div>
-              {showVehiclesSubmenu ? (
-                <MdKeyboardArrowUp className="text-gray-300 text-2xl" />
-              ) : (
-                <MdKeyboardArrowDown className="text-gray-300 text-2xl" />
-              )}
-            </div>
-          </div>
+            <span>
+              <FaCar className="text-[1.4rem]" />
+            </span>
+            Vehicles
+          </NavLink>
 
           <div
             className={` mt-1 flex flex-col border-l border-stone-700   gap-1 ml-12 pl-2 text-sm text-gray-300 text-[1.1rem] overflow-hidden transition-[max-height] duration-300 ${
               showVehiclesSubmenu ? "max-h-40" : "max-h-0"
             }`}
-          >
-            {" "}
-            <NavLink
-              to={"/users/cars"}
-              className={({ isActive }) =>
-                `${
-                  isActive ? "bg-stone-700" : ""
-                } mb-1.5 hover:bg-stone-700 p-2 rounded-md`
-              }
-            >
-              Cars
-            </NavLink>
-            <NavLink
-              to={"/users/heavyCars"}
-              className={({ isActive }) =>
-                `${
-                  isActive ? "bg-stone-700" : ""
-                } mb-1.5 hover:bg-stone-700 p-2 rounded-md`
-              }
-            >
-              Heavy cars
-            </NavLink>
-          </div>
+          ></div>
         </div>
-
-        <NavLink
-          to={"/add"}
-          className={({ isActive }) =>
-            `${
-              isActive ? "bg-stone-700" : ""
-            } rounded-md item flex gap-4 items-center mb-3 p-2 text-[1.1rem] hover:bg-stone-700`
-          }
-        >
-          <span>
-            <AiOutlinePlusCircle className="text-[1.4rem]" />
-          </span>
-          Add
-        </NavLink>
       </div>
-      <div className="down flex items-center gap-4 justify-start w-[100%] bg-[#ffffff21] text-center px-3 py-1 rounded-lg mb-9 cursor-pointer hover:bg-stone-700 transition duration-300 ">
+      <button
+        className="py-2 down flex items-center gap-4 justify-start px-2 text-center bg-[#ffffff21]  w-[100%] rounded-lg mb-9 cursor-pointer hover:bg-stone-700 transition duration-300 "
+        onClick={() => handleLogout()}
+      >
         <span>
           <MdLogout className="text-[1.4rem]" />
         </span>
-        <NavLink to={"/Login"} className="text-[1.1rem] py-1.5">
-          Logout
-        </NavLink>
-      </div>
+        Logout
+      </button>
     </div>
   );
 };

@@ -3,14 +3,19 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router";
+import { ColorRing } from "react-loader-spinner";
+import { toast } from "react-toastify";
+// import { ColorRing } from "react-loader-spinner";
 
 const schema = yup.object().shape({
   email: yup.string().email("enter a valid email").required("required"),
   password: yup.string().required("required"),
 });
 export default function Login() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const {
     register,
@@ -20,22 +25,40 @@ export default function Login() {
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
-
   async function onSubmit(data) {
     setIsLoading(true);
+    setErrorMessage("");
+    // console.log("Form Data:", data);
+
     try {
+      // setIsLoading(true);
       const res = await axios.post(
-        "http://localhost:5034/api/Account/login",
+        "https://veemanage.runasp.net/api/Account/login",
         data
       );
-      console.log("Login Successful:", res.data);
+      // console.log("Login Successful:", res.data);
+      localStorage.setItem("token", res?.data?.token); //saving the token in local storage
+      localStorage.setItem("email", res?.data?.email); //saving the email in local storage
+      
+      if (res?.data?.mustChangePassword == true) {
+        navigate("/ResetPassword");
+      } else {
+        !errorMessage && toast.success("Welcome Back !");
+        setTimeout(() => {
+          navigate("/Overview");
+        }, 1000);
+      }
     } catch (error) {
-      console.error("Login Error:", error);
-      setError("Something went wrong. Please try again.");
+      // console.error("Login Error:", error);
+    
+      const backendMessage = error?.response?.data?.message || "Login failed. Please try again.";
+      
+      toast.error(backendMessage);
+      setErrorMessage(backendMessage);
     }
-
     setIsLoading(false);
   }
+  
   return (
     <>
       <div className="w-full font-Poppins flex items-center justify-center bg-stone-100">
@@ -78,9 +101,32 @@ export default function Login() {
                 </p>
               )}
             </div>
-            <button className="w-full bg-blackColor hover:bg-[#333] transition duration-300 text-white rounded-lg p-2 mt-12  text-lg font-Poppins">
-              Login
+            <button
+              disabled={isLoading}
+              className={`w-full flex justify-center bg-blackColor hover:bg-[#333] transition duration-300 text-white rounded-lg p-2 mt-12  text-lg font-Poppins ${
+                isLoading && "opacity-50 cursor-not-allowed"
+              }`}
+              type="submit"
+            >
+              {isLoading ? (
+                <div className="d-flex justify-content-center">
+                  <ColorRing
+                    visible={true}
+                    height="45"
+                    width="45"
+                    ariaLabel="color-ring-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="color-ring-wrapper"
+                    colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+                  />
+                </div>
+              ) : (
+                "Login"
+              )}
             </button>
+            {errorMessage && (
+              <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+            )}
           </form>
         </div>
       </div>
