@@ -92,7 +92,7 @@ export default function Category() {
                 <IoEllipsisVertical />
               </button>
               {openIndex === index && (
-                <div className="absolute bg-white shadow-md rounded-md p-2 border border-primaryColor right-2 -top-16">
+                <div className="absolute bg-white shadow-md rounded-md p-2 border border-primaryColor right-2 -top-12">
                   <ul className="flex flex-col items-start gap-2">
                   
                     <button
@@ -114,7 +114,7 @@ export default function Category() {
           </div>
         ))}
       </div>
-      {isVisable &&<Popup message={"Are You Sure to Delete This User ?"} onClose={()=>setIsvisable(false)} onConfirm={() => {
+      {isVisable &&<Popup message={"Are You Sure to Delete This Category ?"} onClose={()=>setIsvisable(false)} onConfirm={() => {
         delData(selectedId)
 
 }}/>}
