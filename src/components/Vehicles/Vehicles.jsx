@@ -5,9 +5,12 @@ import { useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import FetchWrapper from "../FetchWrapper";
+import Search from "../Search";
 
 export default function Vehicles() {
-  const { data, isLoading } = useQuery({
+  const [searchItem,setSearchItem]=useState("")
+
+  const { data, isLoading,isError,error } = useQuery({
     queryKey: ["vehicles"],
     queryFn: getVehicles,
   });
@@ -23,14 +26,21 @@ export default function Vehicles() {
       return error;
     }
   }
-  data && console.log("Vehicles data:", data);
+  // data && console.log("Vehicles data:", data);
+  const filterUsers = data?.filter((item) =>
+    (item.firstName + " " + item.lastName).toLowerCase().includes(searchItem.toLowerCase()) || item.nationalId.includes(searchItem) || item.phoneNumber.includes(searchItem)
+
+  );
+
+
   return (
     <>
       <div className="text-center mb-7 w-[100%] py-[0.5rem]   bg-stone-200 text-stone-700 border border-stone-300   rounded-md shadow-sm font-semibold text-xl">
         Vehicles
-      </div>
-      <div className="controls">
-        <div className="btns flex gap-5  mb-8">
+    </div>
+      <div className="controls flex justify-between items-center mb-8">
+        <div className="btns flex gap-5 ">
+
           <Link
             to={"/vehicles/add"}
             className="block  border border-primaryColor w-[180px] p-2 text-center rounded-lg text-primaryColor font-bold"
@@ -50,17 +60,23 @@ export default function Vehicles() {
             Models
           </Link>
         </div>
+        <Search onChange={(e)=>
+        setSearchItem(e.target.value)
+      } />
       </div>
 
       <div>
-        <FetchWrapper isLoading={isLoading} data={data}>
+        <FetchWrapper isLoading={isLoading} isError={isError} error={error} data={data}   filter={filterUsers}>
           <AllUsersTable
             keyOfQuery={"vehicles"}
             baseUrl="https://veemanage.runasp.net/api/Vehicle"
-            titles={["ID", "Model", "Palet Number", "Joind Year", "Category"]}
-            rows={data?.map((item, index) => ({
+
+          titles={["ID", "Model", "Palet Number", "Joind Year", "Category"]}
+          rows={
+            filterUsers?filterUsers.map((item, index) => ({
               link: `/VehiclesProfile/${item.id}`,
-              id: item.id,
+              id:item.id,
+
               values: [
                 index + 1,
                 item.name,
@@ -68,9 +84,24 @@ export default function Vehicles() {
                 item.joindYear,
                 item.category,
               ],
-            }))}
-            columnSizes={["10%", "28%", "20%", "20%", "19%", "3%"]}
-          />
+            }))
+            
+            
+            
+            :data?.map((item, index) => ({
+            link: `/VehiclesProfile/${item.id}`,
+            id:item.id,
+            values: [
+              index + 1,
+              item.name,
+              item.palletNumber,
+              item.joindYear,
+              item.category,
+            ],
+          }))}
+          columnSizes={["10%", "28%", "20%", "20%", "19%", "3%"]}
+        />
+
         </FetchWrapper>
       </div>
     </>

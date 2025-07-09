@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { Link, NavLink } from "react-router";
-import { FaCar, FaTruck, FaBus } from "react-icons/fa";
+import { FaCar, FaTruck, FaBus, FaCircle } from "react-icons/fa";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../Loader/Loader";
+import { toast } from "react-toastify";
+import Popup from "../Popup/Popup";
 
 export default function Category() {
   const [openIndex, setOpenIndex] = useState(null);
+  const[isVisable,setIsvisable]=useState(null)
+  const[selectedId,setSelectedId]=useState(null)
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["category"],
     queryFn: getCategory,
@@ -26,9 +30,12 @@ export default function Category() {
       );
       setOpenIndex(null);
       refetch();
+      toast.success("Deleted Successfully")
+      setIsvisable(false)
       return res?.data;
     } catch (error) {
       console.error("Error deleting data:", error);
+      toast.error("Deleting faild")
       return error;
     }
   }
@@ -49,6 +56,8 @@ export default function Category() {
       return error;
     }
   }
+  console.log(selectedId);
+  
   return (
     <>
       <Link
@@ -69,7 +78,7 @@ export default function Category() {
                   <FaCar />
                 ) : item.name.toLowerCase().includes("bus") ? (
                   <FaBus />
-                ) : item.name.toLowerCase().includes("tractors") ? (
+                ) : item.name.toLowerCase().includes("truck") ? (
                   <FaTruck />
                 ) : (
                   <FaCar />
@@ -83,14 +92,17 @@ export default function Category() {
                 <IoEllipsisVertical />
               </button>
               {openIndex === index && (
-                <div className="absolute bg-white shadow-md rounded-md p-2 border border-primaryColor right-2 -top-20">
+                <div className="absolute bg-white shadow-md rounded-md p-2 border border-primaryColor right-2 -top-16">
                   <ul className="flex flex-col items-start gap-2">
-                    <button className="text-primaryColor font-semibold hover:text-yellow-500 cursor-pointer">
-                      Edit
-                    </button>
+                  
                     <button
-                      onClick={() => delData(item.id)}
-                      className="text-red-500 font-semibold hover:text-yellow-500 cursor-pointer"
+                      onClick={() =>{
+                        setSelectedId(item.id)
+                        setIsvisable(true)
+                      }
+                      } 
+                        
+                      className="text-red-500 font-semibold hover:text-blue-700 cursor-pointer"
                     >
                       Delete
                     </button>
@@ -102,6 +114,10 @@ export default function Category() {
           </div>
         ))}
       </div>
+      {isVisable &&<Popup message={"Are You Sure to Delete This User ?"} onClose={()=>setIsvisable(false)} onConfirm={() => {
+        delData(selectedId)
+
+}}/>}
     </>
   );
 }

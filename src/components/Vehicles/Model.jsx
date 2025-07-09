@@ -1,32 +1,73 @@
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import React from "react";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import Loader from "../Loader/Loader";
 
 const Model = () => {
+  async function getModels() {
+    try {
+      const res = await axios.get(
+        "https://veemanage.runasp.net/api/Vehicle/Model",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(res?.data);
+      return res?.data;
+    } catch (error) {
+      console.error("Error fetching models:", error);
+      return error;
+    }
+  }
+
+  const { data: ModelsData, isLoading } = useQuery({
+    queryKey: ["models"],
+    queryFn: getModels,
+  });
+
+  if (isLoading) return <Loader />;
+
   return (
     <div className="font-Nunito">
       <Link
-        to={"/vehicles/add"}
+        to={"/model/add"}
         className="block mb-12 border border-primaryColor w-[180px] p-2 text-center rounded-lg text-primaryColor font-bold"
       >
         + New Model
       </Link>
-    
-      <div className="grid grid-cols-3">
-        <div className="bg-[#FFFFFF] py-4 px-4 rounded-lg shadow-lg m-2 border-l-[5px] max-w-[331px] min-h-[213px] border-[#4880FF]">
-          <div className="flex justify-between items-center border-b-2 pb-4 mb-5">
-            <span className="text-[25px] font-medium">Audi Q5</span>
-            <button className="text-[#4880FF] text-[23px]">
-              <IoEllipsisVertical />
-            </button>
-          </div>
-          <span className="block mb-4">
-            Year: <span className="text-[#6C757D]">2025</span>
-          </span>
-          <span className="block">
-            Vehicles: <span className="text-[#6C757D]">2025</span>
-          </span>
-        </div>
+
+      <div className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {ModelsData.map((item, index) => {
+          return (
+            <div
+              key={index}
+              className="item bg-[#FFFFFF]  p-2 rounded-lg shadow-lg m-2 border-l-[5px] min-h-[213px] border-[#4880FF] "
+            >
+              <div className="flex justify-between items-center border-b-2 pb-4 mb-5">
+                <span className="font-semibold text-xl">
+                  {item?.brand} {item?.name}
+                </span>
+                <button className="text-[#4880FF] text-[23px]">
+                  <IoEllipsisVertical />
+                </button>
+              </div>
+              <span className="block mb-4">
+                Category:{" "}
+                <span className="text-[#6C757D]">{item?.category?.name}</span>
+              </span>
+              <span className="block">
+                Description:{" "}
+                <span className="text-[#6C757D] text-sm">
+                  {item?.category?.description}
+                </span>
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

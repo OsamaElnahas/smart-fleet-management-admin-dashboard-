@@ -2,17 +2,28 @@ import React from "react";
 import CheckStatus from "../Checker";
 import { Link } from "react-router-dom";
 
-const Popup = ({ message, onClose, onConfirm, email, password, isLoading, link ,status}) => {
+const Popup = ({
+  message,
+  onClose,
+  onConfirm,
+  email,
+  password,
+  isLoading,
+  link,
+  status,
+}) => {
   const showUserInfo = email && password;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white rounded-xl py-10 px-6 shadow-xl max-w-sm w-full flex flex-col items-center gap-6">
-        {isLoading && <CheckStatus status={"loading"}/>}
-        
+        {isLoading && <CheckStatus status={"loading"} />}
+
         {message && (
           <>
-            <p className="text-lg font-semibold text-primaryColor text-center">{message}</p>
+            <p className="text-lg font-semibold text-primaryColor text-center">
+              {message}
+            </p>
           </>
         )}
 
@@ -21,10 +32,12 @@ const Popup = ({ message, onClose, onConfirm, email, password, isLoading, link ,
             <CheckStatus status={isLoading ? "loading" : "success"} />
             <div className="text-black flex flex-col gap-3 justify-start mt-4 w-full">
               <p>
-                <span className="font-bold text-primaryColor">Email:</span> {email}
+                <span className="font-bold text-primaryColor">Email:</span>{" "}
+                {email}
               </p>
               <p>
-                <span className="font-bold text-primaryColor">Password:</span> {password}
+                <span className="font-bold text-primaryColor">Password:</span>{" "}
+                {password}
               </p>
               <Link
                 to={link}
@@ -36,19 +49,18 @@ const Popup = ({ message, onClose, onConfirm, email, password, isLoading, link ,
             </div>
           </>
         )}
-        {status&&<>
-        
-          <CheckStatus status={status===true ? "success" :"error"}/>
-          <button
+        {status && (
+          <>
+            <CheckStatus status={status === true ? "success" : "error"} />
+            <Link
+              to={link}
               onClick={onClose}
-              className="p-2 w-[100px] mt-12 bg-primaryColor text-white rounded-lg hover:bg-blue-700 transition"
+              className="px-4 py-2 w-[100px] mt-12 bg-primaryColor text-white text-center rounded-lg hover:bg-blue-700 transition"
             >
               Done
-            </button>
-        </>
-          
-        
-        }
+            </Link>
+          </>
+        )}
 
         {message && !showUserInfo && (
           <div className="btns flex gap-6 mt-6">
@@ -66,7 +78,6 @@ const Popup = ({ message, onClose, onConfirm, email, password, isLoading, link ,
             </button>
           </div>
         )}
-        
       </div>
     </div>
   );

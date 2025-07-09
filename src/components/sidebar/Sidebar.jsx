@@ -26,13 +26,13 @@ const Sidebar = ({ isVisable, handleToggle }) => {
   }
   return (
     <div
-      className={`bg-[#191919] min-h-[100vh] text-white flex flex-col justify-between px-5 py-10 font-Inter w-[280px] z-[3000] fixed transition-transform duration-400 ${
+      className={`bg-[#191919] min-h-[100vh] text-white flex flex-col justify-between px-5 py-7 font-Inter w-[280px] z-[3000] fixed transition-transform duration-400 ${
         isVisable ? "translate-x-0" : "-translate-x-full"
       }`}
     >
       {" "}
       <div className="up w-[100%]">
-        <div className="title text-[1.3rem] flex gap-3 items-center text-stone-100 mb-14">
+        <div className="title text-[1.3rem] flex gap-3 items-center text-stone-100 mb-9 border-b pb-4 border-stone-700">
           <div className="flex-1">
             <span className=" font-extrabold">VEE </span>MANAGE
           </div>
