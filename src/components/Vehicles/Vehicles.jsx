@@ -6,6 +6,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import FetchWrapper from "../FetchWrapper";
 import Search from "../Search";
+import { FiSearch } from "react-icons/fi"; // أيقونة بحث من react-icons
 
 export default function Vehicles() {
   const [searchItem, setSearchItem] = useState("");
@@ -76,13 +77,13 @@ export default function Vehicles() {
             Models
           </Link>
         </div>
-        <input
+        <Search
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               setSearchItem(e.target.value);
             }
           }}
-        ></input>
+        />
       </div>
 
       <div>
