@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import { FaDownload, FaInfo, FaInfoCircle } from "react-icons/fa";
 
 export default function ExcelTemplateDownloader({ setIsDownloaded }) {
   const [fileUrl, setFileUrl] = useState(null);
@@ -39,13 +40,21 @@ export default function ExcelTemplateDownloader({ setIsDownloaded }) {
   }, [fileUrl]);
 
   return (
-    <div className="py-4">
+    <div className="py-1">
+      <div className="flex items-center gap-5 ">
+      
+
       <button
         onClick={() => handleDownload()}
-        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 mb-3 flex items-center gap-2"
       >
-        Download Vehicle Template
+        <FaDownload/> Download Maintenance History Template
       </button>
+        <p className=" font-semibold text-gray-400 text-center flex items-center gap-2">
+          <FaInfoCircle/> You Should Download the Template First and Fill Before Uploading
+        </p>
+            </div>
+
 
       {/* Conditionally rendered download link (invisible) */}
       {fileUrl && (

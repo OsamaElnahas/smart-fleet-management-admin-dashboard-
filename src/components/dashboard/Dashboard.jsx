@@ -121,10 +121,6 @@ const Dashboard = () => {
               <span className="text-xl">{Vehicles?.length || ""}</span>
             </div>
 
-            <div className="card h-32 text-white px-2 py-6 rounded-lg shadow-md bg-[#5041BC] font-semibold flex flex-col gap-2 justify-center items-center text-center">
-              <span>New Users</span>
-              <span className="text-xl">100</span>
-            </div>
           </div>
 
           {/* <div className="col-span-12 lg:col-span-6 ">
