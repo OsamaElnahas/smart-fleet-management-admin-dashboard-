@@ -12,7 +12,7 @@ export default function DynamicForm({
   defaultValues,
   back_link,
   error,
-  isLoading
+  isLoading,
 }) {
   const {
     register,
@@ -23,8 +23,7 @@ export default function DynamicForm({
     defaultValues,
     mode: "all",
   });
-  console.log("error from DynamicForm",error);
-  
+  console.log("error from DynamicForm", error);
 
   return (
     <>
@@ -55,7 +54,7 @@ export default function DynamicForm({
             </div>
           ))}
 
-            {error&& <p className="text-red-500"> {error} </p>}
+          {error && <p className="text-red-500"> {error} </p>}
           <div className="flex justify-end w-[100%] gap-4 mt-4">
             <button
               className={`py-2 rounded-lg w-[100px] text-center flex justify-center ${
@@ -65,21 +64,21 @@ export default function DynamicForm({
               }`}
               disabled={!isValid}
             >
-             {isLoading ? (
-                            <div className="d-flex justify-content-center">
-                            <ColorRing
-                              visible={true}
-                                 height="30"
-                                 width="30"
-                                 ariaLabel="color-ring-loading"
-                                 wrapperStyle={{}}
-                                 wrapperClass="color-ring-wrapper"
-                                 colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
-                               />
-                             </div>
-                           ) : (
-                             "Create"
-                           )}
+              {isLoading ? (
+                <div className="d-flex justify-content-center">
+                  <ColorRing
+                    visible={true}
+                    height="30"
+                    width="30"
+                    ariaLabel="color-ring-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="color-ring-wrapper"
+                    colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+                  />
+                </div>
+              ) : (
+                "Create"
+              )}
             </button>
             <button className="border border-stone-300 py-2  rounded-lg w-[100px]">
               <Link className="p-3 px-7" to={back_link}>

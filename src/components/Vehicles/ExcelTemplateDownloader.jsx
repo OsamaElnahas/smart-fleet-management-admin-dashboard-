@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
-export default function ExcelTemplateDownloader({setIsDownloaded}) {
+export default function ExcelTemplateDownloader({ setIsDownloaded }) {
   const [fileUrl, setFileUrl] = useState(null);
   const linkRef = useRef(null);
 
@@ -17,10 +17,11 @@ export default function ExcelTemplateDownloader({setIsDownloaded}) {
         }
       );
 
-      const blob = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
       const url = URL.createObjectURL(blob);
       setFileUrl(url); // triggers render
-     
     } catch (error) {
       console.error("Download failed:", error);
     }
@@ -31,21 +32,16 @@ export default function ExcelTemplateDownloader({setIsDownloaded}) {
       linkRef.current.click();
       setTimeout(() => {
         URL.revokeObjectURL(fileUrl);
-        setFileUrl(null); 
-                    setIsDownloaded(true)
-
+        setFileUrl(null);
+        setIsDownloaded(true);
       }, 1000);
     }
   }, [fileUrl]);
 
   return (
-    <div className="p-4">
+    <div className="py-4">
       <button
-        onClick={() =>
-            
-            handleDownload()
-        
-        }
+        onClick={() => handleDownload()}
         className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
       >
         Download Vehicle Template

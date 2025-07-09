@@ -3,7 +3,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import Popup from "../Popup/Popup";
+import ExcelTemplateDownloader from "./ExcelTemplateDownloader";
 
 // Validation Schema
 const schema = Yup.object().shape({
@@ -29,6 +31,7 @@ export default function VehiclesAdd() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [categoryId, setCategoryId] = useState("");
+  const [popup, setPopUp] = useState(false);
 
   const {
     register,
@@ -44,11 +47,14 @@ export default function VehiclesAdd() {
   const { data: categoryData, isLoading: isCategoryLoading } = useQuery({
     queryKey: ["categoryData"],
     queryFn: async () => {
-      const res = await axios.get("https://veemanage.runasp.net/api/Vehicle/Category", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const res = await axios.get(
+        "https://veemanage.runasp.net/api/Vehicle/Category",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       return res.data;
     },
   });
@@ -57,17 +63,20 @@ export default function VehiclesAdd() {
   const { data: modelsData } = useQuery({
     queryKey: ["models", categoryId],
     queryFn: async () => {
-      const res = await axios.get("https://veemanage.runasp.net/api/Vehicle/Model", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        params: {
-          categroyId: categoryId,
-        },
-      });
+      const res = await axios.get(
+        "https://veemanage.runasp.net/api/Vehicle/Model",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          params: {
+            categroyId: categoryId,
+          },
+        }
+      );
       return res.data;
     },
-    enabled: !!categoryId, // only fetch when categoryId exists
+    enabled: !!categoryId,
   });
 
   // Submit handler
@@ -94,12 +103,16 @@ export default function VehiclesAdd() {
       formData.append("lastMaintenanceDate", data.lastMaintenanceDate || "");
       formData.append("file", data.file[0]); // Upload file
 
-      const res = await axios.post("https://veemanage.runasp.net/api/Vehicle/with-excel-history", formData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          // Don't set Content-Type manually
-        },
-      });
+      const res = await axios.post(
+        "https://veemanage.runasp.net/api/Vehicle/with-excel-history",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            // Don't set Content-Type manually
+          },
+        }
+      );
 
       console.log("✅ Vehicle added:", res.data);
     } catch (err) {
@@ -177,12 +190,21 @@ export default function VehiclesAdd() {
     },
   ];
 
+  const { mutate } = useMutation({
+    mutationFn: onSubmit,
+    onSuccess: () => {
+      console.log("💥 POPUP SHOULD SHOW");
+
+      setPopUp(true);
+    },
+  });
+
   return (
     <div className="w-[90%] mx-auto mt-6">
       <h2 className="text-2xl font-bold mb-6">Add Vehicle</h2>
-
+      <ExcelTemplateDownloader />
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit((data) => mutate(data))}
         className="bg-white shadow-md rounded-lg p-6 flex flex-col gap-5"
         encType="multipart/form-data"
       >
@@ -220,7 +242,11 @@ export default function VehiclesAdd() {
               {...register(name)}
               className="border border-gray-300 rounded-md p-2"
             />
-            {errors[name] && <p className="text-red-500 text-sm mt-1">{errors[name].message}</p>}
+            {errors[name] && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors[name].message}
+              </p>
+            )}
           </div>
         ))}
 
@@ -232,13 +258,18 @@ export default function VehiclesAdd() {
             {...register("file")}
             className="border border-gray-300 rounded-md p-2"
           />
-          {errors.file && <p className="text-red-500 text-sm mt-1">{errors.file.message}</p>}
+          {errors.file && (
+            <p className="text-red-500 text-sm mt-1">{errors.file.message}</p>
+          )}
         </div>
 
         {/* Model Select */}
         <div className="flex flex-col">
           <label className="font-semibold mb-1">Model</label>
-          <select {...register("modelId")} className="border border-gray-300 rounded-md p-2">
+          <select
+            {...register("modelId")}
+            className="border border-gray-300 rounded-md p-2"
+          >
             <option value="">Select Model</option>
             {modelsData?.map((model) => (
               <option key={model.id} value={model.id}>
@@ -246,7 +277,11 @@ export default function VehiclesAdd() {
               </option>
             ))}
           </select>
-          {errors.modelId && <p className="text-red-500 text-sm mt-1">{errors.modelId.message}</p>}
+          {errors.modelId && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.modelId.message}
+            </p>
+          )}
         </div>
 
         {/* Dynamic Select Fields */}
@@ -268,7 +303,11 @@ export default function VehiclesAdd() {
                 </option>
               ))}
             </select>
-            {errors[name] && <p className="text-red-500 text-sm mt-1">{errors[name].message}</p>}
+            {errors[name] && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors[name].message}
+              </p>
+            )}
           </div>
         ))}
 
@@ -279,12 +318,21 @@ export default function VehiclesAdd() {
           type="submit"
           disabled={!isValid || isLoading}
           className={`px-5 py-2 rounded-lg text-white font-semibold ${
-            !isValid || isLoading ? "bg-gray-300 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+            !isValid || isLoading
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
           }`}
         >
           {isLoading ? "Saving..." : "Create"}
         </button>
       </form>
+      {popup && (
+        <Popup
+          onClose={() => setPopUp(false)}
+          status={true}
+          link={"/vehicles"}
+        />
+      )}
     </div>
   );
 }

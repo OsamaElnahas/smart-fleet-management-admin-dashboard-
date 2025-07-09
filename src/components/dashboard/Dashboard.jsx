@@ -95,13 +95,7 @@ const Dashboard = () => {
         <div className="grid  md:grid-cols-12 gap-6">
           <div className="cards col-span-12 lg:col-span-6 flex flex-col gap-4 text-sm">
             {/* Users Summary */}
-            <div className="card text-white px-5 py-8 rounded-lg shadow-md bg-slate-800 font-semibold grid grid-cols-2 sm:grid-cols-4 gap-6 items-center   text-center">
-              <div className="item flex flex-col gap-2">
-                <span>All Users</span>
-                <span className="text-white text-xl">
-                  {Users?.length || "-"}
-                </span>
-              </div>
+            <div className="card text-white px-5 py-8 rounded-lg shadow-md bg-slate-700 font-semibold grid grid-cols-2 sm:grid-cols-4 gap-6 items-center  text-center">
               <div className="item flex flex-col gap-2">
                 <span>Managers</span>
                 <span className="text-white text-xl">
