@@ -201,8 +201,8 @@ export default function VehiclesAdd() {
 
   return (
     <div className="w-[90%] mx-auto mt-6">
-      <h2 className="text-2xl font-bold mb-6">Add Vehicle</h2>
       <ExcelTemplateDownloader />
+      <h2 className="text-2xl font-bold mb-6">Add Vehicle</h2>
       <form
         onSubmit={handleSubmit((data) => mutate(data))}
         className="bg-white shadow-md rounded-lg p-6 flex flex-col gap-5"
@@ -241,6 +241,7 @@ export default function VehiclesAdd() {
               type={type}
               {...register(name)}
               className="border border-gray-300 rounded-md p-2"
+              placeholder={label}
             />
             {errors[name] && (
               <p className="text-red-500 text-sm mt-1">
@@ -252,8 +253,9 @@ export default function VehiclesAdd() {
 
         {/* File Upload */}
         <div className="flex flex-col">
-          <label className="font-semibold mb-1">Upload File</label>
+          <label className="font-semibold mb-1">Upload Maintenance History Template File After Fill it</label>
           <input
+          placeholder="Upload history Maintenance Template File"
             type="file"
             {...register("file")}
             className="border border-gray-300 rounded-md p-2"

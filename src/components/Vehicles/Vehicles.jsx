@@ -9,25 +9,38 @@ import Search from "../Search";
 
 export default function Vehicles() {
   const [searchItem,setSearchItem]=useState("")
+  const[PageSize,setPageSize]=useState(10)
+  const[PageIndex,setPageIndex]=useState(1)
 
   const { data, isLoading,isError,error } = useQuery({
-    queryKey: ["vehicles"],
+    queryKey: ["vehicles", PageSize, PageIndex  ],
     queryFn: getVehicles,
   });
 
-  async function getVehicles() {
-    try {
-      const response = await axios.get(
-        "https://veemanage.runasp.net/api/Vehicle"
-      );
-      return response?.data;
-    } catch (error) {
-      console.error("Error fetching vehicles:", error);
-      return error;
-    }
+async function getVehicles() {
+  try {
+    const response = await axios.get(
+      "https://veemanage.runasp.net/api/Vehicle",
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        params: {
+          PageSize: PageSize,
+          PageIndex: PageIndex,
+        },
+      }
+    );
+    console.log("Vehicles data:", response);
+    return response;
+  } catch (error) {
+    console.error("Error fetching vehicles:", error);
+    throw error;
   }
+}
+
   // data && console.log("Vehicles data:", data);
-  const filterUsers = data?.filter((item) =>
+  const filterUsers = data?.data.filter((item) =>
     (item.firstName + " " + item.lastName).toLowerCase().includes(searchItem.toLowerCase()) || item.nationalId.includes(searchItem) || item.phoneNumber.includes(searchItem)
 
   );
@@ -66,7 +79,7 @@ export default function Vehicles() {
       </div>
 
       <div>
-        <FetchWrapper isLoading={isLoading} isError={isError} error={error} data={data}   filter={filterUsers}>
+        <FetchWrapper isLoading={isLoading} isError={isError} error={error} data={data?.data}   filter={filterUsers}>
           <AllUsersTable
             keyOfQuery={"vehicles"}
             baseUrl="https://veemanage.runasp.net/api/Vehicle"
@@ -88,7 +101,7 @@ export default function Vehicles() {
             
             
             
-            :data?.map((item, index) => ({
+            :data?.data.map((item, index) => ({
             link: `/VehiclesProfile/${item.id}`,
             id:item.id,
             values: [
@@ -103,6 +116,11 @@ export default function Vehicles() {
         />
 
         </FetchWrapper>
+      </div>
+      <div className="pagination  flex justify-center gap-10 items-center mt-5 mb-5">
+        <button className="bg-primaryColor text-white p-2 rounded-md w-[140px] cursor-pointer hover:bg-blue-800" onClick={() => setPageIndex(PageIndex - 1)} disabled={PageIndex === 1}>Previous</button>
+        <span>{PageIndex}</span>
+        <button className="bg-primaryColor text-white p-2 rounded-md w-[140px] cursor-pointer hover:bg-blue-800" onClick={() => setPageIndex(PageIndex + 1)} disabled={filterUsers?.length < PageSize}>Next</button>
       </div>
     </>
   );

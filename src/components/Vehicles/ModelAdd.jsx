@@ -183,6 +183,7 @@ export default function ModelAdd() {
   return (
     <>
       <div className="font-bold mb-7 text-2xl font-Inter">Add Model</div>
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="shadow-md p-6 rounded-lg flex flex-col gap-3 bg-white"
@@ -269,7 +270,6 @@ export default function ModelAdd() {
           </Link>
         </div>
       </form>
-
       {isPopupOpen && (
         <Popup
           status={status}
