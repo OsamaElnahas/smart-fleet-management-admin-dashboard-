@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaArrowRight, FaRecycle, FaRemoveFormat, FaTrash, FaUser } from "react-icons/fa";
+import { FaArrowRight, FaInfoCircle, FaRecycle, FaRemoveFormat, FaTrash, FaUser } from "react-icons/fa";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { Link } from "react-router";
 import Popup from "../Popup/Popup";
@@ -88,7 +88,7 @@ export default function AllUsersTable({ titles, rows, columnSizes,baseUrl,keyOfQ
               to={row.link}
               className=" p-[3px] px-1 border-b border-stone-300  text-[16px] cursor-pointer  flex gap-2 items-center transition duration-300 rounded-md hover:bg-primaryColor hover:text-white"
               >
-              <span><FaUser/></span>  Profile
+              <span><FaInfoCircle /></span>  Details
 
             </Link>
             <div className=" p-[3px]  px-1 text-[16px] cursor-pointer  flex gap-2 items-center transition duration-300 rounded-md hover:bg-primaryColor hover:text-white " onClick={()=>{
@@ -124,7 +124,7 @@ export default function AllUsersTable({ titles, rows, columnSizes,baseUrl,keyOfQ
                 to={row.link}
                 className="inline-block bg-primaryColor text-white py-1 px-3 rounded-lg text-sm w-28 text-center"
               >
-                View Profile
+                View Details
               </Link>
               <div className=" py-1 px-3 text-[16px] cursor-pointer  flex gap-3 items-center bg-red-500 rounded-lg text-white w-28 text-center" onClick={()=>{
                 setSelectedId(row.id);

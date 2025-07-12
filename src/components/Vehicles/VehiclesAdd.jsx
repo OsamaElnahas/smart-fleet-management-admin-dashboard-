@@ -12,7 +12,7 @@ const schema = Yup.object().shape({
   palletNumber: Yup.string().required("Plate Number is required"),
   joinedYear: Yup.string().required("Joined Year is required"),
   fuelType: Yup.string().required("Fuel Type is required"),
-  kmDriven: Yup.number().required("KM Driven is required"),
+  currentOdometerKM: Yup.number().required("KM Driven is required"),
   status: Yup.string().required("Status is required"),
   modelId: Yup.string().required("Model Name is required"),
   modelYear: Yup.number().required("Model Year is required"),
@@ -89,7 +89,7 @@ export default function VehiclesAdd() {
       formData.append("palletNumber", data.palletNumber);
       formData.append("joinedYear", data.joinedYear);
       formData.append("fuelType", data.fuelType);
-      formData.append("kmDriven", data.kmDriven);
+      formData.append("currentOdometerKM", data.currentOdometerKM);
       formData.append("status", data.status);
       formData.append("modelId", data.modelId);
       formData.append("modelYear", data.modelYear);
@@ -102,6 +102,13 @@ export default function VehiclesAdd() {
       formData.append("lastAssignedDate", data.lastAssignedDate || "");
       formData.append("lastMaintenanceDate", data.lastMaintenanceDate || "");
       formData.append("file", data.file[0]); // Upload file
+console.log("📦 Raw form values from react-hook-form:", data);
+
+// Log FormData key-value pairs
+for (let [key, value] of formData.entries()) {
+  console.log(`FormData ➤ ${key}:`, value);
+}
+      
 
       const res = await axios.post(
         "https://veemanage.runasp.net/api/Vehicle/with-excel-history",
@@ -230,7 +237,7 @@ export default function VehiclesAdd() {
           ["Plate Number", "palletNumber", "text"],
           ["Joined Year", "joinedYear", "text"],
           ["Model Year", "modelYear", "number"],
-          ["KM Driven", "kmDriven", "number"],
+          ["KM Driven", "currentOdometerKM", "number"],
           ["Engine Size", "engineSize", "text"],
           ["Last Assigned Date", "lastAssignedDate", "date"],
           ["Last Maintenance Date", "lastMaintenanceDate", "date"],

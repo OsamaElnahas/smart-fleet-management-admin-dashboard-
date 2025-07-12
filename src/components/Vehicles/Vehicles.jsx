@@ -104,7 +104,9 @@ export default function Vehicles() {
                 index + 1,
                 item.name,
                 item.palletNumber,
-                item.joindYear,
+                new Date(item.joinedYear,).toLocaleDateString("en-GB", {
+        year: "numeric",}),
+                
                 item.category,
               ],
             }))}
