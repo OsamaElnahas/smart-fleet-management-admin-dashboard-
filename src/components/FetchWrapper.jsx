@@ -1,8 +1,13 @@
-import React from "react";
 import Loader from "./Loader/Loader";
-import { filter } from "lodash";
 
-export default function FetchWrapper({ isLoading, isError, error, data, children,filter }) {
+export default function FetchWrapper({
+  isLoading,
+  isError,
+  error,
+  data,
+  children,
+  filter,
+}) {
   if (isLoading) {
     return <Loader />;
   }
@@ -15,7 +20,12 @@ export default function FetchWrapper({ isLoading, isError, error, data, children
     );
   }
 
-  if (data && data.length === 0 || filter.length==0) {
+  const isEmpty =
+    !Array.isArray(data) ||
+    data.length === 0 ||
+    (filter && Array.isArray(filter) && filter.length === 0);
+
+  if (isEmpty) {
     return (
       <div className="text-center text-2xl text-primaryColor mt-28">
         No Data Found

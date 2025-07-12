@@ -8,7 +8,7 @@ import { FaSearch } from "react-icons/fa";
 import Search from "../Search";
 
 export default function Manager() {
-  const [searchItem,setSearchItem]=useState("")
+  const [searchItem, setSearchItem] = useState("");
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["managers"],
     queryFn: () =>
@@ -28,14 +28,18 @@ export default function Manager() {
       return [];
     }
   }
-  const filterUsers = data?.filter((item) =>
-    (item.firstName + " " + item.lastName).toLowerCase().includes(searchItem.toLowerCase()) || item.nationalId.includes(searchItem) || item.phoneNumber.includes(searchItem)
-
+  const filterUsers = data?.filter(
+    (item) =>
+      (item.firstName + " " + item.lastName)
+        .toLowerCase()
+        .includes(searchItem.toLowerCase()) ||
+      item.nationalId.includes(searchItem) ||
+      item.phoneNumber.includes(searchItem)
   );
-  
+
   console.log("manager data:", data && data);
-  console.log("search item",searchItem);
-  console.log("filter users",filterUsers);
+  console.log("search item", searchItem);
+  console.log("filter users", filterUsers);
   // isError && console.log("error from query", error?.message);
 
   return (
@@ -49,12 +53,10 @@ export default function Manager() {
         to={"/users/managers/add"}
         className="block  border border-primaryColor w-[180px] p-2 text-center rounded-lg text-primaryColor font-bold"
         >
-        + Add Manager
-      </Link>
-      <Search onChange={(e)=>
-        setSearchItem(e.target.value)
-      } />
-        </div>
+          + Add Manager
+        </Link>
+        <Search onChange={(e) => setSearchItem(e.target.value)} />
+      </div>
 
       <FetchWrapper
         isLoading={isLoading}
@@ -76,35 +78,34 @@ export default function Manager() {
             // "Address",
           ]}
           rows={
-            filterUsers? filterUsers?.map((item, index) => ({
-              link: `/ManagerProfile/${item.id}`,
-              id:item.id,
-              values: [
-                index + 1,
-                item.firstName +" "+item.lastName,
-                item.phoneNumber,
-                item.email,
-                item.dateOfBirth,
-                item.nationalId,
-                // item.address?.governorate,
-              ],
-            }))
-            
-            :
-            
-            data?.map((item, index) => ({
-            link: `/ManagerProfile/${item.id}`,
-            id: item.id,
-            values: [
-              index + 1,
-              item.firstName + " " + item.lastName,
-              item.phoneNumber,
-              item.email,
-              item.dateOfBirth,
-              item.nationalId,
-              // item.address?.governorate,
-            ],
-          }))}
+            filterUsers
+              ? filterUsers?.map((item, index) => ({
+                  link: `/ManagerProfile/${item.id}`,
+                  id: item.id,
+                  values: [
+                    index + 1,
+                    item.firstName + " " + item.lastName,
+                    item.phoneNumber,
+                    item.email,
+                    item.dateOfBirth,
+                    item.nationalId,
+                    // item.address?.governorate,
+                  ],
+                }))
+              : data?.map((item, index) => ({
+                  link: `/ManagerProfile/${item.id}`,
+                  id: item.id,
+                  values: [
+                    index + 1,
+                    item.firstName + " " + item.lastName,
+                    item.phoneNumber,
+                    item.email,
+                    item.dateOfBirth,
+                    item.nationalId,
+                    // item.address?.governorate,
+                  ],
+                }))
+          }
           columnSizes={["8%", "16%", "20%", "20%", "15%", "18%", "3%"]}
         />
       </FetchWrapper>

@@ -26,13 +26,13 @@ const Sidebar = ({ isVisable, handleToggle }) => {
   }
   return (
     <div
-      className={`bg-[#191919] min-h-[100vh] text-white flex flex-col justify-between px-5 py-7 font-Inter w-[280px] z-[3000] fixed transition-transform duration-400 ${
+      className={`bg-[#191919] min-h-[100vh] text-white flex flex-col justify-between px-5 py-10 font-Inter w-[270px] z-[3000] fixed transition-transform duration-400 ${
         isVisable ? "translate-x-0" : "-translate-x-full"
       }`}
     >
       {" "}
       <div className="up w-[100%]">
-        <div className="title text-[1.3rem] flex gap-3 items-center text-stone-100 mb-9 border-b pb-4 border-stone-700">
+        <div className="title text-[1.3rem] flex gap-3 items-center text-stone-100 mb-9 pb-4">
           <div className="flex-1">
             <span className=" font-extrabold">VEE </span>MANAGE
           </div>
@@ -52,9 +52,9 @@ const Sidebar = ({ isVisable, handleToggle }) => {
           }
         >
           <span>
-            <MdOutlineDashboard className="text-[1.4rem]" />
+            <MdOutlineDashboard className="text-[20px]" />
           </span>
-          Overview
+          <span className="text-[#FFFFFFB2] text-[16px]">Dashboard</span>
         </NavLink>
         <div className="item flex flex-col mb-3 text-[1.1rem] rounded-md ">
           <div
@@ -64,9 +64,9 @@ const Sidebar = ({ isVisable, handleToggle }) => {
             <div className="flex gap-3 items-center cursor-pointer rounded-md w-full justify-between ">
               <div className="flex-1 flex gap-4 items-center cursor-pointer">
                 <span>
-                  <FaUsers className="text-[1.4rem]" />
+                  <FaUsers className="text-[20px]" />
                 </span>
-                <span className="text-[#ffffffc0]">Users</span>
+                <span className="text-[#FFFFFFB2] text-[16px]">Users</span>
               </div>
               {showUsersSubmenu ? (
                 <MdKeyboardArrowUp className="text-gray-300 text-2xl" />
@@ -124,9 +124,10 @@ const Sidebar = ({ isVisable, handleToggle }) => {
             }
           >
             <span>
-              <FaCar className="text-[1.4rem]" />
+              <FaCar className="text-[20px]" />
             </span>
-            Vehicles
+
+            <span className="text-[#FFFFFFB2] text-[16px]">Vehicles</span>
           </NavLink>
 
           <div
@@ -141,7 +142,7 @@ const Sidebar = ({ isVisable, handleToggle }) => {
         onClick={() => handleLogout()}
       >
         <span>
-          <MdLogout className="text-[1.4rem]" />
+          <MdLogout className="text-[20px]" />
         </span>
         Logout
       </button>
