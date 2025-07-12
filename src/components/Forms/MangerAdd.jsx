@@ -8,6 +8,7 @@ import Popup from "../Popup/Popup";
 const schema = Yup.object().shape({
   firstName: Yup.string().required("Name is required"),
   lastName: Yup.string().required("Name is required"),
+  email: Yup.string().required("email is required"),
   phoneNumber: Yup.string()
     .matches(/^\d+$/, "Please enter a valid phone number")
     .required("Phone number is required"),
@@ -41,6 +42,12 @@ const fields = [
     label: "Phone Number",
     type: "text",
     placeholder: "Enter phone number",
+  },
+  {
+    name: "email",
+    label: "email",
+    type: "email",
+    placeholder: "Enter Manager email",
   },
 
   {

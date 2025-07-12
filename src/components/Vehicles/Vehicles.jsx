@@ -112,28 +112,15 @@ export default function Vehicles() {
           />
         </FetchWrapper>
       </div>
-      {!isLoading && (
-        <div className="pagination  flex justify-center gap-10 items-center mt-5 mb-5">
-          <button
-            className={`${
-              PageIndex === 1
-                ? "bg-gray-400"
-                : "bg-primaryColor hover:bg-blue-800"
-            }  text-white p-2 rounded-md w-[140px] cursor-pointer `}
-            onClick={() => setPageIndex(PageIndex - 1)}
-            disabled={PageIndex === 1}
-          >
-            Previous
-          </button>
-          <span>{PageIndex}</span>
-          <button
-            className="bg-primaryColor text-white p-2 rounded-md w-[140px] cursor-pointer hover:bg-blue-800"
-            onClick={() => setPageIndex(PageIndex + 1)}
-          >
-            Next
-          </button>
-        </div>
-      )}
+           {data?.length>0 &&
+          
+         <div className="pagination  flex justify-center gap-10 items-center mt-5 mb-5">
+        <button className="bg-primaryColor text-white p-2 rounded-md w-[140px] cursor-pointer hover:bg-blue-800" onClick={() => setPageIndex(PageIndex - 1)} disabled={PageIndex === 1}>Previous</button>
+        <span>{PageIndex}</span>
+        <button className="bg-primaryColor text-white p-2 rounded-md w-[140px] cursor-pointer hover:bg-blue-800" onClick={() => setPageIndex(PageIndex + 1)} disabled={data?.length < PageSize}>Next</button>
+      </div>
+}
+   
     </>
   );
 }
