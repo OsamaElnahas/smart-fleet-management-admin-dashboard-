@@ -9,7 +9,7 @@ import Search from "../Search";
 
 export default function Vehicles() {
   const [searchItem,setSearchItem]=useState("")
-  const[PageSize,setPageSize]=useState(10)
+  const[PageSize,setPageSize]=useState(12)
   const[PageIndex,setPageIndex]=useState(1)
 
   const { data, isLoading,isError,error } = useQuery({
