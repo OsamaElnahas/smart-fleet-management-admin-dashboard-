@@ -9,9 +9,9 @@ import Search from "../Search";
 import { FiSearch } from "react-icons/fi"; // أيقونة بحث من react-icons
 
 export default function Vehicles() {
-  const [searchItem, setSearchItem] = useState("");
-  const [PageSize, setPageSize] = useState(10);
-  const [PageIndex, setPageIndex] = useState(1);
+  const [searchItem,setSearchItem]=useState("")
+  const[PageSize,setPageSize]=useState(12)
+  const[PageIndex,setPageIndex]=useState(1)
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["vehicles", PageSize, PageIndex, searchItem],
