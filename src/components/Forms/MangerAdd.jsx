@@ -29,7 +29,7 @@ const fields = [
     name: "firstName",
     label: "First Name",
     type: "text",
-    placeholder: "Enter first name",
+    placeholder: "Enter Manager first name",
   },
   {
     name: "lastName",
