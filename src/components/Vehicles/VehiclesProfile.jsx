@@ -60,12 +60,12 @@ export default function VehiclesProfile() {
                 </div>
                 <div className="item flex flex-col gap-2 mb-3">
                   <span className=" font-bold">Current Km</span>
-                  <span className="text-gray-500">{data?.kmDriven}</span>
+                  <span className="text-gray-500">{data?.currentOdometerKM}</span>
                 </div>
                 <div className="item flex flex-col gap-2 mb-3">
-                  <span className=" font-bold">Fuel Efficiency</span>
+                  <span className=" font-bold">Engine Size</span>
                   <span className="text-gray-500">
-                    {data?.vehicleModel?.fuelEfficiency}
+                    {data?.engineSize}
                   </span>
                 </div>
               </div>
@@ -78,10 +78,12 @@ export default function VehiclesProfile() {
                   <span className=" font-bold">Plate Number</span>
                   <span className="text-gray-500">{data?.palletNumber}</span>
                 </div>
+                
                 <div className="item flex flex-col gap-2 mb-3">
                   <span className=" font-bold">Joined Date</span>
                   <span className="text-gray-500">{data?.joinedYear}</span>
                 </div>
+                
               </div>
             </div>
           </div>

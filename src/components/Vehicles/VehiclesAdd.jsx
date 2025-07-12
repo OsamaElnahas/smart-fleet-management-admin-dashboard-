@@ -232,8 +232,8 @@ export default function VehiclesAdd() {
           ["Model Year", "modelYear", "number"],
           ["KM Driven", "kmDriven", "number"],
           ["Engine Size", "engineSize", "text"],
-          ["Last Assigned Date", "lastAssignedDate", "datetime-local"],
-          ["Last Maintenance Date", "lastMaintenanceDate", "datetime-local"],
+          ["Last Assigned Date", "lastAssignedDate", "date"],
+          ["Last Maintenance Date", "lastMaintenanceDate", "date"],
         ].map(([label, name, type]) => (
           <div className="flex flex-col" key={name}>
             <label className="font-semibold mb-1">{label}</label>
