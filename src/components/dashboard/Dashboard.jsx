@@ -95,7 +95,7 @@ const Dashboard = () => {
         <div className="grid  md:grid-cols-12 gap-6">
           <div className="cards col-span-12 lg:col-span-6 flex flex-col gap-4 text-sm">
             {/* Users Summary */}
-            <div className="card text-white px-5 py-8 rounded-lg shadow-md bg-slate-700 font-semibold grid grid-cols-2 sm:grid-cols-4 gap-6 items-center  text-center">
+            <div className="card text-white px-5 py-8 rounded-lg shadow-md bg-slate-700 font-semibold grid grid-cols-4 sm:grid-cols-3 gap-6  items-center  text-center">
               <div className="item flex flex-col gap-2">
                 <span>Managers</span>
                 <span className="text-white text-xl">
@@ -120,7 +120,6 @@ const Dashboard = () => {
               <span className="">Vehicles</span>
               <span className="text-xl">{Vehicles?.length || ""}</span>
             </div>
-
           </div>
 
           {/* <div className="col-span-12 lg:col-span-6 ">
